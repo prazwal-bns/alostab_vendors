@@ -173,7 +173,7 @@ class ProductController extends Controller
     }
     // end func    
 
-    // for multi image
+    // for ohh shit  mad esome mistake multi image
     public function UpdateProductMultiImage(Request $request,$id){
         $imgs = $request->multi_img;
 
