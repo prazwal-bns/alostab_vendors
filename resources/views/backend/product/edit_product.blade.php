@@ -211,7 +211,8 @@
 
                                         <div class="col-12">
                                             <div class="d-grid">
-                                                <input type="submit" class="btn btn-success px-4" value="Save Changes" />
+                                                <input type="submit" class="btn btn-success px-4"
+                                                    value="Save Changes" />
                                             </div>
                                         </div>
                                     </div>
@@ -226,80 +227,84 @@
         </div>
 
     </div>
-    
+
     {{-- For Product Main Thumbnail Image --}}
     <div class="page-content">
         <h5 class="mb-0 text-uppercase">Update Thumbnail Iamge</h5>
         <hr>
         <div class="card">
-            <form id="myForm" method="post" action="{{ route('update.product.thumbnail', $products->id)  }}" enctype="multipart/form-data">
+            <form id="myForm" method="post" action="{{ route('update.product.thumbnail', $products->id) }}"
+                enctype="multipart/form-data">
                 @csrf
 
-            <input type="hidden" name="id" value="{{ $products->id }}">
-            <input type="hidden" name="old_img" value="{{ $products->product_thumbnail }}">
-            <div class="card-body">
-                <div class="mb-3">
-                    <label name="product_thumbnail" for="formFile" class="form-label">Select Product Thumbnail Image:</label>
-                    <input class="form-control" type="file" id="formFile" onChange="mainThamUrl(this)">
+                <input type="hidden" name="id" value="{{ $products->id }}">
+                <input type="hidden" name="old_img" value="{{ $products->product_thumbnail }}">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label name="product_thumbnail" for="formFile" class="form-label">Select Product Thumbnail
+                            Image:</label>
+                        <input class="form-control" type="file" id="formFile" onChange="mainThamUrl(this)">
+                    </div>
+                    <div class="mb-3">
+                        <img src="{{ asset($products->product_thumbnail) }}" id="mainThmb" width="100"
+                            height="100" alt="">
+                    </div>
+                    <input type="submit" class="btn btn-success px-4" value="Save Changes" />
                 </div>
-                <div class="mb-3">
-                   <img src="{{asset($products->product_thumbnail)}}" id="mainThmb" width="100" height="100" alt="">
-                </div>
-                <input type="submit" class="btn btn-success px-4" value="Save Changes" />
-            </div>
             </form>
         </div>
     </div>
     {{-- End product Main Thumbnail --}}
 
 
-<!-- For Product Multi Image -->
-<div class="page-content">
-    <h5 class="mb-0 text-uppercase">Update Multi Image</h5>
-    <hr>
-    <div class="card">
-        <div class="card-body">
-            <table class="table mb-0 table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">SN</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Choose Image</th>
-                        <th scope="col">Update Image</th>
-                        <th scope="col">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <form method="post" action="{{ route('update.product.multiimage',['id' => $products->id]) }}" enctype="multipart/form-data">
-                        @csrf
-                        @foreach($multiImgs as $key => $img)
-                            <tr>
-                                <th scope="row">{{$key+1}}</th>
-                                <td>
-                                    <img id="displayImage{{$key}}" src="{{ asset($img->photo_image) }}" width="70" alt="">
-                                </td>
-                                <td>
-                                    <input class="form-control" type="file" name="multi_img[{{$img->id}}]" onchange="multiImgUrl(this, 'displayImage{{$key}}')">
-                                </td>
-                                <td>
-                                    <input type="submit" class="btn btn-success px-4" value="Update Image" />
-                                </td>
-                                <td>
-                                    <a href="" class="btn btn-danger" title="Delete Data">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </form>
-                </tbody>
-            </table>
+    <!-- For Product Multi Image -->
+    <div class="page-content">
+        <h6 class="mb-0 text-uppercase">Update Multi Image </h6>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <table class="table mb-0 table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">SN</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Select Image</th>
+                            <th scope="col">Change Image </th>
+                            <th scope="col">Delete </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <form method="post" action="{{ route('update.product.multiimage', ['id' => $products->id]) }}"
+                            enctype="multipart/form-data">
+                            @csrf
+
+                            @foreach ($multiImgs as $key => $img)
+                                <tr>
+                                    {{-- <th scope="row">{{ $key + 1 }}</th>
+                                    <td> <img src="{{ asset($img->photo_image) }}" style="width:70; height: 40px;"> </td>
+                                    <td> <input type="file" class="form-control" name="multi_img[{{ $img->id }}]"></td>
+                                    <td><input type="submit" class="btn btn-success px-4" value="Update Image " /></td> --}}
+
+
+                                    <th scope="row">{{$key+1}}</th>
+                                    <td><img id="displayImage{{$key}}" src="{{ asset($img->photo_image) }}" width="70" alt=""></td>
+                                    <td><input class="form-control" type="file" name="multi_img[{{$img->id}}]" onchange="multiImgUrl(this, 'displayImage{{$key}}')"></td>
+                                    <td><input type="submit" class="btn btn-success px-4" value="Update Image" /></td>
+
+                                    <td><a href="{{ route('delete.multimg.product',$img->id) }}" class="btn btn-danger" id="delete" title="Delete Data"><i class="fa fa-trash"></i></a></td>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </form>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-<!-- End product Multi Image -->
 
-{{-- End product Multi Image --}}
+    {{-- End product Multi Image --}}
 
 
     <script type="text/javascript">
@@ -399,18 +404,18 @@
         }
     </script>
 
-{{-- For Multi Image --}}
-<script type="text/javascript">
-    function multiImgUrl(input, imgId) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#' + imgId).attr('src', e.target.result).width(70).height(70);
-            };
-            reader.readAsDataURL(input.files[0]);
+    {{-- For Multi Image 2nd code --}}
+    <script type="text/javascript">
+        function multiImgUrl(input, imgId) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#' + imgId).attr('src', e.target.result).width(70).height(70);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
         }
-    }
-</script>
+    </script>
 
 
     <script>

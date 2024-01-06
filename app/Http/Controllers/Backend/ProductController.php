@@ -11,6 +11,7 @@ use App\Models\MultiImg;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
@@ -29,68 +30,62 @@ class ProductController extends Controller
     }
     // end function
 
+
     public function StoreProduct(Request $request){
-
-            $image = $request->file('product_thumbnail');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(800,800)->save('upload/products/thumbnail/'.$imageName);
-            $save_url = 'upload/products/thumbnail/'.$imageName;
+        $image = $request->file('product_thumbnail');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->resize(800,800)->save('upload/products/thumbnail/'.$imageName);
+        $save_url = 'upload/products/thumbnail/'.$imageName;
     
-            $product_id = Product::insertGetId([
-                'brand_id' => $request->brand_id,
-                'category_id' => $request->category_id,
-                'subcategory_id' => $request->subcategory_id,
-                                
-                'product_name' => $request->product_name,
-                'product_slug' => strtolower(str_replace(' ','-',$request->product_name)),
-
-                'product_code' => $request->product_code,
-                'product_quantity' => $request->product_quantity,
-                'product_tags' => $request->product_tags,
-                'product_size' => $request->product_size,
-                'product_color' => $request->product_color,
-                'selling_price' => $request->selling_price,
-                'discount_price' => $request->discount_price,
-                'short_desc' => $request->short_desc,
-                'long_desc' => $request->long_desc,
-
-                'vendor_id' => $request->vendor_id,
-                'hot_deals' => $request->hot_deals,
-                'featured' => $request->featured,
-                'special_offer' => $request->special_offer,
-                'special_deals' => $request->special_deals,
-
-                'status' => 1,
-
-                'product_thumbnail' => $save_url,
+        $product_id = Product::insertGetId([
+            'brand_id' => $request->brand_id,
+            'category_id' => $request->category_id,
+            'subcategory_id' => $request->subcategory_id,
+            'product_name' => $request->product_name,
+            'product_slug' => strtolower(str_replace(' ','-',$request->product_name)),
+            'product_code' => $request->product_code,
+            'product_quantity' => $request->product_quantity,
+            'product_tags' => $request->product_tags,
+            'product_size' => $request->product_size,
+            'product_color' => $request->product_color,
+            'selling_price' => $request->selling_price,
+            'discount_price' => $request->discount_price,
+            'short_desc' => $request->short_desc,
+            'long_desc' => $request->long_desc,
+            'vendor_id' => $request->vendor_id,
+            'hot_deals' => $request->hot_deals,
+            'featured' => $request->featured,
+            'special_offer' => $request->special_offer,
+            'special_deals' => $request->special_deals,
+            'status' => 1,
+            'product_thumbnail' => $save_url,
+            'created_at'=> Carbon::now(),
+        ]);
+    
+        // For Uploading Multiple Image Code ----->
+        $images = $request->file('multi_img');
+        foreach($images as $key => $img){
+            $multiimageName = time() . '_' . $key . '.' . $img->getClientOriginalExtension();
+            Image::make($img)->resize(800,800)->save('upload/products/multi-image/'.$multiimageName);
+    
+            $uploadPath = 'upload/products/multi-image/'.$multiimageName;
+    
+            MultiImg::insert([
+                'product_id' => $product_id,
+                'photo_image'=> $uploadPath,
                 'created_at'=> Carbon::now(),
             ]);
-
-            // For Uploading Multiple Image Code ----->
-            $images = $request->file('multi_img');
-            foreach($images as $img){
-                $multiimageName = time() . '.' . $img->getClientOriginalExtension();
-                Image::make($img)->resize(800,800)->save('upload/products/multi-image/'.$multiimageName);
-
-                $uploadPath = 'upload/products/multi-image/'.$multiimageName;
-
-                MultiImg::insert([
-                    'product_id' => $product_id,
-                    'photo_image'=> $uploadPath,
-                    'created_at'=> Carbon::now(),
-                ]);
-            }
-            // end for each
-
-            // end multi image
+        }
+        // end for each
     
-            $notification = array(
-                'message' => "Product Has Been Successfully Inserted",
-                'alert-type' => 'success'
-            );
+        $notification = array(
+            'message' => "Product Has Been Successfully Inserted",
+            'alert-type' => 'success'
+        );
     
-            return redirect()->route('all.product')->with($notification);
+        return redirect()->route('all.product')->with($notification);
     }
+    
     // end function
 
     public function EditProduct($id){
@@ -174,6 +169,7 @@ class ProductController extends Controller
     // end func    
 
     // for multi image
+
     public function UpdateProductMultiImage(Request $request,$id){
         $imgs = $request->multi_img;
 
@@ -207,5 +203,82 @@ class ProductController extends Controller
         ];
         return redirect()->back()->with($notification);
     }
+    // // end func    
+
+
+    // delete Multi image
+    public function DeleteMultiImgProduct($id){
+        $oldImg =MultiImg::findOrFail($id);
+        if (file_exists($oldImg->photo_image)) {
+            unlink($oldImg->photo_image);
+        }
+
+        MultiImg::findOrFail($id)->delete();
+        $notification = [
+            'message' => "Product Multi Image Deleted Successfully.",
+            'alert-type' => 'info'
+        ];
+        return redirect()->back()->with($notification);
+    }
     // end func    
+
+    // Inactive product
+    public function InactiveProduct($id){
+        Product::findOrFail($id)->update(['status' => 0]);
+        $notification = [
+            'message' => "Product Deactivated Successfully.",
+            'alert-type' => 'info'
+        ];
+        return redirect()->back()->with($notification);
+    }
+    // end func
+
+    // active product
+    public function ActiveProduct($id){
+        Product::findOrFail($id)->update(['status' => 1]);
+        $notification = [
+            'message' => "Product Activated Successfully.",
+            'alert-type' => 'success'
+        ];
+        return redirect()->back()->with($notification);
+    }
+    // end func
+
+    // delete product
+      public function DeleteProduct($id){
+        $product = Product::findOrFail($id);
+        
+        // Unlink the main product thumbnail
+        if (file_exists($product->product_thumbnail)) {
+            unlink($product->product_thumbnail);
+        }
+    
+        // Delete the main product record
+        Product::findOrFail($id)->delete();
+    
+        // Retrieve and loop through multi images
+        $images = MultiImg::where('product_id', $id)->get();
+        foreach ($images as $img) {
+            // Unlink each multi image file if it exists
+            if (file_exists($img->photo_image)) {
+                unlink($img->photo_image);
+            }
+    
+            // Delete each multi image record
+            $img->delete();
+        }
+    
+        $notification = [
+            'message' => "Product Deleted Successfully.",
+            'alert-type' => 'info'
+        ];
+    
+        return redirect()->back()->with($notification);
+    }
+        
+
+
+   
+    // end func
+    
 }
