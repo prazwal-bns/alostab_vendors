@@ -418,7 +418,7 @@
     </script>
 
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#multiImg').on('change', function() { //on file input change
                 if (window.File && window.FileReader && window.FileList && window
@@ -448,10 +448,11 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
 
 
+{{-- Category-> Sub-Category Display --}}
     <script type="text/javascript">
         // Wait for the document to be fully loaded before executing the script
         $(document).ready(function() {
