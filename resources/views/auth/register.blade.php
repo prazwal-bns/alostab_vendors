@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-content pt-150 pb-150">
+        <div class="page-content pt-50 pb-5">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
@@ -42,21 +42,21 @@
                                             <h1 class="mb-5">Create an Account</h1>
                                             <p class="mb-30">Already have an account? <a href="{{route('login')}}">Login</a></p>
                                         </div>
-                                        <form method="POST" action="{{ route('register') }}">
+                                        <form id="myForm" method="POST" action="{{ route('register') }}">
                                             @csrf
                                             <div class="form-group">
-                                                <input type="text" id="name" required="" name="name" placeholder="Username" />
+                                                <input type="text" id="name"  name="name" placeholder="Full Name" />
                                             </div>
                                             <div class="form-group">
-                                                <input type="email" id="email" required="" name="email" placeholder="Email" />
+                                                <input type="email" id="email"  name="email" placeholder="Email" />
                                             </div>
                                             <div class="form-group">
                                                 <input required="" id="password" type="password" name="password" placeholder="Password" />
                                             </div>
                                             <div class="form-group">
-                                                <input required="" id="'password_confirmation" type="password" name="password_confirmation" placeholder="Confirm password" />
+                                                <input  id="'password_confirmation" type="password" name="password_confirmation" placeholder="Confirm password" />
                                             </div>
-                                            <div class="login_footer form-group mb-50">
+                                            <div class="login_footer form-group mb-10">
                                                 <div class="chek-form">
                                                     <div class="custome-checkbox">
                                                         <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox12" value="" />
@@ -65,6 +65,16 @@
                                                 </div>
                                                 <a href="#"><i class="fi-rs-book-alt mr-5 text-muted"></i>Lean more</a>
                                             </div>
+                                            @if($errors->any())
+                                                <div class="alert alert-danger mb-4">
+                                                    <ul class="list-unstyled mb-0">
+                                                        @foreach($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
                                             <div class="form-group mb-30">
                                                 <button type="submit" class="btn btn-fill-out btn-block hover-up font-weight-bold" name="login">Submit &amp; Register</button>
                                             </div>
@@ -79,13 +89,13 @@
                                         <img src="{{asset('frontend/assets/imgs/theme/icons/logo-facebook.svg')}}" alt="" />
                                         <span>Continue with Facebook</span>
                                     </a>
-                                    <a href="#" class="social-login google-login">
+                                    <a href="/auth/google/redirect" class="social-login google-login">
                                         <img src="{{asset('frontend/assets/imgs/theme/icons/logo-google.svg')}}" alt="" />
                                         <span>Continue with Google</span>
                                     </a>
-                                    <a href="#" class="social-login apple-login">
-                                        <img src="{{asset('frontend/assets/imgs/theme/icons/logo-apple.svg')}}" alt="" />
-                                        <span>Continue with Apple</span>
+                                    <a href="/auth/github/redirect" class="social-login apple-login">
+                                        <img src="{{asset('frontend/assets/imgs/theme/icons/github.svg')}}" alt="" />
+                                        <span>Continue with Github</span>
                                     </a>
                                 </div>
                             </div>
@@ -130,6 +140,48 @@
     <!-- Template  JS -->
     <script src="{{ asset('frontend/assets/js/main.js?v=5.3') }}"></script>
     <script src="{{ asset('frontend/assets/js/shop.js?v=5.3') }}"></script>
+
+    <script type="text/javascript" src=" {{ asset('frontend/assets/js/validate.min.js') }}"></script>
+
+   <script type="text/javascript">
+    $(document).ready(function() {
+        $('#myForm').validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                }
+            },
+            messages: {
+                name: {
+                    required: 'Please Enter Your Full Name.',
+                },
+                email: {
+                    required: 'Email Field is Required.',
+                },
+                password: {
+                    required: 'Password Field is Required.',
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+</script>
 </body>
 
 </html>

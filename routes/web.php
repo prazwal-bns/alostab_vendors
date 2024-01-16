@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\ProvideController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Backend\BrandController;
@@ -35,6 +36,9 @@ Route::middleware(['auth'])->group(function(){
 });
 
 
+// For Google Login => Socialite 
+Route::get('/auth/{provider}/redirect',[ProvideController::class,'redirect']);
+Route::get('/auth/{provider}/callback',[ProvideController::class,'callback']);
 
 
 // Admin Dashboard

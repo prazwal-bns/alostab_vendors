@@ -44,17 +44,17 @@
                                             <h1 class="mb-5">Login</h1>
                                             <p class="mb-30 mt-3">Don't have an account? <a href="{{route('register')}}">Create here</a></p>
                                         </div>
-                                        <form method="POST" action="{{ route('login') }}">
+                                        <form id="myForm" method="POST" action="{{ route('login') }}">
                                             @csrf
                                             <div class="form-group">
-                                                <input type="email" id="email" required="" name="email" placeholder="Username or Email *" />
+                                                <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" placeholder="Username or Email *" />
                                             </div>
                                             <div class="form-group">
-                                                <input required="" id="password" type="password" name="password" placeholder="Your password *" />
+                                                <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" placeholder="Your password *" />
                                             </div>
 
                                             @if($errors->has('email') || $errors->has('password'))
-                                                <p class="text-danger">Username or Password didn't match. Please Try again.</p>
+                                                <p class="message text-danger">Invalid Details. Please Try again.</p>
                                                 <br/>
                                             @endif
                                     
@@ -108,8 +108,42 @@
 
     {{-- toastr --}}
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+   <script type="text/javascript" src=" {{ asset('frontend/assets/js/validate.min.js') }}"></script>
 
-   <script>
+   <script type="text/javascript">
+    $(document).ready(function() {
+        $('#myForm').validate({
+            rules: {
+                email: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                }
+            },
+            messages: {
+                email: {
+                    required: 'Email Field is Required.',
+                },
+                password: {
+                    required: 'Password Field is Required.',
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+</script>
+<script>
        @if (Session::has('message'))
            var type = "{{ Session::get('alert-type', 'info') }}"
            switch (type) {
@@ -130,6 +164,7 @@
                    break;
            }
        @endif
-   </script>
+</script>
+
 </body>
 </html>

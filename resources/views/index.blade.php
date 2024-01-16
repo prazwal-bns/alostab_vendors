@@ -202,11 +202,18 @@
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="row">
-                                                    <div class="form-group col-md-6">
-                                                        <label>User Name <span class="required">*</span></label>
-                                                        <input class="form-control" value="{{ $userData->username }}"
-                                                            name="username" type="text" />
-                                                    </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>User Name <span class="required">*</span></label>
+                                                    @if ($userData->username)
+                                                        <input class="form-control" value="{{ $userData->username }}" name="username" type="text" />
+                                                    @else
+                                                        @php
+                                                            $username = strtolower(str_replace(' ', '', $userData->name));
+                                                        @endphp
+                                                        <input class="form-control" value="{{ $username }}" name="username" type="text" />
+                                                    @endif
+                                                </div>
+
 
                                                     <div class="form-group col-md-6">
                                                         <label>Full Name <span class="required">*</span></label>
