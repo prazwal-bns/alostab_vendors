@@ -25,6 +25,13 @@
     <link rel="stylesheet" href=" {{ asset('adminbackend/assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href=" {{ asset('adminbackend/assets/css/header-colors.css') }}" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+        {{-- datatable --}}
+	<link href="{{ asset('adminbackend/assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" />
+
+    <link href="{{asset('adminbackend/assets/plugins/input-tags/css/tagsinput.css')}}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Vendor Dashboard</title>
 </head>
 
@@ -55,7 +62,8 @@
     <!--start switcher-->
     @include('vendor.body.switcher')
     <!--end switcher-->
-    <!-- Bootstrap JS -->
+
+
     <script src=" {{ asset('adminbackend/assets/js/bootstrap.bundle.min.js') }}"></script>
     <!--plugins-->
     <script src=" {{ asset('adminbackend/assets/js/jquery.min.js') }}"></script>
@@ -75,10 +83,29 @@
         });
     </script>
     <script src=" {{ asset('adminbackend/assets/js/index.js') }}"></script>
+
+    {{-- Data table --}}
+	<script src=" {{ asset('adminbackend/assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
+
+    <script>
+		$(document).ready(function() {
+			var table = $('#example2').DataTable( {
+				lengthChange: false,
+				// buttons: [ 'copy', 'excel', 'pdf', 'print']
+			} );
+		 
+			table.buttons().container()
+				.appendTo( '#example2_wrapper .col-md-6:eq(0)' );
+		} );
+	</script>
+    {{-- end datatable --}}
+
     <!--app JS-->
     <script src=" {{ asset('adminbackend/assets/js/app.js') }}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript" src=" {{ asset('adminbackend/assets/js/validate.min.js') }}"></script>
+    <script src="{{ asset('adminbackend/assets/plugins/input-tags/js/tagsinput.js')}}"></script>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         @if (Session::has('message'))
             var type = "{{ Session::get('alert-type', 'info') }}"
@@ -101,6 +128,14 @@
             }
         @endif
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.tiny.cloud/1/lfhhoi5ghk8tok0ojqis70e6frmdrz6dl6v3zzoz4s7dnthj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+		tinymce.init({
+		  selector: '#mytextarea'
+		});
+	</script>
+    <script src="{{ asset('adminbackend/assets/js/code.js') }}"></script>
 </body>
 
 </html>

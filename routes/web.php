@@ -8,7 +8,9 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\VendorProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RedirectIfAuthenticated;
 
@@ -65,6 +67,28 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
     Route::post('/vendor/profile/store', [VendorController::class, 'VendorProfileStore'])->name('vendor.profile.store');
     Route::get('/vendor/change/password', [VendorController::class, 'VendorChangePassword'])->name('vendor.change.password');
     Route::post('/vendor/update/password', [VendorController::class, 'VendorUpdatePassword'])->name('vendor.update.password');
+
+    // Vendor Add Product
+    Route::controller(VendorProductController::class)->group(function(){
+        Route::get('/vendor/all/dashboard', 'VendorAllProduct')->name('vendor.all.product');
+        Route::get('/vendor/add/dashboard', 'VendorAddProduct')->name('vendor.add.product');
+        Route::get('vendor/subcategory/ajax/{category_id}','VendorGetSubCategory');
+
+        Route::post('/vendor/store/product', 'VendorStoreProduct')->name('vendor.store.product');
+        Route::get('/vendor/edit/product/{id}', 'VendorEditProduct')->name('vendor.edit.product');
+
+        Route::post('/vendor/update/product/{id}', 'VendorUpdateProduct')->name('vendor.update.product');
+        Route::post('/update/vendor/product/thumbnail/{id}', 'UpdateVendorProductThumbnail')->name('update.vendor.product.thumbnail');
+
+        Route::post('/vendor/update/product/multiimage/{id}' , 'VendorUpdateProductMultiimage')->name('vendor.update.product.multiimage');
+
+        Route::get('vendor/delete/multiimg/product/{id}','VendorMultiImgDelete')->name('vendor.delete.multimg.product');
+
+        Route::get('vendor/inactive/product/{id}','VendorInactiveProduct')->name('vendor.inactive.product');
+        Route::get('vendor/active/product/{id}','VendorActiveProduct')->name('vendor.active.product');
+
+        Route::get('vendor/delete/product/{id}','VendorDeleteProduct')->name('vendor.delete.product');
+    });
 });
 
 
@@ -150,7 +174,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-// Product Controller
+// Admin Middleware, product, sliders
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(ProductController::class)->group(function(){
         Route::get('/all/product','AllProduct')->name('all.product');
@@ -173,6 +197,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
        
     });
+
+    Route::controller(SliderController::class)->group(function(){
+        Route::get('/all/slider','AllSlider')->name('all.slider');
+        Route::get('/add/slider','AddSlider')->name('add.slider');
+
+
+
+        Route::post('/store/slider','StoreSlider')->name('store.slider');
+
+        Route::get('/edit/slider/{id}','EditSlider')->name('edit.slider');
+
+        Route::post('/update/slider/{id}','UpdateSlider')->name('update.slider');
+
+        Route::get('/delete/slider/{id}','DeleteSlider')->name('delete.slider');
+    });
+
 });
 
 
