@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('short_desc');
             $table->text('long_desc');
             $table->string('product_thumbnail');
-            $table->string('vendor_id');
+            $table->string('vendor_id')->nullable();
             $table->integer('hot_deals');
             $table->integer('featured');
             $table->integer('special_offer');

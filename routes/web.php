@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\ProvideController;
+use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Backend\BrandController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
+use App\Http\Controllers\Frontend\IndexController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RedirectIfAuthenticated;
 
@@ -174,7 +176,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-// Admin Middleware, product, sliders
+// Admin Middleware, product, sliders banners
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(ProductController::class)->group(function(){
         Route::get('/all/product','AllProduct')->name('all.product');
@@ -201,21 +203,26 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(SliderController::class)->group(function(){
         Route::get('/all/slider','AllSlider')->name('all.slider');
         Route::get('/add/slider','AddSlider')->name('add.slider');
-
-
-
         Route::post('/store/slider','StoreSlider')->name('store.slider');
-
         Route::get('/edit/slider/{id}','EditSlider')->name('edit.slider');
-
         Route::post('/update/slider/{id}','UpdateSlider')->name('update.slider');
-
         Route::get('/delete/slider/{id}','DeleteSlider')->name('delete.slider');
     });
 
+    Route::controller(BannerController::class)->group(function(){
+        Route::get('/all/banner','AllBanner')->name('all.banner');
+        Route::get('/add/banner','AddBanner')->name('add.banner');
+        Route::post('/store/banner','StoreBanner')->name('store.banner');
+        Route::get('/edit/banner/{id}','EditBanner')->name('edit.banner');
+        Route::post('/update/banner/{id}','UpdateBanner')->name('update.banner');
+        Route::get('/delete/banner/{id}','DeleteBanner')->name('delete.banner');
+    });
 });
+// end admin 
 
 
+// Frontend All Product Details Route
+Route::get('/product/details/{id}/{slug}',[IndexController::class,'ProductDetails']);
 
 
 

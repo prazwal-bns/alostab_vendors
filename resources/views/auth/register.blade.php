@@ -85,10 +85,10 @@
                             </div>
                             <div class="col-lg-6 pr-30 d-none d-lg-block">
                                 <div class="card-login mt-115">
-                                    <a href="#}" class="social-login facebook-login">
+                                    {{-- <a href="#" class="social-login facebook-login">
                                         <img src="{{asset('frontend/assets/imgs/theme/icons/logo-facebook.svg')}}" alt="" />
                                         <span>Continue with Facebook</span>
-                                    </a>
+                                    </a> --}}
                                     <a href="/auth/google/redirect" class="social-login google-login">
                                         <img src="{{asset('frontend/assets/imgs/theme/icons/logo-google.svg')}}" alt="" />
                                         <span>Continue with Google</span>

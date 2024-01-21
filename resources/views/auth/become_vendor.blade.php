@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-content pt-150 pb-150">
+        <div class="page-content pt-80 pb-150">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
@@ -42,7 +42,7 @@
                                             <h1 class="mb-5">Become a Vendor</h1>
                                             <p class="mb-30">Already have a vendor account? <a href="{{route('vendor.login')}}">Login</a></p>
                                         </div>
-                                        <form method="POST" action="{{ route('vendor.register') }}">
+                                        <form method="POST" id="myForm" action="{{ route('vendor.register') }}">
                                             @csrf
                                             <div class="form-group">
                                                 <input type="text" id="name" required="" name="name" placeholder="Vendor Name" />
@@ -91,7 +91,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 pr-30 d-none d-lg-block">
+                            <div class="col-lg-6 d-none d-lg-block">
+                                <img class="border-radius-15 img-fluid"  src="{{ asset('frontend/assets/imgs/page/login22.jpg') }}" alt="Image" style="margin-left: 20px;">
+                            </div>
+                            
+                        </div>
+                            {{-- <div class="col-lg-6 pr-30 d-none d-lg-block">
                                 <div class="card-login mt-115">
                                     <a href="#" class="social-login facebook-login">
                                         <img src="{{asset('frontend/assets/imgs/theme/icons/logo-facebook.svg')}}" alt="" />
@@ -106,7 +111,7 @@
                                         <span>Continue with Apple</span>
                                     </a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -148,6 +153,74 @@
     <!-- Template  JS -->
     <script src="{{ asset('frontend/assets/js/main.js?v=5.3') }}"></script>
     <script src="{{ asset('frontend/assets/js/shop.js?v=5.3') }}"></script>
+
+    <script type="text/javascript" src=" {{ asset('frontend/assets/js/validate.min.js') }}"></script>
+
+   <script type="text/javascript">
+    $(document).ready(function() {
+        $('#myForm').validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                username: {
+                    required: true,
+                },
+                vendor_join: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                },
+                phone: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                },
+                password_confirmation: {
+                    required: true,
+                }
+            },
+            messages: {
+                name: {
+                    required: 'Please Enter Vendor Name.',
+                },
+                username: {
+                    required: 'Username Field is Required.',
+                },
+                email: {
+                    required: 'Email Field is Required.',
+                },
+                phone: {
+                    required: 'Phone Field is Required.',
+                },
+                vendor_join: {
+                    required: 'Please Enter Vendor Join Date.',
+                },
+                password: {
+                    required: 'Password Field is Required.',
+                },
+                password_confirmation: {
+                    required: 'Password Confirmation Field is Required.',
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+</script>
+
+
 </body>
 
 </html>

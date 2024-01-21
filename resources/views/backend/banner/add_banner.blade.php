@@ -4,13 +4,13 @@
     <div class="page-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Add Slider </div>
+            <div class="breadcrumb-title pe-3">Add Banner </div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Slider</li>
+                        <li class="breadcrumb-item active" aria-current="page">Banner</li>
                     </ol>
                 </nav>
             </div>
@@ -23,35 +23,35 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <form id="myForm" action="{{ route('store.slider') }}" method="POST"
+                                <form id="myForm" action="{{ route('store.banner') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Slider Title:</h5>
+                                            <h6 class="mb-0">Banner Title:</h5>
                                         </div>
                                         <div class="col-sm-9 text-secondary form-group">
-                                            <input id="sliderTitle" type="text" name="slider_title"
+                                            <input id="banner_title" type="text" name="banner_title"
                                                 class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Short Title:</h5>
+                                            <h6 class="mb-0">Banner URL:</h5>
                                         </div>
                                         <div class="col-sm-9 text-secondary form-group">
-                                            <input id="shortTitle" type="text" name="short_title"
+                                            <input id="shortTitle" type="text" name="banner_url"
                                                 class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Slider Image:</h5>
+                                            <h6 class="mb-0">Banner Image:</h5>
                                         </div>
                                         <div class="col-sm-9 text-secondary form-group">
-                                            <input name="slider_image" type="file" class="form-control"
+                                            <input name="banner_image" type="file" class="form-control"
                                                 id="image" />
                                         </div>
                                     </div>
@@ -85,25 +85,25 @@
         $(document).ready(function() {
             $('#myForm').validate({
                 rules: {
-                    slider_title: {
+                    banner_title: {
                         required: true,
                     },
-                    short_title: {
+                    banner_url: {
                         required: true,
                     },
-                    slider_image: {
+                    banner_image: {
                         required: true,
                     },
                 },
                 messages: {
-                    slider_title: {
-                        required: 'Please Enter Slider Title',
+                    banner_title: {
+                        required: 'Please Enter Banner Title',
                     },
-                    short_title: {
-                        required: 'Please Enter Short Title',
+                    banner_url: {
+                        required: 'Please Enter Banner URL',
                     },
-                    slider_image: {
-                        required: 'Please Select Slider Image.',
+                    banner_image: {
+                        required: 'Please Select Banner Image.',
                     },
 
                 },

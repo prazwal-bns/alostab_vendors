@@ -59,15 +59,15 @@
                                         <hr />
                                     </div>
                                     <div class="form-body">
-                                        <form class="row g-3" method="POST" action="{{ route('login') }}">
+                                        <form class="row g-3" id="myForm" method="POST" action="{{ route('login') }}">
                                             @csrf
 
-                                            <div class="col-12">
+                                            <div class="col-12 form-group">
                                                 <label for="inputEmailAddress" class="form-label">Email Address</label>
                                                 <input id="email" class="form-control" type="email" name="email"
                                                     placeholder="Email Address">
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 form-group">
                                                 <label for="inputChoosePassword" class="form-label">Enter
                                                     Password</label>
                                                 <div class="input-group" id="show_hide_password">
@@ -117,6 +117,44 @@
     <script src="{{ asset('adminbackend/assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
     <script src="{{ asset('adminbackend/assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
     <script src="{{ asset('adminbackend/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
+
+    <script type="text/javascript" src=" {{ asset('frontend/assets/js/validate.min.js') }}"></script>
+
+   <script type="text/javascript">
+    $(document).ready(function() {
+        $('#myForm').validate({
+            rules: {
+                email: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                }
+            },
+            messages: {
+                email: {
+                    required: 'Email Field is Required.',
+                },
+                password: {
+                    required: 'Password Field is Required.',
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+</script>
+
+
     <!--Password show & hide js -->
     <script>
         $(document).ready(function() {
