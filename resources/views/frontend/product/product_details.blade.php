@@ -95,7 +95,7 @@
                                 <option value="{{ $size }}">{{ ucwords($size) }}</option>
                                 @endforeach
                             </select>
-                            </ul>
+
                         </div>
                         @endif
 
@@ -110,7 +110,7 @@
                                 <option value="{{ $color }}">{{ ucwords($color) }}</option>
                                 @endforeach
                             </select>
-                            </ul>
+                            
                         </div>
                         @endif
                         <div class="detail-extralink mb-50">

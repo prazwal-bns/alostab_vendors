@@ -1,6 +1,6 @@
 
 <footer class="main">
-    <section class="newsletter mb-15 wow animate__animated animate__fadeIn">
+    {{-- <section class="newsletter mb-15 wow animate__animated animate__fadeIn">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <section class="featured section-padding">
         <div class="container">
             <div class="row">

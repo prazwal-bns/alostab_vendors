@@ -37,8 +37,7 @@
                                             </a>
                                         </div>
                                         <div class="product-action-1">
-                                            <a aria-label="Quick view" class="action-btn small hover-up"
-                                                data-bs-toggle="modal" data-bs-target="#quickViewModal"> <i
+                                            <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal" id="{{ $product->id }}" onClick="productView(this.id)"> <i
                                                     class="fi-rs-eye"></i></a>
                                             <a aria-label="Add To Wishlist"
                                                 class="action-btn small hover-up"

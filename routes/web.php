@@ -33,6 +33,20 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 
 Route::get('/',[IndexController::class,'Index']);
 
+// Frontend All Product Details Route
+Route::get('/product/details/{id}/{slug}', [IndexController::class, 'ProductDetails']);
+
+// vendor details
+Route::get('/vendor/details/{id}',[IndexController::class,'VendorDetails'])->name('vendor.details');
+Route::get('/vendor/all',[IndexController::class,'VendorAll'])->name('vendor.all');
+
+// Category Product - Nav
+Route::get('/product/category/{id}/{slug}', [IndexController::class, 'ProductByCategory']);
+
+// SUb Category Product - Nav
+Route::get('/product/subcategory/{id}/{slug}', [IndexController::class, 'ProductBySubCategory']);
+
+
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', [UserController::class, 'UserDashboard'])->name('dashboard');
@@ -223,8 +237,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // end admin 
 
 
-// Frontend All Product Details Route
-Route::get('/product/details/{id}/{slug}',[IndexController::class,'ProductDetails']);
+// Product Quickview Modal With Ajax
+Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
+
 
 
 

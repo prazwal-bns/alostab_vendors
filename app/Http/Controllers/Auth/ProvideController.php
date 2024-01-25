@@ -40,6 +40,7 @@ class ProvideController extends Controller
     {
         $socialUser = Socialite::driver($provider)->user();
 
+
         // Check if the user with the same email already exists
         $existingUser = User::where('email', $socialUser->email)->first();
 
@@ -48,6 +49,7 @@ class ProvideController extends Controller
             Auth::login($existingUser);
             return redirect('/dashboard');
         }
+
 
         // If the user doesn't exist, create a new user
         $user = User::create([

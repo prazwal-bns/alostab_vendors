@@ -226,7 +226,7 @@
         <div class="container">
             <div class="header-wrap header-space-between position-relative">
                 <div class="logo logo-width-1 d-block d-lg-none">
-                    <a href="index.html"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
+                    <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
                             alt="logo" /></a>
                 </div>
                 <div class="header-nav d-none d-lg-flex">
@@ -302,14 +302,14 @@
 
                                 @foreach ($categories as $category)
                                     <li>
-                                        <a href="#">{{ $category->category_name }} <i class="fi-rs-angle-down"></i></a>
+                                        <a href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }} <i class="fi-rs-angle-down"></i></a>
                                         @php
                                             $subcategories = App\Models\Subcategory::where('category_id',$category->id)->orderBy('subcategory_name', 'ASC')->get();
                                         @endphp
                                         
                                         <ul class="sub-menu">
                                             @foreach ($subcategories as $subcategory)
-                                                <li><a href="vendors-grid.html">{{ $subcategory->subcategory_name }}</a></li>
+                                                <li><a href="{{ url('product/subcategory/'.$subcategory->id.'/'.$subcategory->subcategory_slug) }}">{{ $subcategory->subcategory_name }}</a></li>
                                             @endforeach
                                         </ul>
                                     </li>

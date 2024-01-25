@@ -54,4 +54,62 @@ class IndexController extends Controller
         return view ('frontend.index',compact('skip_category_zero','skip_product_zero', 'skip_category_one', 'skip_product_one', 'skip_category_three', 'skip_product_three','hot_deals','special_offer','recent_products','special_deals'));
     }
     // end func
+
+    public function VendorDetails($id){
+        $vendor = User::findOrFail($id);
+        $vendor_product = Product::where('vendor_id',$id)->get();
+
+        return view('frontend.vendor.vendor_details',compact('vendor','vendor_product'));
+    }
+    // end func
+
+    public function VendorAll(){
+        $vendors = User::where('status', 'active')->where('role', 'vendor')->orderBy('id', 'DESC')->get();
+        return view('frontend.vendor.all_vendors',compact('vendors'));
+    }
+    // end func
+
+    public function ProductByCategory(Request $request, $id, $slug){
+        $products = Product::where('status',1)->where('category_id',$id)->orderBy('id','DESC')->get();
+        $categories = Category::orderBy('category_name','ASC')->get();
+
+        $breadCrumb = Category::where('id',$id)->first();
+        
+        $newProduct = Product::orderBy('id','DESC')->limit(3)->get();
+
+        return view('frontend.product.product_category_view',compact('products','categories','breadCrumb','newProduct'));
+
+    }
+    // end func
+
+    public function ProductBySubCategory(Request $request, $id, $slug){
+        $products = Product::where('status',1)->where('subcategory_id',$id)->orderBy('id','DESC')->get();
+        $categories = Category::orderBy('category_name','ASC')->get();
+
+        $subCatBreadCrumb = SubCategory::where('id',$id)->first();
+        
+        $newProduct = Product::orderBy('id','DESC')->limit(3)->get();
+
+        return view('frontend.product.product_subcategory_view',compact('products','categories', 'subCatBreadCrumb','newProduct'));
+
+    }
+    // end func
+
+    public function ProductViewAjax($id){
+        $product = Product::with('category','brand','subcategory')->findOrFail($id);
+
+        $color = $product->product_color;
+        $product_color = explode(',', $color);
+
+        $size = $product->product_size;
+        $product_size = explode(',', $size);
+
+        return response()->json(array(
+            'product' => $product,
+            'color' => $product_color,
+            'size' => $product_size,
+        ));
+    }
+    // end func
+
 }

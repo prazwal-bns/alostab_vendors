@@ -46,7 +46,7 @@
                                                     d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
                                                 </path>
                                             </svg>Website</h6>
-                                        <span class="text-secondary">https://codervent.com</span>
+                                        <span class="text-secondary">https://vendordetail.com</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -59,7 +59,7 @@
                                                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5">
                                                 </line>
                                             </svg>Instagram</h6>
-                                        <span class="text-secondary">codervent</span>
+                                        <span class="text-secondary">Vendor_Info</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -69,7 +69,7 @@
                                                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
                                                 </path>
                                             </svg>Facebook</h6>
-                                        <span class="text-secondary">codervent</span>
+                                        <span class="text-secondary">Vendor_FB</span>
                                     </li>
                                 </ul>
                             </div>
