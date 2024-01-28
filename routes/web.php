@@ -12,7 +12,10 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\User\CompareController;
+use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RedirectIfAuthenticated;
 
@@ -242,7 +245,45 @@ Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax
 
 
 
+// Product ADD TO CART
+Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
 
+
+// Product MINI CART -> Displaying data in mini cart in navbar
+Route::get('/product/mini/cart', [CartController::class, 'AddMiniCart']);
+
+// PRODUCT REMOVE MINI CART
+Route::get('/minicart/product/remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
+
+// ADD TO CART FROM PRODUCT DETAILS PAGE
+Route::post('/dcart/data/store/{id}', [CartController::class, 'AddToCartDetails']);
+
+// Product ADD TO WISHLIST
+Route::post('/add-to-wishlist/{product_id}', [WishlistController::class, 'AddToWishList']);
+
+
+// Product ADD TO WISHLIST
+Route::post('/add-to-compare/{product_id}', [CompareController::class, 'AddToCompare']);
+
+
+// User All Route -> Middle ware for wishlist protection
+Route::middleware(['auth', 'role:user'])->group(function () {
+    // For Wishlist Page
+    Route::controller(WishlistController::class)->group(function(){
+        Route::get('/wishlist','AllWishlist')->name('wishlist');
+        Route::get('/get-wishlist-product/','GetWishListProduct');
+
+        Route::get('/wishlist-remove/{id}','WishlistRemove');
+    });
+
+    // For Compare Page
+    Route::controller(CompareController::class)->group(function () {
+        Route::get('/compare', 'AllCompare')->name('compare');
+        Route::get('/get-compare-product/', 'GetCompareProduct');
+
+        Route::get('/compare-remove/{id}', 'CompareRemove');
+    });
+});
 
 
 require __DIR__ . '/auth.php';

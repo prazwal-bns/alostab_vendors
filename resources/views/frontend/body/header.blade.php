@@ -9,9 +9,9 @@
                     <div class="header-info">
                         <ul>
 
-                            <li><a href="page-account.html">My Cart</a></li>
-                            <li><a href="shop-wishlist.html">Checkout</a></li>
-                            <li><a href="shop-order.html">Order Tracking</a></li>
+                            <li><a href="">My Cart</a></li>
+                            <li><a href="">Checkout</a></li>
+                            <li><a href="">Order Tracking</a></li>
                         </ul>
                     </div>
                 </div>
@@ -110,62 +110,49 @@
                             </div>
 
                             <div class="header-action-icon-2">
-                                <a href="shop-wishlist.html">
+                                <a href="{{ route('wishlist') }}">
                                     <img class="svgInject" alt="Nest"
                                         src = "{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-                                    <span class="pro-count blue">6</span>
+                                    <span class="pro-count blue" id="wishQty"></span>
                                 </a>
-                                <a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
+                                <a href="{{ route('wishlist') }}"><span class="lable">Wishlist</span></a>
                             </div>
+
                             <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="shop-cart.html">
+                                <a href="{{ route('compare') }}">
+                                    <img class="svgInject" alt="Nest" src = "{{ asset('frontend/assets/imgs/theme/icons/icon-compare.svg') }}" />
+                                    <span class="pro-count blue" id="compareQty"></span>
+                                </a>
+                                <a href="{{ route('compare') }}"><span class="lable">Compare</span></a>
+                            </div>
+
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="{{ route('wishlist') }}">
                                     <img alt="Nest"
                                         src = "{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-                                    <span class="pro-count blue">2</span>
+                                    <span class="pro-count blue" id="cartQty"></span>
                                 </a>
-                                <a href="shop-cart.html"><span class="lable">Cart</span></a>
+                                <a href="#"><span class="lable">Cart</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                    <ul>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Nest"
-                                                        src = "{{ asset('frontend/assets/imgs/shop/thumbnail-3.jpg') }}" /></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Daisy Casual Bag</a></h4>
-                                                <h4><span>1 × </span>$800.00</h4>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Nest"
-                                                        src = "{{ asset('frontend/assets/imgs/shop/thumbnail-2.jpg') }}" /></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Corduroy Shirts</a></h4>
-                                                <h4><span>1 × </span>$3200.00</h4>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="shopping-cart-footer">
-                                        <div class="shopping-cart-total">
-                                            <h4>Total <span>$4000.00</span></h4>
+                                    {{-- // START MINI CART WITH AJAX --}}
+                                    <div id="miniCart">
+
+                                    </div>
+                                    {{-- // END MINI CART WITH AJAX --}}
+
+                                    <div class="">
+                                        <div class="">
+                                            <h4>Total:  <span>Rs.  <span id="cartSubTotal"> </span></span></h4>
                                         </div>
                                         <div class="shopping-cart-button">
-                                            <a href="shop-cart.html" class="outline">View cart</a>
-                                            <a href="shop-checkout.html">Checkout</a>
+                                            <a href="" class="outline">View cart</a>
+                                            <a href="">Checkout</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="header-action-icon-2">
-                                <a href="page-account.html">
+                            <div class="">
+                                <a href="">
                                     <img class="svgInject" alt="Nest"
                                         src = "{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
                                 </a>
@@ -337,7 +324,7 @@
                 <div class="header-action-right d-block d-lg-none">
                     <div class="header-action-2">
                         <div class="header-action-icon-2">
-                            <a href="shop-wishlist.html">
+                            <a href="">
                                 <img alt="heart"
                                     src = "{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
                                 <span class="pro-count white">4</span>
@@ -443,7 +430,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
+                                <li><a href="">Shop – Wishlist</a></li>
                                 <li><a href="shop-cart.html">Shop – Cart</a></li>
                                 <li><a href="shop-checkout.html">Shop – Checkout</a></li>
                                 <li><a href="shop-compare.html">Shop – Compare</a></li>
@@ -513,17 +500,17 @@
                         <li class="menu-item-has-children">
                             <a href="#">Pages</a>
                             <ul class="dropdown">
-                                <li><a href="page-about.html">About Us</a></li>
-                                <li><a href="page-contact.html">Contact</a></li>
-                                <li><a href="page-account.html">My Account</a></li>
-                                <li><a href="page-login.html">Login</a></li>
-                                <li><a href="page-register.html">Register</a></li>
-                                <li><a href="page-forgot-password.html">Forgot password</a></li>
-                                <li><a href="page-reset-password.html">Reset password</a></li>
-                                <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="page-terms.html">Terms of Service</a></li>
-                                <li><a href="page-404.html">404 Page</a></li>
+                                <li><a href="">About Us</a></li>
+                                <li><a href="">Contact</a></li>
+                                <li><a href="">My Account</a></li>
+                                <li><a href="">Login</a></li>
+                                <li><a href="">Register</a></li>
+                                <li><a href="">Forgot password</a></li>
+                                <li><a href="">Reset password</a></li>
+                                <li><a href="">Purchase Guide</a></li>
+                                <li><a href="">Privacy Policy</a></li>
+                                <li><a href="">Terms of Service</a></li>
+                                <li><a href="">404 Page</a></li>
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
