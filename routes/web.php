@@ -283,7 +283,18 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
         Route::get('/compare-remove/{id}', 'CompareRemove');
     });
+
+
+    // For CART Page
+    Route::controller(CartController::class)->group(function () {
+        Route::get('/myCart', 'MyCart')->name('myCart');
+        Route::get('/get-cart-product', 'GetCartProduct');
+        Route::get('/remove-mycart/{rowId}', 'RemoveMyCart');
+        Route::get('/cart-decrement/{rowId}', 'CartDecrement');
+        Route::get('/cart-increment/{rowId}', 'CartIncrement');
+    });
 });
 
+// USER MIDDLE WARE END
 
 require __DIR__ . '/auth.php';
