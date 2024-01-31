@@ -737,6 +737,7 @@
                 success:function(data){
                     cart();
                     miniCart();
+                    coupounCalculation();
                 }
             })
         }
@@ -750,10 +751,165 @@
                 success:function(data){
                     cart();
                     miniCart();
+                    coupounCalculation();
                 }
             })
         }
     </script>
+
+{{--  FOR APPLYING COUPOUN --}}
+<script type="text/javascript">
+    function applyCoupoun(id){
+        var coupoun_name = $('#coupoun_name').val();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {coupoun_name:coupoun_name},
+                url: "/apply-coupoun",
+                success:function(data){
+                    coupounCalculation();
+                    if(data.validity == true){
+                        $('#coupounField').hide();
+                    }
+                    
+
+                    // START COUPOUN MESSAGE
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success,
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error,
+                    });
+                }
+                // END COUPOUN MESSAGE
+                }
+            })
+    }
+
+
+    // FOR COUPOUN CALCULATED AMOUNT 
+    function coupounCalculation(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "/calculate-coupoun",
+                success:function(data){
+                    if(data.total){
+                        $('#coupounCalcField').html(
+                            `<tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Subtotal</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h4 class="text-brand text-end">Rs. ${data.total}</h4>
+                                </td>
+                            </tr>
+                                                                    
+                            <tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Total</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h4 class="text-brand text-end">Rs. ${data.total}</h4>
+                                </td>
+                            </tr>`
+                        )
+                    }
+                    else{
+                        $('#coupounCalcField').html(
+                            `<tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Subtotal</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h4 class="text-brand text-end">Rs. ${data.subtotal}</h4>
+                                </td>
+                            </tr>
+                                                                    
+                            <tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Applied Coupoun</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h5 class="text-danger text-end">${data.coupoun_name} <a type="submit" onclick="coupounRemove()"><i class="fi-rs-trash"></i></a></h5>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Discount Amount</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h4 class="text-brand text-end">Rs. ${data.discount_amount}</h4>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="cart_total_label">
+                                    <h6 class="text-muted">Grand Total</h6>
+                                </td>
+                                <td class="cart_total_amount">
+                                    <h4 class="text-brand text-end">Rs. ${data.total_amount}</h4>
+                                </td>
+                            </tr>
+
+                            `
+                        )
+                    }
+                }
+            })
+    }
+    coupounCalculation();
+
+    // REMOVE COUPOUN
+        function coupounRemove(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "/remove-coupoun",
+                success:function(data){
+                    coupounCalculation();
+                    $('#coupounField').show();
+                    // START WISHLIST MESSAGE
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        icon: 'success',
+                        title: data.success,
+                    });
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        icon: 'error',
+                        title: data.error,
+                    });
+                }
+                // END WISHLIST MESSAGE
+                }
+            })
+        }
+        // REMOVE COUPOUN END
+</script>
 
 </body>
 

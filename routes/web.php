@@ -9,9 +9,11 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
+use App\Http\Controllers\CoupounController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\User\CompareController;
@@ -197,6 +199,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 // Admin Middleware, product, sliders banners
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Product Contrller
     Route::controller(ProductController::class)->group(function(){
         Route::get('/all/product','AllProduct')->name('all.product');
         Route::get('/add/product','AddProduct')->name('add.product');
@@ -219,6 +222,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
        
     });
 
+    // Slider Controller
     Route::controller(SliderController::class)->group(function(){
         Route::get('/all/slider','AllSlider')->name('all.slider');
         Route::get('/add/slider','AddSlider')->name('add.slider');
@@ -228,6 +232,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/delete/slider/{id}','DeleteSlider')->name('delete.slider');
     });
 
+    // Banner Controller
     Route::controller(BannerController::class)->group(function(){
         Route::get('/all/banner','AllBanner')->name('all.banner');
         Route::get('/add/banner','AddBanner')->name('add.banner');
@@ -236,6 +241,47 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/update/banner/{id}','UpdateBanner')->name('update.banner');
         Route::get('/delete/banner/{id}','DeleteBanner')->name('delete.banner');
     });
+
+    // Coupoun Controller
+    Route::controller(CoupounController::class)->group(function () {
+        Route::get('/all/coupoun', 'AllCoupoun')->name('all.coupoun');
+        Route::get('/add/coupoun', 'AddCoupoun')->name('add.coupoun');
+        Route::post('/store/coupoun', 'StoreCoupoun')->name('store.coupoun');
+        Route::get('/edit/coupoun/{id}', 'EditCoupoun')->name('edit.coupoun');
+        Route::post('/update/coupoun/{id}', 'UpdateCoupoun')->name('update.coupoun');
+        Route::get('/delete/banner/{id}', 'DeleteCoupoun')->name('delete.coupoun');
+    });
+
+    // Shipping Controller
+    Route::controller(ShippingController::class)->group(function () {
+        // SHIPPING DIVISION
+        Route::get('/all/division', 'AllDivision')->name('all.division');
+        Route::get('/add/division', 'AddDivision')->name('add.division');
+        Route::post('/store/division', 'StoreDivision')->name('store.division');
+        Route::get('/edit/division/{id}', 'EditDivision')->name('edit.division');
+        Route::post('/update/division/{id}', 'UpdateDivision')->name('update.division');
+        Route::get('/delete/division/{id}', 'DeleteDivision')->name('delete.division');
+
+        // SHIPPING DISTRICT
+        Route::get('/all/district', 'AllDistrict')->name('all.district');
+        Route::get('/add/district', 'AddDistrict')->name('add.district');
+        Route::post('/store/district', 'StoreDistrict')->name('store.district');
+        Route::get('/edit/district/{id}', 'EditDistrict')->name('edit.district');
+        Route::post('/update/district/{id}', 'UpdateDistrict')->name('update.district');
+        Route::get('/delete/district/{id}', 'DeleteDistrict')->name('delete.district');
+
+        // SHIPPING STATE
+        Route::get('/all/state', 'AllState')->name('all.state');
+        Route::get('/add/state', 'AddState')->name('add.state');
+        Route::post('/store/state', 'StoreState')->name('store.state');
+        Route::get('/district/ajax/{division_id}','GetDistrict');
+
+        Route::get('/edit/state/{id}', 'EditState')->name('edit.state');
+        Route::post('/update/state/{id}', 'UpdateState')->name('update.state');
+        Route::get('/delete/state/{id}', 'DeleteState')->name('delete.state');
+
+    });
+
 });
 // end admin 
 
@@ -262,8 +308,16 @@ Route::post('/dcart/data/store/{id}', [CartController::class, 'AddToCartDetails'
 Route::post('/add-to-wishlist/{product_id}', [WishlistController::class, 'AddToWishList']);
 
 
-// Product ADD TO WISHLIST
+// Product ADD TO COMPARE
 Route::post('/add-to-compare/{product_id}', [CompareController::class, 'AddToCompare']);
+
+// Apply Coupoun -> Frontend
+Route::post('/apply-coupoun', [CartController::class, 'ApplyCoupoun']);
+
+// Calculate and display coupoun amount
+Route::get('/calculate-coupoun', [CartController::class, 'CalculateCoupoun']);
+
+Route::get('/remove-coupoun', [CartController::class, 'RemoveCoupoun']);
 
 
 // User All Route -> Middle ware for wishlist protection
@@ -294,7 +348,15 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         Route::get('/cart-increment/{rowId}', 'CartIncrement');
     });
 });
+// ------------- ^^ USER MIDDLE WARE END ^^
 
-// USER MIDDLE WARE END
+//
+
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
