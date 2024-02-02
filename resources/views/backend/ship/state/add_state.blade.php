@@ -27,14 +27,14 @@
                                     @csrf
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Division Name:</h6>
+                                            <h6 class="mb-0">District Name:</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary form-group">
 
-                                            <select name="division_id" class="form-select mb-3" aria-label="Default select example" required>
+                                            <select name="district_id" class="form-select mb-3" aria-label="Default select example" required>
                                                 <option selected disabled hidden>Select a category</option>
-                                                @foreach ($division as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->division_name }}</option>
+                                                @foreach ($district as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->district_name }}</option>
                                                 @endforeach
                                             </select>
                                             
@@ -43,10 +43,10 @@
 
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">District Name:</h6>
+                                            <h6 class="mb-0">City Name:</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary form-group">
-                                            <select name="district_id" class="form-select mb-3" aria-label="Default select example" required>
+                                            <select name="city_id" class="form-select mb-3" aria-label="Default select example" required>
                                                 <option>  </option>
                                             </select>
                                             
@@ -84,22 +84,22 @@
                     state_name: {
                         required: true,
                     },
-                    division_id: {
+                    district_id: {
                         required: true,
                     },
-                    district_id: {
+                    city_id: {
                         required: true,
                     }
                 },
                 messages: {
-                    division_id: {
-                        required: 'Please Select Division Name',
-                    },
                     district_id: {
                         required: 'Please Select District Name',
                     },
+                    city_id: {
+                        required: 'Please Select City Name',
+                    },
                     state_name: {
-                        required: 'Please Enter State Name Name',
+                        required: 'Please Enter State Name',
                     }
                 },
                 errorElement: 'span',
@@ -120,19 +120,19 @@
     <script type="text/javascript">
    
 $(document).ready(function(){
-    $('select[name="division_id"]').on('change',function(){
-        var division_id = $(this).val();
-        if(division_id){
+    $('select[name="district_id"]').on('change',function(){
+        var district_id = $(this).val();
+        if(district_id){
             
             $.ajax({
-                url: "{{url('/district/ajax')}}/"+division_id,
+                url: "{{url('/city/ajax')}}/"+district_id,
                 type: "GET",
                 dataType: "json",
                 success:function(data){
-                    $('select[name="district_id"]').html('');
-                    var d = $('select[name="district_id"]').empty();
+                    $('select[name="city_id"]').html('');
+                    var d = $('select[name="city_id"]').empty();
                     $.each(data,function(key,value){
-                        $('select[name="district_id"]').append('<option value="' + value.id + '">' + value.district_name + '</option>');
+                        $('select[name="city_id"]').append('<option value="' + value.id + '">' + value.city_name + '</option>');
                     })
                 }
             })

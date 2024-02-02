@@ -27,22 +27,6 @@
                                     @csrf
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Division Name:</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary form-group">
-
-                                            <select name="division_id" class="form-select mb-3" aria-label="Default select example" required>
-                                                <option selected disabled hidden>Select a category</option>
-                                                @foreach ($division as $item)
-                                                    <option value="{{ $item->id }}" {{$item->id ==$state->division_id ? 'selected' : ''}}> {{ $item->division_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
                                             <h6 class="mb-0">District Name:</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary form-group">
@@ -51,6 +35,22 @@
                                                 <option selected disabled hidden>Select a category</option>
                                                 @foreach ($district as $item)
                                                     <option value="{{ $item->id }}" {{$item->id ==$state->district_id ? 'selected' : ''}}> {{ $item->district_name }}</option>
+                                                @endforeach
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">City Name:</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary form-group">
+
+                                            <select name="city_id" class="form-select mb-3" aria-label="Default select example" required>
+                                                <option selected disabled hidden>Select a category</option>
+                                                @foreach ($city as $item)
+                                                    <option value="{{ $item->id }}" {{$item->id ==$state->city_id ? 'selected' : ''}}> {{ $item->city_name }}</option>
 
                                                 @endforeach
                                             </select>
@@ -91,22 +91,22 @@
                     state_name: {
                         required: true,
                     },
-                    division_id: {
+                    district_id: {
                         required: true,
                     },
-                    district_id: {
+                    city_id: {
                         required: true,
                     }
                 },
                 messages: {
-                    division_id: {
-                        required: 'Please Select Division Name',
-                    },
                     district_id: {
                         required: 'Please Select District Name',
                     },
+                    city_id: {
+                        required: 'Please Select City Name',
+                    },
                     state_name: {
-                        required: 'Please Enter State Name Name',
+                        required: 'Please Enter State Name',
                     }
                 },
                 errorElement: 'span',

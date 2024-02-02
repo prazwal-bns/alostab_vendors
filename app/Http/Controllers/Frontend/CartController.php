@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupoun;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ShipDistrict;
+use App\Models\ShipState;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 use Carbon\AbstractTranslator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -231,6 +234,40 @@ class CartController extends Controller
     public function RemoveCoupoun(){
         Session::forget('coupoun');
         return response()->json(['success' => 'Coupoun Removed Successfully']);
+    }
+    // END FUNCTION
+
+    // ---------> CHECKOUT PAGE
+    public function StartCheckout(){
+        if(Auth::check()){
+            if(Cart::total() > 0){
+                $carts = Cart::content();
+                $cartQty = Cart::count();
+                $cartTotal = Cart::total();
+
+                $districts = ShipDistrict::orderBy('district_name','ASC')->get();
+                // $states = ShipState::orderBy('state_name','ASC')->get();
+              
+
+                return view('frontend.checkout.view_checkout',compact('carts','cartQty','cartTotal', 'districts'));
+            }
+            else{
+                $notification = array(
+                    'message' => "Please Shop at least one product.",
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->to('/')->with($notification);
+            }
+        }
+        else{
+            $notification = array(
+                'message' => "You need to Login To Your Account before checking out.",
+                'alert-type' => 'error'
+            );
+
+            return redirect()->route('login')->with($notification);
+        }
     }
     // END FUNCTION
 }

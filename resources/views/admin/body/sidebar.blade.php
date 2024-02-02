@@ -127,9 +127,9 @@
                 <div class="menu-title">Shipping Area</div>
             </a>
             <ul>
-                <li> <a href="{{route('all.division')}}"><i class="bx bx-right-arrow-alt"></i>All Division</a>
-                </li>
                 <li> <a href="{{route('all.district')}}"><i class="bx bx-right-arrow-alt"></i>All District</a>
+                </li>
+                <li> <a href="{{route('all.city')}}"><i class="bx bx-right-arrow-alt"></i>All City</a>
                 </li>
                 <li> <a href="{{route('all.state')}}"><i class="bx bx-right-arrow-alt"></i>All State</a>
                 </li>

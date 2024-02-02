@@ -27,26 +27,10 @@
                                     @csrf
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Division Name:</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary form-group">
-
-                                            <select name="division_id" class="form-select mb-3" aria-label="Default select example" required>
-                                                <option selected disabled hidden>Select a category</option>
-                                                @foreach ($division as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->division_name }}</option>
-                                                @endforeach
-                                            </select>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
                                             <h6 class="mb-0">District Name:</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary form-group">
-                                            <input id="subcategoryTitle" type="text" name="district_name"
+                                            <input id="coupounTitle" type="text" name="district_name"
                                                 class="form-control" />
                                         </div>
                                     </div>
@@ -54,7 +38,7 @@
                                     <div class="row">
                                         <div class="col-sm-3"></div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="submit" class="btn btn-primary px-3" value="Save Changes" />
+                                            <input type="submit" class="btn btn-success px-3" value="Save Changes" />
                                         </div>
                                     </div>
                             </div>
@@ -69,20 +53,14 @@
         $(document).ready(function() {
             $('#myForm').validate({
                 rules: {
-                    division_id: {
-                        required: true,
-                    },
                     district_name: {
                         required: true,
-                    }
+                    },
                 },
                 messages: {
-                    division_id: {
-                        required: 'Please Select Division Name',
-                    },
                     district_name: {
                         required: 'Please Enter District Name',
-                    }
+                    },
                 },
                 errorElement: 'span',
                 errorPlacement: function(error, element) {

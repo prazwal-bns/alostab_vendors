@@ -3,7 +3,7 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">All Division</div>
+        <div class="breadcrumb-title pe-3">All District</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
@@ -28,7 +28,6 @@
                     <thead style="background-color: #004c36; color: #fff;">
                         <tr>
                             <th>SN</th>
-                            <th>Division Name</th>
                             <th>District Name</th>
                             <th>Action</th>
                         </tr>
@@ -38,7 +37,6 @@
                             @foreach ($district as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $item['Division']['division_name'] ?? 'N/A' }}</td>
                                     <td>{{ $item->district_name }}</td>
                                     <td>
                                         <a href="{{ route('edit.district', $item->id) }}" class="btn btn-info">Edit</a>

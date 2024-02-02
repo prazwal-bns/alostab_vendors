@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\CoupounController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\User\CheckOutController;
 use App\Http\Controllers\User\CompareController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -254,27 +255,30 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Shipping Controller
     Route::controller(ShippingController::class)->group(function () {
-        // SHIPPING DIVISION
-        Route::get('/all/division', 'AllDivision')->name('all.division');
-        Route::get('/add/division', 'AddDivision')->name('add.division');
-        Route::post('/store/division', 'StoreDivision')->name('store.division');
-        Route::get('/edit/division/{id}', 'EditDivision')->name('edit.division');
-        Route::post('/update/division/{id}', 'UpdateDivision')->name('update.division');
-        Route::get('/delete/division/{id}', 'DeleteDivision')->name('delete.division');
-
         // SHIPPING DISTRICT
         Route::get('/all/district', 'AllDistrict')->name('all.district');
+
         Route::get('/add/district', 'AddDistrict')->name('add.district');
         Route::post('/store/district', 'StoreDistrict')->name('store.district');
+
         Route::get('/edit/district/{id}', 'EditDistrict')->name('edit.district');
         Route::post('/update/district/{id}', 'UpdateDistrict')->name('update.district');
         Route::get('/delete/district/{id}', 'DeleteDistrict')->name('delete.district');
+
+
+        // SHIPPING CITY
+        Route::get('/all/city', 'AllCity')->name('all.city');
+        Route::get('/add/city', 'AddCity')->name('add.city');
+        Route::post('/store/city', 'StoreCity')->name('store.city');
+        Route::get('/edit/city/{id}', 'EditCity')->name('edit.city');
+        Route::post('/update/city/{id}', 'UpdateCity')->name('update.city');
+        Route::get('/delete/city/{id}', 'DeleteCity')->name('delete.city');
 
         // SHIPPING STATE
         Route::get('/all/state', 'AllState')->name('all.state');
         Route::get('/add/state', 'AddState')->name('add.state');
         Route::post('/store/state', 'StoreState')->name('store.state');
-        Route::get('/district/ajax/{division_id}','GetDistrict');
+        Route::get('/city/ajax/{district_id}', 'GetCity');
 
         Route::get('/edit/state/{id}', 'EditState')->name('edit.state');
         Route::post('/update/state/{id}', 'UpdateState')->name('update.state');
@@ -317,7 +321,12 @@ Route::post('/apply-coupoun', [CartController::class, 'ApplyCoupoun']);
 // Calculate and display coupoun amount
 Route::get('/calculate-coupoun', [CartController::class, 'CalculateCoupoun']);
 
+// REMOVE COUPOUN
 Route::get('/remove-coupoun', [CartController::class, 'RemoveCoupoun']);
+
+
+// Frontend->checkout
+Route::get('/checkout', [CartController::class, 'StartCheckout'])->name('checkout');
 
 
 // User All Route -> Middle ware for wishlist protection
@@ -338,19 +347,28 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         Route::get('/compare-remove/{id}', 'CompareRemove');
     });
 
+    // For CHECKOUT  Page
+    Route::controller(CheckOutController::class)->group(function () {
+        Route::get('/city-get/ajax/{district_id}', 'GetCityAjax');
+        Route::get('/state-get/ajax/{city_id}', 'GetStateAjax');
 
-    // For CART Page
-    Route::controller(CartController::class)->group(function () {
-        Route::get('/myCart', 'MyCart')->name('myCart');
-        Route::get('/get-cart-product', 'GetCartProduct');
-        Route::get('/remove-mycart/{rowId}', 'RemoveMyCart');
-        Route::get('/cart-decrement/{rowId}', 'CartDecrement');
-        Route::get('/cart-increment/{rowId}', 'CartIncrement');
+        Route::post('/checkout/store', 'StoreCheckout')->name('checkout.store');
+
     });
+
 });
 // ------------- ^^ USER MIDDLE WARE END ^^
 
-//
+// For CART Page
+Route::controller(CartController::class)->group(function () {
+    Route::get('/myCart', 'MyCart')->name('myCart');
+    Route::get('/get-cart-product', 'GetCartProduct');
+    Route::get('/remove-mycart/{rowId}', 'RemoveMyCart');
+    Route::get('/cart-decrement/{rowId}', 'CartDecrement');
+    Route::get('/cart-increment/{rowId}', 'CartIncrement');
+});
+
+
 
 
 

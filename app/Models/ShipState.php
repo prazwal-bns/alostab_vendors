@@ -9,13 +9,15 @@ class ShipState extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public function Division()
-    {
-        return $this->belongsTo(ShipDivision::class, 'division_id', 'id');
-    }
 
     public function District()
     {
-        return $this->belongsTo(ShipDistricts::class, 'district_id', 'id');
+        return $this->belongsTo(ShipDistrict::class, 'district_id', 'id');
     }
+
+    public function City()
+    {
+        return $this->belongsTo(ShipCity::class, 'city_id', 'id');
+    }
+   
 }

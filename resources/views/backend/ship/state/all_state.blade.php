@@ -28,8 +28,8 @@
                     <thead style="background-color: #004c36; color: #fff;">
                         <tr>
                             <th>SN</th>
-                            <th>Division Name</th>
                             <th>District Name</th>
+                            <th>City Name</th>
                             <th>State Name</th>
                             <th>Action</th>
                         </tr>
@@ -39,8 +39,8 @@
                             @foreach ($state as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $item['Division']['division_name'] ?? 'N/A' }}</td>
                                     <td>{{ $item['District']['district_name'] ?? 'N/A' }}</td>
+                                    <td>{{ $item['City']['city_name'] ?? 'N/A' }}</td>
                                     <td>{{ $item->state_name }}</td>
                                     <td>
                                         <a href="{{ route('edit.state', $item->id) }}" class="btn btn-info">Edit</a>

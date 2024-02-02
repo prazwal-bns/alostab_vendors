@@ -19,6 +19,9 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{asset ('frontend/assets/css/plugins/animate.min.css')}}" />
     <link rel="stylesheet" href="{{asset ('frontend/assets/css/main.css?v=5.3')}}" />
+
+    {{-- Toaster --}}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
 
 <body>
@@ -87,6 +90,31 @@
 
     {{-- Sweet alert for add to cart --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- TOASTER --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
+                    toastr.info(" {{ Session::get('message') }} ");
+                    break;
+
+                case 'success':
+                    toastr.success(" {{ Session::get('message') }} ");
+                    break;
+
+                case 'warning':
+                    toastr.warning(" {{ Session::get('message') }} ");
+                    break;
+
+                case 'error':
+                    toastr.error(" {{ Session::get('message') }} ");
+                    break;
+            }
+        @endif
+    </script>
 
 
     <script type="text/javascript">
@@ -635,6 +663,7 @@
                 // console.log(response);
 
                 $('#cartAmount').text(response.cartQty);
+                $('#checkOutQty').text(response.cartQty);
                 var rows = ""
                 $.each(response.carts, function(key,value){
                     rows += `

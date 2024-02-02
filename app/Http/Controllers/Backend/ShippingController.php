@@ -3,91 +3,27 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShipCity;
+use App\Models\ShipDistrict;
 use Illuminate\Http\Request;
-use App\Models\ShipDistricts;
-use App\Models\ShipDivision;
 use App\Models\ShipState;
 
 class ShippingController extends Controller
 {
-    public function AllDivision(){
-        $division = ShipDivision::latest()->get();
-        return view('backend.ship.division.all_division', compact('division'));
-    }
-    // END FUNCTION
-    public function AddDivision(){
-        return view('backend.ship.division.add_division');
-    }
-    // END FUNCTION
-
-    public function StoreDivision(Request $request)
-    {
-        ShipDivision::insert([
-            'division_name' => $request->division_name,
-        ]);
-
-        $notification = array(
-            'message' => "Division Inserted Successfully",
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('all.division')->with($notification);
-    }
-    // End function
-
-    public function EditDivision($id){
-        $division = ShipDivision::findOrFail($id);
-        return view('backend.ship.division.edit_division', compact('division'));
-    }
-    // End function
-
-    public function UpdateDivision(Request $request, $id){
-        $division_id = $id;
-        ShipDivision::findOrFail($division_id)->update([
-            'division_name' => $request->division_name,
-        ]);
-
-        $notification = array(
-            'message' => "Division Updated Successfully",
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('all.division')->with($notification);
-    }
-    // End function
-
-    public function DeleteDivision($id)
-    {
-        ShipDivision::findOrFail($id)->delete();
-
-        $notification = array(
-            'message' => "Division Deleted Successfully",
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
-    }
-    //end function
-
-
     // ------------------------------> FOR DISTRICT <-------------
-    public function AllDistrict()
-    {
-        $district = ShipDistricts::latest()->get();
+    public function AllDistrict(){
+        $district = ShipDistrict::latest()->get();
         return view('backend.ship.district.all_district', compact('district'));
     }
     // END FUNCTION
-
-    public function AddDistrict()
-    {
-        $division = ShipDivision::orderBy('division_name','ASC')->get();
-        return view('backend.ship.district.add_district', compact('division'));
+    public function AddDistrict(){
+        return view('backend.ship.district.add_district');
     }
     // END FUNCTION
 
-    public function StoreDistrict(Request $request){
-        ShipDistricts::insert([
-            'division_id' => $request->division_id,
+    public function StoreDistrict(Request $request)
+    {
+        ShipDistrict::insert([
             'district_name' => $request->district_name,
         ]);
 
@@ -98,21 +34,17 @@ class ShippingController extends Controller
 
         return redirect()->route('all.district')->with($notification);
     }
-    // END FUNCTION
+    // End function
 
-    public function EditDistrict($id)
-    {
-        $division = ShipDivision::orderBy('division_name', 'ASC')->get();
-        $district = ShipDistricts::findOrFail($id);
-        return view('backend.ship.district.edit_district', compact('district','division'));
+    public function EditDistrict($id){
+        $district = ShipDistrict::findOrFail($id);
+        return view('backend.ship.district.edit_district', compact('district'));
     }
     // End function
 
-    public function UpdateDistrict(Request $request, $id)
-    {
+    public function UpdateDistrict(Request $request, $id){
         $district_id = $id;
-        ShipDistricts::findOrFail($district_id)->update([
-            'division_id' => $request->division_id,
+        ShipDistrict::findOrFail($district_id)->update([
             'district_name' => $request->district_name,
         ]);
 
@@ -125,13 +57,82 @@ class ShippingController extends Controller
     }
     // End function
 
-
     public function DeleteDistrict($id)
     {
-        ShipDistricts::findOrFail($id)->delete();
+        ShipDistrict::findOrFail($id)->delete();
 
         $notification = array(
             'message' => "District Deleted Successfully",
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+    //end function
+
+
+    // ------------------------------> FOR CITY <-------------
+    public function AllCity()
+    {
+        $city = ShipCity::latest()->get();
+        return view('backend.ship.city.all_city', compact('city'));
+    }
+    // END FUNCTION
+
+    public function AddCity()
+    {
+        $district = ShipDistrict::orderBy('district_name','ASC')->get();
+        return view('backend.ship.city.add_city', compact('district'));
+    }
+    // END FUNCTION
+
+    public function StoreCity(Request $request){
+        ShipCity::insert([
+            'district_id' => $request->district_id,
+            'city_name' => $request->city_name,
+        ]);
+
+        $notification = array(
+            'message' => "City Inserted Successfully",
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.city')->with($notification);
+    }
+    // END FUNCTION
+
+    public function EditCity($id)
+    {
+        $district = ShipDistrict::orderBy('district_name', 'ASC')->get();
+        $city = ShipCity::findOrFail($id);
+        return view('backend.ship.city.edit_city', compact('district', 'city'));
+    }
+    // End function
+
+    public function UpdateCity(Request $request, $id)
+    {
+        $city_id = $id;
+        ShipCity::findOrFail($city_id)->update([
+            'district_id' => $request->district_id,
+            'city_name' => $request->city_name,
+        ]);
+
+        $notification = array(
+            'message' => "City Updated Successfully",
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.city')->with($notification);
+    }
+    // End function
+
+
+    public function DeleteCity($id)
+    {
+        ShipCity::findOrFail($id)->delete();
+
+        $notification = array(
+            'message' => "City Deleted Successfully",
             'alert-type' => 'success'
         );
 
@@ -151,17 +152,17 @@ class ShippingController extends Controller
 
     public function AddState()
     {
-        $division = ShipDivision::orderBy('division_name', 'ASC')->get();
-        $district = ShipDistricts::orderBy('district_name', 'ASC')->get();
-        return view('backend.ship.state.add_state', compact('division','district'));
+        $district = ShipDistrict::orderBy('district_name', 'ASC')->get();
+        $city = ShipCity::orderBy('city_name', 'ASC')->get();
+        return view('backend.ship.state.add_state', compact('district', 'city'));
     }
     // END FUNCTION
 
     public function StoreState(Request $request)
     {
         ShipState::insert([
-            'division_id' => $request->division_id,
             'district_id' => $request->district_id,
+            'city_id' => $request->city_id,
             'state_name' => $request->state_name,
         ]);
 
@@ -174,20 +175,19 @@ class ShippingController extends Controller
     }
     // END FUNCTION
 
-    public function
-    GetDistrict($division_id)
+    public function GetCity($district_id)
     {
-        $dist = ShipDistricts::where('division_id', $division_id)->orderBy('district_name', 'ASC')->get();
-        return json_encode($dist);
+        $city = ShipCity::where('district_id', $district_id)->orderBy('city_name', 'ASC')->get();
+        return json_encode($city);
     }
 
     public function EditState($id)
     {
-        $division = ShipDivision::orderBy('division_name', 'ASC')->get();
-        $district = ShipDistricts::orderBy('district_name', 'ASC')->get();
+        $district = ShipDistrict::orderBy('district_name', 'ASC')->get();
+        $city = ShipCity::orderBy('city_name', 'ASC')->get();
 
         $state = ShipState::findOrFail($id);
-        return view('backend.ship.state.edit_state', compact('district', 'division','state'));
+        return view('backend.ship.state.edit_state', compact('district', 'city','state'));
     }
     // End function
 
@@ -195,8 +195,8 @@ class ShippingController extends Controller
     {
         $state_id = $id;
         ShipState::findOrFail($state_id)->update([
-            'division_id' => $request->division_id,
             'district_id' => $request->district_id,
+            'city_id' => $request->city_id,
             'state_name' => $request->state_name,
         ]);
 
