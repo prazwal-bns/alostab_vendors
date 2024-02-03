@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\User\CheckOutController;
 use App\Http\Controllers\User\CompareController;
+use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -354,6 +355,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
         Route::post('/checkout/store', 'StoreCheckout')->name('checkout.store');
 
+    });
+
+    // For STRIPE ALL ROUTE
+    Route::controller(StripeController::class)->group(function () {
+        Route::post('/stripe/order', 'StripeOrder')->name('stripe.order');
+        Route::post('/cash/order', 'CashOrder')->name('cash.order');
+        
     });
 
 });

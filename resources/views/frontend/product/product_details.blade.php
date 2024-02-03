@@ -90,7 +90,6 @@
                         <div class="attr-detail attr-size mb-30">
                             <strong class="mr-10">Size: </strong>
                             <select name="" class="form-control unicase-form-control" id="dsize">
-                                <option value="" selected disabled>Choose Size</option>
                                 @foreach($product_size as $size)
                                 <option value="{{ $size }}">{{ ucwords($size) }}</option>
                                 @endforeach
@@ -105,7 +104,6 @@
                         <div class="attr-detail attr-size mb-30">
                             <strong class="mr-10">Color: </strong>
                             <select name="" class="form-control unicase-form-control" id="dcolor">
-                                <option value="" selected disabled>Choose Color</option>
                                 @foreach($product_color as $color)
                                 <option value="{{ $color }}">{{ ucwords($color) }}</option>
                                 @endforeach
@@ -124,6 +122,9 @@
                             <div class="product-extra-link2">
 
                                 <input type="hidden" id="dproduct_id" value="{{ $product->id }}">
+                                <input type="hidden" id="vproduct_id" value="{{ $product->vendor_id }}">
+
+
                                 <button type="submit" class="button button-add-to-cart" onClick="addToCartDetails()"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
 
                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>

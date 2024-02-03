@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     public function AddToCart(Request $request, $id){
+
+        if(Session::has('coupoun')){
+            Session::forget('coupoun');
+        }
+
         $product = Product::findOrFail($id);
         if($product->discount_price == NULL){
             Cart::add([
@@ -29,6 +34,7 @@ class CartController extends Controller
                     'image' => $product->product_thumbnail,
                     'color' => $request->color,
                     'size' => $request->size,
+                    'vendor' => $request->vendor,
                 ]
             ]);
             return response()->json(['success' => 'Product Successfully added to Your Cart']);
@@ -44,6 +50,7 @@ class CartController extends Controller
                     'image' => $product->product_thumbnail,
                     'color' => $request->color,
                     'size' => $request->size,
+                    'vendor' => $request->vendor,
                 ]
             ]);
             return response()->json(['success' => 'Product Successfully added to Your Cart']);
@@ -74,6 +81,10 @@ class CartController extends Controller
     // ADD TO CART FROM PRODUCT DETAILS
     public function AddToCartDetails(Request $request, $id)
     {
+        if (Session::has('coupoun')) {
+            Session::forget('coupoun');
+        }
+        
         $product = Product::findOrFail($id);
         if ($product->discount_price == NULL) {
             Cart::add([
@@ -86,6 +97,7 @@ class CartController extends Controller
                     'image' => $product->product_thumbnail,
                     'color' => $request->color,
                     'size' => $request->size,
+                    'vendor' => $request->vendor,
                 ]
             ]);
             return response()->json(['success' => 'Product Successfully added to Your Cart']);
@@ -100,6 +112,7 @@ class CartController extends Controller
                     'image' => $product->product_thumbnail,
                     'color' => $request->color,
                     'size' => $request->size,
+                    'vendor' => $request->vendor,
                 ]
             ]);
             return response()->json(['success' => 'Product Successfully added to Your Cart']);

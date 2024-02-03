@@ -202,17 +202,19 @@
                             <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse"
                                 data-target="#bankTranfer" aria-controls="bankTranfer">Stripe Gateway</label>
                         </div>
+
                         <div class="custome-radio">
                             <input class="form-check-input" required="" type="radio" name="payment_option"
-                                value="cash" id="exampleRadios4" checked="">
+                                value="card" id="exampleRadios4" checked="">
                             <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse"
-                                data-target="#checkPayment" aria-controls="checkPayment">Cash on delivery</label>
+                                data-target="#checkPayment" aria-controls="checkPayment">Khalti Getway</label>
                         </div>
+
                         <div class="custome-radio">
-                            <input class="form-check-input" required="" type="radio" value="card"
+                            <input class="form-check-input" required="" type="radio" value="cash"
                                 name="payment_option" id="exampleRadios5" checked="">
                             <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse"
-                                data-target="#paypal" aria-controls="paypal">Online Getway</label>
+                                data-target="#paypal" aria-controls="paypal">Cash on delivery</label>
                         </div>
                     </div>
                     <div class="payment-logo d-flex">
@@ -244,7 +246,7 @@
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
-                            $('select[name="city_id"]').html('');
+                            $('select[name="state_id"]').html('');
                             var d = $('select[name="city_id"]').empty();
                             $.each(data, function(key, value) {
                                 $('select[name="city_id"]').append('<option value="' +
