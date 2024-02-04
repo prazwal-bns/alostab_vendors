@@ -42,8 +42,8 @@ class CheckOutController extends Controller
         if($request->payment_option == 'stripe'){
             return view('frontend.payment.stripe',compact('data','cartTotal'));
         }
-        elseif($request->payment_option=='card'){
-            return 'Card Page';
+        elseif($request->payment_option== 'khalti'){
+            return view('frontend.payment.khalti',compact('data','cartTotal'));
         }
         else{
             return view('frontend.payment.cash',compact('data','cartTotal'));

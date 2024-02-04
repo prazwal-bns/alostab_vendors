@@ -20,6 +20,14 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Align content vertically center */
+        }
+
+        .logo {
+            max-width: 200px;
+            margin-bottom: 20px; /* Adjust margin as needed */
         }
 
         h1 {
@@ -32,6 +40,7 @@
             font-size: 16px;
             line-height: 1.6;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         table {

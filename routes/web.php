@@ -8,10 +8,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\CoupounController;
 use App\Http\Controllers\Frontend\CartController;
@@ -114,7 +116,14 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 
         Route::get('vendor/delete/product/{id}','VendorDeleteProduct')->name('vendor.delete.product');
     });
+
+    
+    Route::controller(VendorOrderController::class)->group(function () {
+        Route::get('/vendor/order', 'VendorOrder')->name('vendor.order');
+    });
+
 });
+// END MIDDLEWARE VENDOR
 
 
 // Login Routes
@@ -285,6 +294,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/update/state/{id}', 'UpdateState')->name('update.state');
         Route::get('/delete/state/{id}', 'DeleteState')->name('delete.state');
 
+    });
+
+    // MANAGE ORDER
+    Route::controller(OrderController::class)->group(function () {
+        // SHIPPING DISTRICT
+        Route::get('/pending/order', 'PendingOrder')->name('pending.order');
     });
 
 });

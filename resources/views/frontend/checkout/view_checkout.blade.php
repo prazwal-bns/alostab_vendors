@@ -205,9 +205,9 @@
 
                         <div class="custome-radio">
                             <input class="form-check-input" required="" type="radio" name="payment_option"
-                                value="card" id="exampleRadios4" checked="">
+                                value="khalti" id="exampleRadios4" checked="">
                             <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse"
-                                data-target="#checkPayment" aria-controls="checkPayment">Khalti Getway</label>
+                                data-target="#checkPayment" aria-controls="checkPayment">Khalti Gateway</label>
                         </div>
 
                         <div class="custome-radio">
