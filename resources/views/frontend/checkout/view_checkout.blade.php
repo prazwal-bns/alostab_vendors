@@ -30,7 +30,7 @@
                                 <input type="text" required="" name="shipping_name" value="{{ Auth::user()->name }}">
                             </div>
                             <div class="form-group col-lg-6">
-                                <input type="email" required="" name="shipping_email"
+                                <input type="email" placeholder="Name" required="" name="shipping_email"
                                     value="{{ Auth::user()->email }}">
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
-                                <input required="" type="text" name="shipping_phone"
+                                <input required="" placeholder="Phone No." type="text" name="shipping_phone"
                                     value="{{ Auth::user()->phone }}">
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
-                                <input required="" type="text" name="post_code" placeholder="Post Code *">
+                                <input required="" placeholder="Postal Code" type="text" name="post_code" placeholder="Post Code *">
                             </div>
                         </div>
 
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
-                                <input required="" type="text" name="shipping_address"
+                                <input required="" placeholder="Address" type="text" name="shipping_address"
                                     value="{{ Auth::user()->address }}">
                             </div>
                         </div>

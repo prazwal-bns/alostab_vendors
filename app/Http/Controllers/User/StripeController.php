@@ -120,6 +120,7 @@ class StripeController extends Controller
     {
         if (Session::has('coupoun')) {
             $total_amount = Session::get('coupoun')['total_amount'];
+            $discount_amount = Session::get('coupoun')['discount_amount'];
         } else {
             $total_amount = round(Cart::total());
         }
@@ -193,5 +194,7 @@ class StripeController extends Controller
 
         return redirect()->route('dashboard')->with($notification);
     }
-    // END FUNCTION    
+    // END FUNCTION   
+    
+    
 }

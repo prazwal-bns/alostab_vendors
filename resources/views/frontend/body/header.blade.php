@@ -72,16 +72,7 @@
                         <form action="#">
                             <select class="select-active">
                                 <option>All Categories</option>
-                                <option>Milks and Dairies</option>
-                                <option>Wines & Alcohol</option>
-                                <option>Clothing & Beauty</option>
-                                <option>Pet Foods & Toy</option>
-                                <option>Fast food</option>
-                                <option>Baking material</option>
-                                <option>Vegetables</option>
-                                <option>Fresh Seafood</option>
-                                <option>Noodles & Rice</option>
-                                <option>Ice cream</option>
+                                
                             </select>
                             <input type="text" placeholder="Search for items..." />
                         </form>
@@ -225,6 +216,38 @@
                         <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                             <div class="d-flex categori-dropdown-inner">
                                 <ul>
+                                    @php
+                                        $thCategories = App\Models\Category::orderBy('category_name', 'ASC')->limit(5)->get();
+                                    @endphp
+                                    
+                                    @foreach ($thCategories as $item)
+                                        <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">
+                                            <li>
+                                            <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}"> <img
+                                                    src = "{{ asset($item->category_image) }}"
+                                                    alt="" />{{ $item->category_name }}</a>
+                                            </li>
+                                        </a>
+                                    @endforeach
+                                </ul>
+
+                                 <ul>
+                                    @php
+                                        $teCategories = App\Models\Category::orderBy('category_name', 'DESC')->limit(4)->get();
+                                    @endphp
+                                    
+                                    @foreach ($teCategories as $item)
+                                        <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">
+                                            <li>
+                                            <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}"> <img
+                                                    src = "{{ asset($item->category_image) }}"
+                                                    alt="" />{{ $item->category_name }}</a>
+                                            </li>
+                                        </a>
+                                    @endforeach
+                                </ul>
+                                
+                                {{-- <ul class="end">
                                     @foreach ($categories as $item)
                                         <li>
                                             <a href="shop-grid-right.html"> <img
@@ -232,16 +255,7 @@
                                                     alt="" />{{ $item->category_name }}</a>
                                         </li>
                                     @endforeach
-                                </ul>
-                                <ul class="end">
-                                    @foreach ($categories as $item)
-                                        <li>
-                                            <a href="shop-grid-right.html"> <img
-                                                    src = "{{ asset($item->category_image) }}"
-                                                    alt="" />{{ $item->category_name }}</a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                </ul> --}}
                             </div>
                             <div class="more_slide_open" style="display: none">
                                 <div class="d-flex categori-dropdown-inner">

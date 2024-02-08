@@ -18,6 +18,38 @@
     {{-- Toastr --}}
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
+<style>
+  /* Adjustments for Login Buttons */
+.login-buttons {
+    display: flex;
+    align-items: center;
+}
+
+/* Adjustments for Google Login Section */
+.social-login {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.google-login-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.google-login-img {
+    margin-right: 10px;
+    height: 20px; /* Set the height of the image */
+}
+
+.google-login-text {
+    font-weight: bold;
+}
+
+</style>
 <body>
     @include('frontend.body.header')
     <main class="main pages">
@@ -44,6 +76,7 @@
                                             <h1 class="mb-5">Login</h1>
                                             <p class="mb-30 mt-3">Don't have an account? <a href="{{route('register')}}">Create here</a></p>
                                         </div>
+                                                                  
                                         <form id="myForm" method="POST" action="{{ route('login') }}">
                                             @csrf
                                             <div class="form-group">
@@ -58,7 +91,7 @@
                                                 <br/>
                                             @endif
                                     
-                                            <div class="login_footer form-group mb-50">
+                                            <div class="login_footer form-group mb-30">
                                                 <div class="chek-form">
                                                     <div class="custome-checkbox">
                                                         <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
@@ -67,10 +100,31 @@
                                                 </div>
                                                 <a class="text-muted" href="{{ route('password.request') }}">Forgot password?</a>
                                             </div>
-                                            <div class="form-group">
+
+                                            {{-- <div class="form-group">
                                                 <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>
+                                                 <!-- Google Login Button -->
+                                                <div class="social-login google-login mb-3 ml-30 ">
+                                                    <a href="/auth/google/redirect" class="google-login-link ">
+                                                         <img src="{{ asset('frontend/assets/imgs/theme/icons/googleee.png') }}" height="20" alt="" class="google-login-img" />
+                                                        <span class="google-login-text"><strong> Continue with Google</strong></span>
+                                                    </a>
+                                                </div>
+                                            </div> --}}
+                                            <div class="form-group login-buttons">
+                                                <!-- Log in Button -->
+                                                <button type="submit" class="btn btn-heading btn-block hover-up" name="login">Log in</button>
+                                                <!-- Google Login Button -->
+                                                <div class="social-login google-login ml-30 hover-up">
+                                                    <a href="/auth/google/redirect" class="google-login-link">
+                                                        <img src="{{ asset('frontend/assets/imgs/theme/icons/googleee.png') }}" height="20" alt="" class="google-login-img" />
+                                                        <span class="google-login-text"><strong> Continue with Google</strong></span>
+                                                    </a>
+                                                </div>
                                             </div>
+
                                         </form>
+                                       
                                     </div>
                                 </div>
                             </div>

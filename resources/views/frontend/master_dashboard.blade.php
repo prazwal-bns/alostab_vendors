@@ -20,10 +20,16 @@
     <link rel="stylesheet" href="{{asset ('frontend/assets/css/plugins/animate.min.css')}}" />
     <link rel="stylesheet" href="{{asset ('frontend/assets/css/main.css?v=5.3')}}" />
 
+    
+
     {{-- Toaster --}}
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     
+    {{-- STRIPE --}}
     <script src="https://js.stripe.com/v3/"></script>
+
+    {{-- KHALTI --}}
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 </head>
 
 <body>
@@ -90,6 +96,8 @@
 
     {{-- Sweet alert for add to cart --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
 
     {{-- TOASTER --}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

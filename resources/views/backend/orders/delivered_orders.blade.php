@@ -3,7 +3,7 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">All Pending Orders</div>
+        <div class="breadcrumb-title pe-3">All Confirmed Orders</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
@@ -39,7 +39,7 @@
                             <td>{{$item->invoice_number}}</td>
                             <td>Rs. {{$item->amount}}</td>
                             <td>{{$item->payment_method}}</td>
-                            <td><span class="badge rounded-pill bg-danger">{{$item->status}}</span></td>
+                            <td><span class="badge rounded-pill bg-success">{{$item->status}}</span></td>
                             
                             <td>
                                 <a href="{{ route('admin.order.details',$item->id) }}" class="btn btn-info"><i class="fa fa-eye" title="Details"></i></a>

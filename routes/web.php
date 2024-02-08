@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\CoupounController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\User\AllUserController;
 use App\Http\Controllers\User\CheckOutController;
 use App\Http\Controllers\User\CompareController;
 use App\Http\Controllers\User\StripeController;
@@ -250,7 +251,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store/banner','StoreBanner')->name('store.banner');
         Route::get('/edit/banner/{id}','EditBanner')->name('edit.banner');
         Route::post('/update/banner/{id}','UpdateBanner')->name('update.banner');
-        Route::get('/delete/banner/{id}','DeleteBanner')->name('delete.banner');
+
+        Route::get('/delete/banner/{id}', 'DeleteBanner')->name('delete.banner');
     });
 
     // Coupoun Controller
@@ -260,7 +262,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store/coupoun', 'StoreCoupoun')->name('store.coupoun');
         Route::get('/edit/coupoun/{id}', 'EditCoupoun')->name('edit.coupoun');
         Route::post('/update/coupoun/{id}', 'UpdateCoupoun')->name('update.coupoun');
-        Route::get('/delete/banner/{id}', 'DeleteCoupoun')->name('delete.coupoun');
+        Route::get('/delete/coupoun/{id}', 'DeleteCoupoun')->name('delete.coupoun');
     });
 
     // Shipping Controller
@@ -300,6 +302,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(OrderController::class)->group(function () {
         // SHIPPING DISTRICT
         Route::get('/pending/order', 'PendingOrder')->name('pending.order');
+        Route::get('/admin/confirmed/order', 'AdminConfirmOrder')->name('admin.confirmed.order');
+        Route::get('/admin/processing/order', 'AdminProcessingOrder')->name('admin.processing.order');
+        Route::get('/admin/delivered/order', 'AdminDeliveredOrder')->name('admin.delivered.order');
+
+        // CHANGE ORDER START
+        Route::get('/pending/to/confirm/{id}', 'PendingToConfirm')->name('pendingTo.Confirm');
+        Route::get('/confirm/to/processing/{id}', 'ConfirmToProcessing')->name('confirmTo.Processing');
+        Route::get('/processing/to/delivered/{id}', 'ProcessingToDelivered')->name('processingTo.Delivered');
+
+        // END CHANGE ORDER
+
+        Route::get('/admin/invoice/download/{order_id}', 'AdminInvoiceDownload')->name('admin.invoice.download');
+        Route::get('/admin/order/details/{order_id}', 'AdminOrderDetails')->name('admin.order.details');
     });
 
 });
@@ -376,10 +391,23 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::controller(StripeController::class)->group(function () {
         Route::post('/stripe/order', 'StripeOrder')->name('stripe.order');
         Route::post('/cash/order', 'CashOrder')->name('cash.order');
-        
+
+        // Route::post('/khalti/verification', 'KhaltiVerification')->name('khalti.verification');
+    });
+
+    // For User Dashboard
+    Route::controller(AllUserController::class)->group(function () {
+        Route::get('/user/account/page', 'UserAccount')->name('user.account.page');
+        Route::get('/user/change/password', 'UserChangePassword')->name('user.change.password');
+        Route::get('/user/order/page', 'UserOrderPage')->name('user.order.page');
+
+        Route::get('user/order_details/{order_id}', 'UserOrderDetails');
+        Route::get('user/invoice_download/{order_id}', 'UserInvoiceDownload');
     });
 
 });
+ 
+
 // ------------- ^^ USER MIDDLE WARE END ^^
 
 // For CART Page

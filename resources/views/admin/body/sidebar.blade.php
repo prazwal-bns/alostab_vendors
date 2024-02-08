@@ -158,10 +158,10 @@
                 <div class="menu-title">Manage Order</div>
             </a>
             <ul>
-                <li> <a href="{{route('pending.order')}}"><i class="bx bx-right-arrow-alt"></i>Pending Order</a>
-                </li>
-                {{-- <li> <a href="{{route('active.vendor')}}"><i class="bx bx-right-arrow-alt"></i>Active Vendor</a>
-                </li> --}}
+                <li> <a href="{{route('pending.order')}}"><i class="bx bx-right-arrow-alt"></i>Pending Orders</a></li>
+                <li> <a href="{{route('admin.confirmed.order')}}"><i class="bx bx-right-arrow-alt"></i>Confirmed Orders</a></li>
+                <li> <a href="{{route('admin.processing.order')}}"><i class="bx bx-right-arrow-alt"></i>Processing Orders</a></li>
+                <li> <a href="{{route('admin.delivered.order')}}"><i class="bx bx-right-arrow-alt"></i>Delivered Orders</a></li>
             </ul>
         </li>
         <li>
