@@ -452,7 +452,7 @@
 
                     // Construct the table row with the calculated price
                     rows += `<tr class="pt-30">
-                        <td class="custome-checkbox pl-30"> 
+                        <td class="custome-checkbox pl-40"> 
                         </td>
                         <td class="image product-thumbnail pt-40"><img src="/${value.product.product_thumbnail}" alt="#" /></td>
                         <td class="product-des product-name">
@@ -583,32 +583,32 @@
 
                     // Construct the table row with the calculated price
                     rows += `
-                    <tr class="pr_image">
-                            <td class="text-body font-sm fw-600 font-heading mw-200">Preview</td>
+                        <tr class="pr_image">
+                            <td class="text-body font-sm fw-600 font-heading mw-200"><h6>Preview</h6></td>
                             <td class="row_img"><img src="/${value.product.product_thumbnail}" alt="compare-img" height="300" /></td>
                         </tr>
                         <tr class="pr_title">
-                            <td class="text-body font-sm fw-600 font-heading">Name</td>
+                            <td class="text-body font-sm fw-600 font-heading"><h6>Name</h6></td>
                             <td class="product_name">
-                                <h6><a href="" class="text-heading">${value.product.product_name}</a></h6>
+                                <h6><a href="#" class="text-heading">${value.product.product_name}</a></h6>
                             </td>
                         </tr>
                         <tr class="pr_price">
-                            <td class="text-body font-sm fw-600 font-heading">Price</td>
+                            <td class="text-body font-sm fw-600 font-heading"><h6>Price</h6></td>
                             <td class="product_price">
                                 <h3 class="price text-brand">Rs. ${finalPrice}</h3>
                             </td>
                         </tr>
 
                         <tr class="description">
-                            <td class="text-body font-sm fw-600 font-heading">Description</td>
+                            <td class="text-body font-sm fw-600 font-heading"><h6>Description</h6></td>
                             <td class="row_text font-xs">
                                 <p class="font-sm text-muted">${value.product.short_desc}</p>
                             </td>
                         </tr>
 
                         <tr class="pr_stock">
-                            <td class="text-body font-sm fw-600 font-heading">Stock status</td>
+                            <td class="text-body font-sm fw-600 font-heading"><h6>Stock status</h6></td>
                             ${value.product.product_quantity > 0
                                 ? `<td class="row_stock"><span class="stock-status in-stock mb-0">In Stock</span></td>`
                                 :
@@ -617,7 +617,7 @@
                             }
                         </tr>
                         <tr class="pr_remove text-body">
-                            <td class="text-body font-md fw-600"></td>
+                            <td class="text-body font-sm fw-600 font-heading"><h6>Remove</h6></td>
                             <td class="row_remove">
                                 <a type="submit" id="${value.id}" onclick="removeCompareList(this.id)" class="text-body"><i class="fi-rs-trash mr-5"></i><span>Remove</span> </a>
                             </td>

@@ -216,14 +216,28 @@
                     </table>
                 </div>
             </div>
+
             @if($order->status !== 'delivered') 
             @else 
-            {{-- START RETURN ORDER --}}
-            <div class="form-group">
-                <h4 for="return_reason">Order Return Reason</h4>
-                <textarea class="my-3" rows="5" placeholder="Enter your reason for returning the order" name="return_reason"></textarea>
-                <button type="submit" class="btn btn-danger btn-sm">Return Order</button>
-            </div>
+            @php 
+                $order = App\Models\Order::where('id',$order->id)->where('return_reason','=', NULL)->first();
+            @endphp
+                @if($order)
+                    <form action="{{ route('return.order',$order->id) }}" method="POST">
+                        @csrf
+                    {{-- START RETURN ORDER --}}
+                    <div class="form-group" style="width:40%">
+                        <h4>Return Your Order</h4>
+                        <p>If you have any issues with your product, you can also return the product.</p>
+                        <textarea name="return_reason" class="my-3" rows="5" placeholder="Enter your reason for returning the order"></textarea>
+                        <button type="submit" class="btn btn-danger btn-sm">Return Order</button>
+                    </div>
+                    </form>
+                @else 
+                <hr><br>
+                <br>
+                <h4 style="color: red;">You Have Already Sent Return Request for this product.</h4>
+                @endif
             {{-- END RETURN ORDER --}}
 
             @endif

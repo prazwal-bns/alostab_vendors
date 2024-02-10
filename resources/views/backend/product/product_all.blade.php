@@ -9,7 +9,7 @@
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Total Products : <span class="badge rounded-pill bg-success">{{count($products)}}</span></li>
+                    <li class="breadcrumb-item active" aria-current="page">Total Products : <span class="badge bg-success" style="font-size: 18px;">{{count($products)}}</span></li>
                 </ol>
             </nav>
         </div>

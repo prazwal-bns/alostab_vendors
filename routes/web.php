@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ReturnOrderController;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -121,6 +122,10 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
     
     Route::controller(VendorOrderController::class)->group(function () {
         Route::get('/vendor/order', 'VendorOrder')->name('vendor.order');
+        Route::get('/vendor/return/order', 'VendorReturnOrder')->name('vendor.return.order');
+        Route::get('/vendor/complete/return/order', 'VendorCompleteReturnOrder')->name('vendor.complete.return.order');
+
+        Route::get('/vendor/order/details/{order_id}', 'VendorOrderDetails')->name('vendor.order.details');
     });
 
 });
@@ -317,8 +322,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/admin/order/details/{order_id}', 'AdminOrderDetails')->name('admin.order.details');
     });
 
+
+    // RETURN CONTROLLER
+    Route::controller(ReturnOrderController::class)->group(function () {
+        Route::get('/return/request', 'ReturnRequest')->name('return.request');
+        Route::get('/approve/return/request/{order_id}', 'ApproveReturnRequest')->name('approve.return.request');
+
+        Route::get('/completed/request', 'CompletedOrderRequest')->name('completed.request');
+    });
 });
-// end admin 
+// end admin middleware
 
 
 // Product Quickview Modal With Ajax
@@ -403,6 +416,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
         Route::get('user/order_details/{order_id}', 'UserOrderDetails');
         Route::get('user/invoice_download/{order_id}', 'UserInvoiceDownload');
+
+        Route::post('return/order/{order_id}', 'ReturnOrder')->name('return.order');
+        Route::get('return/order/page', 'ReturnOrderPage')->name('return.order.page');
     });
 
 });

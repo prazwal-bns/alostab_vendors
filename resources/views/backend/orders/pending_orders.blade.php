@@ -39,7 +39,10 @@
                             <td>{{$item->invoice_number}}</td>
                             <td>Rs. {{$item->amount}}</td>
                             <td>{{$item->payment_method}}</td>
-                            <td><span class="badge rounded-pill bg-danger">{{$item->status}}</span></td>
+
+                            <td style="font-size: 18px">
+                                <span class="badge bg-danger">{{$item->status}}</span>                             
+                            </td>
                             
                             <td>
                                 <a href="{{ route('admin.order.details',$item->id) }}" class="btn btn-info"><i class="fa fa-eye" title="Details"></i></a>

@@ -257,18 +257,13 @@
                                     @endforeach
                                 </ul> --}}
                             </div>
-                            <div class="more_slide_open" style="display: none">
+                            {{-- <div class="more_slide_open" style="display: none">
                                 <div class="d-flex categori-dropdown-inner">
                                     <ul>
                                         <li>
                                             <a href="shop-grid-right.html"> <img
                                                     src = "{{ asset('frontend/assets/imgs/theme/icons/icon-1.svg') }}"
                                                     alt="" />Milks and Dairies</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-right.html"> <img
-                                                    src = "{{ asset('frontend/assets/imgs/theme/icons/icon-2.svg') }}"
-                                                    alt="" />Clothing & beauty</a>
                                         </li>
                                     </ul>
                                     <ul class="end">
@@ -283,10 +278,24 @@
                                                     alt="" />Fresh Seafood</a>
                                         </li>
                                     </ul>
+                                    <ul>
+                                        @php
+                                            $showCategories = App\Models\Category::orderBy('category_name', 'DESC')->limit(2)->get();
+                                        @endphp
+                                        
+                                        @foreach ($showCategories as $item)
+                                            <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">
+                                                <li>
+                                                <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}"> <img
+                                                        src = "{{ asset($item->category_image) }}"
+                                                        alt="" />{{ $item->category_name }}</a>
+                                                </li>
+                                            </a>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">Show
-                                    more...</span></div>
+                            <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">Show more...</span></div> --}}
                         </div>
                     </div>
                     <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">

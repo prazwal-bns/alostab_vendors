@@ -37,12 +37,27 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{$item['Order']['order_date']}}</td>
                             <td>{{$item['Order']['invoice_number']}}</td>
-                            <td>{{$item['Order']['amount']}}</td>
+                            <td>Rs. {{$item['Order']['amount']}}</td>
                             <td>{{$item['Order']['payment_method']}}</td>
-                            <td><span class="badge rounded-pill bg-success">{{$item['Order']['status']}}</span></td>
-                            
+
+                            {{-- <td style="font-size: 18px">
+                                
+                                <span class="badge bg-success">{{$item['Order']['status']}}</span>
+                            </td> --}}
+                            <td style="font-size: 18px">
+                                @if($item['Order']['status'] == 'pending')
+                                    <span class="badge bg-danger">{{$item['Order']['status']}}</span>
+                                @elseif($item['Order']['status'] == 'confirm')
+                                    <span class="badge bg-primary">{{$item['Order']['status']}}</span>
+                                @elseif($item['Order']['status'] == 'processing')
+                                    <span class="badge bg-info">{{$item['Order']['status']}}</span>
+                                @elseif($item['Order']['status'] == 'delivered')
+                                    <span class="badge bg-success">{{$item['Order']['status']}}</span>
+                                @endif
+                            </td>
+
                             <td>
-                                <a href="" class="btn btn-info"><i class="fa fa-eye" title="Details"></i></a>
+                                <a href="{{ route('vendor.order.details', $item->order->id) }}" class="btn btn-info"><i class="fa fa-eye" title="Details"></i></a>
                             </td>
                         </tr>
                         @endforeach

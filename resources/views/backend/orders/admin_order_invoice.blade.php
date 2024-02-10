@@ -25,12 +25,12 @@
         }
         .invoice-header {
             background-color: #f2f2f2;
-            padding: 10px 20px;
+            padding: 5px 20px;
         }
         .invoice-details {
             /* background-color: #f9f9f9; */
             background-color: #f2f2f2;
-            padding: 10px 20px;
+            padding: 5px 20px;
         }
         .invoice-products {
             background-color: #f2f2f2;
@@ -43,12 +43,12 @@
         .thanks {
             color: #050047;
             font-size: 18px;
-            margin-top: 5px;
-            margin-bottom: 30px;
+            margin-top: 3px;
+            margin-bottom: 15px;
         }
         .authority {
             text-align: right;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .authority h5 {
             color: #07002d;
@@ -71,7 +71,6 @@
     </style>
 </head>
 <body>
-
 <table class="invoice-header">
     <tr>
         <td class="left-align" colspan="2">
@@ -87,7 +86,6 @@
         </td>
     </tr>
 </table>
-
 <table class="invoice-details">
     <tr>
         <td>
@@ -113,6 +111,9 @@
         </td>
     </tr>
 </table>
+@php
+    $subtotal = 0;
+@endphp
 <table class="invoice-products">
     <h3>Products</h3>
     <thead>
@@ -141,12 +142,17 @@
             <td align="center">{{ $item->qty }}</td>
             <td align="center">Rs.{{ $item->price }}</td>
         </tr>
+        @php
+            $subtotal += $item->qty * $item->price;
+        @endphp
     @endforeach
     </tbody>
 </table>
 
 <div class="total-section">
-    <h3><span style="color:  #931814;">Subtotal:</span> Rs. {{ $order->amount }}</h3>
+    {{-- <h3><span style="color:  #931814;">Subtotal:</span> Rs.{{ $item->qty * $item->price }}</h3> --}}
+    <h3><span style="color: #931814;">Subtotal:</span> Rs.{{ $subtotal }}</h3>
+    <h3><span style="color: #931814;">Discount:</span> Rs. {{ $order->discount_amount }}</h3>
     <h3><span style="color: #931814;">Total:</span> Rs. {{ $order->amount }}</h3>
     {{-- <h2><span style="color: green;">Full Payment PAID</h2> --}}
 </div>

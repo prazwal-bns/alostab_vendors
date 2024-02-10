@@ -164,6 +164,19 @@
                 <li> <a href="{{route('admin.delivered.order')}}"><i class="bx bx-right-arrow-alt"></i>Delivered Orders</a></li>
             </ul>
         </li>
+
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="bx bx-cart"></i>
+                </div>
+                <div class="menu-title">Return Order</div>
+            </a>
+            <ul>
+                <li> <a href="{{route('return.request')}}"><i class="bx bx-right-arrow-alt"></i>Requested Order Return</a></li>
+                <li> <a href="{{route('completed.request')}}"><i class="bx bx-right-arrow-alt"></i>Completed Order Return</a></li>
+            </ul>
+        </li>
+
         <li>
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>

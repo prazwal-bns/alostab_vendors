@@ -39,10 +39,11 @@
                             <td>{{$item->invoice_number}}</td>
                             <td>Rs. {{$item->amount}}</td>
                             <td>{{$item->payment_method}}</td>
-                            <td><span class="badge rounded-pill bg-success">{{$item->status}}</span></td>
+                            <td style="font-size: 18px"><span class="badge" style="background: rgb(1, 197, 1);">{{$item->status}}</span></td>
                             
                             <td>
                                 <a href="{{ route('admin.order.details',$item->id) }}" class="btn btn-info"><i class="fa fa-eye" title="Details"></i></a>
+                                <a href="{{ route('admin.invoice.download',$item->id) }}" class="btn btn-danger"><i class="fa fa-download" title="Download Invoice"></i></a>
                             </td>
                         </tr>
                         @endforeach

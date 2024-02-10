@@ -21,9 +21,11 @@ class StripeController extends Controller
     public function StripeOrder(Request $request){
         if(Session::has('coupoun')){
             $total_amount = Session::get('coupoun')['total_amount'];
+            $discount_amount = Session::get('coupoun')['discount_amount'];
         }
         else{
             $total_amount = round(Cart::total());
+            $discount_amount = 0;
         }
 
         \Stripe\Stripe::setApiKey('sk_test_51OfF36AIv39y6cmEZjb9WSgs07eVCEsd8VqVyrMBqcFguRCaQ8cQ3r7W8wQ6Czf4oyW8G98mF97jjuXWHjIuHQZN00AqNgV01u');
@@ -56,8 +58,9 @@ class StripeController extends Controller
             'transaction_id' => $charge->balance_transaction,
             'currency' => $charge->currency,
             'amount' => $total_amount,
-            'order_number' => $charge->metadata->order_id,
+            'discount_amount' => $discount_amount,
 
+            'order_number' => $charge->metadata->order_id,
             'invoice_number' => 'ALOV'.mt_rand(10000000,99999999),
             'order_date' => Carbon::now()->format('d F Y'),
             'order_month' => Carbon::now()->format('F'),
@@ -73,6 +76,7 @@ class StripeController extends Controller
         $data =[
             'invoice_no' =>$invoice->invoice_number,
             'amount' =>$total_amount,
+            'discount_amount' => $discount_amount,
             'name' =>$invoice->name,
             'email' =>$invoice->email,
             'address' =>$invoice->address,
@@ -123,6 +127,7 @@ class StripeController extends Controller
             $discount_amount = Session::get('coupoun')['discount_amount'];
         } else {
             $total_amount = round(Cart::total());
+            $discount_amount = 0;
         }
 
         $order_id = Order::insertGetId([
@@ -141,6 +146,7 @@ class StripeController extends Controller
             'payment_method' => 'Cash On Delivery',
             'currency' => 'Rs.',
             'amount' => $total_amount,
+            'discount_amount' => $discount_amount,
 
             'invoice_number' => 'ALOV' . mt_rand(10000000, 99999999),
             'order_date' => Carbon::now()->format('d F Y'),
@@ -157,6 +163,7 @@ class StripeController extends Controller
         $data = [
             'invoice_no' => $invoice->invoice_number,
             'amount' => $total_amount,
+            'discount_amount' => $discount_amount,
             'name' => $invoice->name,
             'email' => $invoice->email,
             'address' => $invoice->address,

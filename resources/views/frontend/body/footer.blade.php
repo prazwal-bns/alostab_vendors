@@ -118,7 +118,7 @@
                             <a href="index.html" class="mb-15"><img
                                     src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
                                     alt="logo" /></a>
-                            <p class="font-lg text-heading">Awesome grocery store website</p>
+                            <p class="font-lg text-heading">Awesome e-commerce store website</p>
                         </div>
                         <ul class="contact-infor">
                             <li><img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}"

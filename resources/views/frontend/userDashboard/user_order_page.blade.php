@@ -52,16 +52,25 @@
                                                                 <td>Rs. {{ $order->amount }}</td>
                                                                 <td>{{ $order->payment_method }}</td>
                                                                 <td>{{ $order->invoice_number }}</td>
-                                                                <td>
+                                                                <td style="font-size: 18px">
                                                                     @if ($order->status == 'pending')
                                                                         <span class="badge badge-pill bg-warning"> Pending </span>
                                                                     @elseif ($order->status == 'confirm')
-                                                                        <span class="badge badge-pill bg-info"> Confirm </span>
+                                                                        <span class="badge badge-pill" style="background: purple"> Confirm </span>
                                                                     @elseif ($order->status == 'processing')
-                                                                        <span class="badge badge-pill bg-danger"> Proccessing </span>
+                                                                        <span class="badge badge-pill bg-info"> Proccessing </span>
                                                                     @elseif ($order->status == 'delivered')
                                                                         <span class="badge badge-pill bg-success"> Delivered </span>
+                                                                    
+                                                                    @if($order->return_order == 1)
+                                                                        <span class="badge" style="background: red;">Return Requested</span>
+                                                                    @elseif($order->return_order == 2)
+                                                                        <span class="badge" style="background: rgb(0, 177, 53);">Return Success</span>
                                                                     @endif
+
+                                                                    @endif
+
+                                                                    
                                                                 </td>
                                                                 
                                                                 <td>
