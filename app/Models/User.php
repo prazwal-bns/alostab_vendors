@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 
@@ -39,6 +40,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // USER ACTIVE NOW
+    public function UserOnline(){
+        return Cache::has('user-is-online' . $this->id);
+    }
 
     public static function generateUserNameFromName($name){
         // Extract a portion of the name or use the whole name, depending on your preference

@@ -15,27 +15,6 @@ class ProvideController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-
-
-
-    // public function callback($provider){
-    //     $SocialUser = Socialite::driver($provider)->user();
-
-    //     $user = User::updateOrCreate([
-    //         'provider_id' => $SocialUser->id,
-    //         'provider' => $provider,
-    //     ], [
-    //         'name' => $SocialUser->name,
-    //         'username' => User::generateUserNameFromName($SocialUser->name),
-    //         'email' => $SocialUser->email,
-    //         'provider_token' => $SocialUser->token,
-    //     ]);
-
-    //     Auth::login($user);
-
-    //     return redirect('/dashboard');
-    // }
-
     public function callback($provider)
     {
         $socialUser = Socialite::driver($provider)->user();
@@ -52,7 +31,7 @@ class ProvideController extends Controller
 
 
         // If the user doesn't exist, create a new user
-        $user = User::create([
+        $user = User::updateOrCreate([
             'name' => $socialUser->name,
             'username' => User::generateUserNameFromName($socialUser->name),
             'email' => $socialUser->email,

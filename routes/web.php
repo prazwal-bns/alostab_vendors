@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\ProvideController;
+use App\Http\Controllers\Backend\ActiveUserController;
 use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\ReturnOrderController;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\SliderController;
@@ -329,6 +331,25 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/approve/return/request/{order_id}', 'ApproveReturnRequest')->name('approve.return.request');
 
         Route::get('/completed/request', 'CompletedOrderRequest')->name('completed.request');
+    });
+    
+
+    // REPORT GENERATION
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/view/report', 'ViewReport')->name('view.report');
+        Route::post('/search/by/date', 'SearchByDate')->name('search-by-date');
+        Route::post('/search/by/year/month', 'SearchByYearMonth')->name('search-by-year-month');
+        Route::post('/search/by/year/only', 'SearchByYearOnly')->name('search-by-year-only');
+
+        Route::get('/order/by/user', 'OrderByUser')->name('order.by.user');
+        Route::post('/search/by/user', 'SearchByUser')->name('search-by-user');
+    });
+
+
+    // USER MANAGEMENT
+    Route::controller(ActiveUserController::class)->group(function () {
+        Route::get('/all/user', 'AllUser')->name('all.user');
+        Route::get('/all/vendor', 'AllVendor')->name('all.vendor');
     });
 });
 // end admin middleware

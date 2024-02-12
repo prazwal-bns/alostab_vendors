@@ -178,6 +178,18 @@
         </li>
 
         <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="bx bx-cart"></i>
+                </div>
+                <div class="menu-title">Manage User</div>
+            </a>
+            <ul>
+                <li> <a href="{{route('all.user')}}"><i class="bx bx-right-arrow-alt"></i>All Customers</a></li>
+                <li> <a href="{{route('all.vendor')}}"><i class="bx bx-right-arrow-alt"></i>All Vendors</a></li>
+            </ul>
+        </li>
+
+        {{-- <li>
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
                 </div>
@@ -253,7 +265,21 @@
                 <li> <a href="icons-feather-icons.html"><i class="bx bx-right-arrow-alt"></i>Feather Icons</a>
                 </li>
             </ul>
+        </li> --}}
+        <li class="menu-label">Report Generation</li>
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-line-chart"></i>
+                </div>
+                <div class="menu-title">Manage Report</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('view.report') }}"><i class="bx bx-right-arrow-alt"></i>View Report</a></li>
+                <li> <a href="{{ route('order.by.user') }}"><i class="bx bx-right-arrow-alt"></i>Order By User</a></li>
+            </ul>
         </li>
+        <li>
+
         <li class="menu-label">Charts & Maps</li>
         <li>
             <a class="has-arrow" href="javascript:;">
