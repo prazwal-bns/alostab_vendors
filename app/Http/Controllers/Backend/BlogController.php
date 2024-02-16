@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
+use App\Models\BlogComment;
 use App\Models\BlogPost;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 class BlogController extends Controller
@@ -222,5 +224,29 @@ class BlogController extends Controller
 
     // END FUNCTION
     // ------------------------------> END FRONTEND BLOG <--------------------------------------
+
+
+    // ------------------------------> START BLOG Comment <--------------------------------------
+    public function StoreBlogComment(Request $request){
+        $blog_id = $request->blog_id;
+        $request->validate([
+            'blog_comment' => 'required',
+        ]);
+
+        BlogComment::insert([
+            'blog_id' => $blog_id,
+            'user_id' => Auth::id(),
+            'blog_comment' => $request->blog_comment,
+            'created_at' => Carbon::now(),
+
+        ]);
+
+        $notification = array(
+            'message' => 'Blog Comment Added Successfully.',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
 
 }

@@ -7,7 +7,7 @@
                 <div class="col-xl-3">
                     <h1 class="mb-15">Blog & News</h1>
                     <div class="breadcrumb">
-                        <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                        <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
                         <span></span> Blog & News
                     </div>
                 </div>
@@ -26,45 +26,7 @@
                             Blog Posts
                         </h3>
                     </div>
-                    <div class="sort-by-product-area">
-                        <div class="sort-by-cover mr-10">
-                            <div class="sort-by-product-wrap">
-                                <div class="sort-by">
-                                    <span><i class="fi-rs-apps"></i>Show:</span>
-                                </div>
-                                <div class="sort-by-dropdown-wrap">
-                                    <span> 50 <i class="fi-rs-angle-small-down"></i></span>
-                                </div>
-                            </div>
-                            <div class="sort-by-dropdown">
-                                <ul>
-                                    <li><a class="active" href="#">50</a></li>
-                                    <li><a href="#">100</a></li>
-                                    <li><a href="#">150</a></li>
-                                    <li><a href="#">200</a></li>
-                                    <li><a href="#">All</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="sort-by-cover">
-                            <div class="sort-by-product-wrap">
-                                <div class="sort-by">
-                                    <span><i class="fi-rs-apps-sort"></i>Sort:</span>
-                                </div>
-                                <div class="sort-by-dropdown-wrap">
-                                    <span>Featured <i class="fi-rs-angle-small-down"></i></span>
-                                </div>
-                            </div>
-                            <div class="sort-by-dropdown">
-                                <ul>
-                                    <li><a class="active" href="#">Featured</a></li>
-                                    <li><a href="#">Newest</a></li>
-                                    <li><a href="#">Most comments</a></li>
-                                    <li><a href="#">Release Date</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="loop-grid loop-list pr-30 mb-50">
                     @foreach($blogPost as $post)
@@ -81,8 +43,9 @@
                             <p class="post-exerpt mb-40">{{ $post->post_short_description }}</p>
                             <div class="entry-meta meta-1 font-xs color-grey mt-10 pb-10">
                                 <div>
+                                    <span class="post-on">Posted on: </span>
                                     <span class="post-on">{{ $post->created_at->format('M d Y') }}</span>
-                                    <span class="hit-count has-dot">126k Views</span>
+                                    
                                 </div>
                                 <a href="{{ url('post/details/'.$post->id.'/'.$post->post_slug) }}" class="text-brand font-heading font-weight-bold">Read more <i class="fi-rs-arrow-right"></i></a>
                             </div>
@@ -90,34 +53,18 @@
                     </article>
                     @endforeach
                 </div>
-                <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-start">
-                            <li class="page-item">
-                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-left"></i></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-right"></i></a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+
             </div>
             <div class="col-lg-3 primary-sidebar sticky-sidebar">
                 <div class="widget-area">
-                    <div class="sidebar-widget-2 widget_search mb-50">
+                    {{-- <div class="sidebar-widget-2 widget_search mb-50">
                         <div class="search-form">
                             <form action="#">
                                 <input type="text" placeholder="Search…" />
                                 <button type="submit"><i class="fi-rs-search"></i></button>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="sidebar-widget widget-category-2 mb-50">
                         <h5 class="section-title style-1 mb-30">Category</h5>
@@ -134,17 +81,6 @@
                         </ul>
                     </div>
 
-                    {{-- <div class="banner-img wow fadeIn mb-50 animated d-lg-block d-none">
-                        <img src="{{ asset('frontend/assets/imgs/banner/banner-11.png') }}" alt="" />
-                        <div class="banner-text">
-                            <span>Oganic</span>
-                            <h4>
-                                Save 17% <br />
-                                on <span class="text-brand">Oganic</span><br />
-                                Juice
-                            </h4>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>

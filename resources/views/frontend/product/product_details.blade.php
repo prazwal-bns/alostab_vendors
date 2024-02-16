@@ -3,8 +3,10 @@
 <div class="page-header breadcrumb-wrap">
 <div class="container">
     <div class="breadcrumb">
-        <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-        <span></span> <a href="shop-grid-right.html">{{ ucwords($product['category']['category_name']) }}</a> <span></span>{{ ucwords($product['subcategory']['subcategory_name']) }}<span></span>{{ ucwords($product->product_name) }}</div>
+        <a href="" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+        <span></span> <a href="">{{ ucwords($product['category']['category_name']) }}</a>
+        <span></span>{{ ucwords($product['subcategory']['subcategory_name']) }}<span></span>{{ ucwords($product->product_name) }}
+    </div>
 </div>
 </div>
 <div class="container mb-30">
@@ -18,17 +20,17 @@
                         <!-- MAIN SLIDES -->
                         <div class="product-image-slider">
 
-                            @foreach ($multiImage as $image)                                
-                            <figure class="border-radius-10">
-                                <img src="{{ asset($image->photo_image) }}" alt="product image" />
-                            </figure>
+                            @foreach ($multiImage as $image)
+                                <figure class="border-radius-10">
+                                    <img src="{{ asset($image->photo_image) }}" alt="product image" />
+                                </figure>
                             @endforeach
-                            
+
                         </div>
                         <!-- THUMBNAILS -->
                         <div class="slider-nav-thumbnails">
-                            @foreach ($multiImage as $image)   
-                            <div><img src="{{ asset($image->photo_image) }}" alt="product image" /></div>
+                            @foreach ($multiImage as $image)
+                                <div><img src="{{ asset($image->photo_image) }}" alt="product image" /></div>
                             @endforeach
                         </div>
                     </div>
@@ -36,33 +38,52 @@
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="detail-info pr-30 pl-30">
-                        @if($product->product_quantity > 0)
+                        @if ($product->product_quantity > 0)
                             <span class="stock-status in-stock"> Stock In </span>
                         @else
-                        <span class="stock-status out-stock"> Stock Out </span>
+                            <span class="stock-status out-stock"> Stock Out </span>
                         @endif
 
-                        
+
                         <h2 class="title-detail" id="dpname">{{ ucwords($product->product_name) }}</h2>
                         <div class="product-detail-rating">
                             <div class="product-rate-cover text-end">
+
+                                @php
+                                $reviewCount = App\Models\Review::where('product_id',$product->id)->where('status',1)->latest()->get();
+                                $average = App\Models\Review::where('product_id',$product->id)->where('status',1)->avg('rating');
+                                @endphp
+
                                 <div class="product-rate d-inline-block">
-                                    <div class="product-rating" style="width: 90%"></div>
+                                    @if($average == 0)
+                                    
+                                    @elseif($average == 1 || $average < 2)
+                                        <div class="product-rating" style="width: 20%"></div>
+                                    @elseif($average == 2 || $average < 3)
+                                        <div class="product-rating" style="width: 40%"></div>
+                                    @elseif($average == 3 || $average < 4)
+                                        <div class="product-rating" style="width: 60%"></div>
+                                    @elseif($average == 4 || $average < 5)
+                                        <div class="product-rating" style="width: 80%"></div>
+                                    @elseif($average == 5 || $average < 5)
+                                        <div class="product-rating" style="width: 100%"></div>
+                                    @endif
                                 </div>
-                                <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                <span class="font-small ml-5 text-muted"> {{ count($reviewCount) }} reviews</span>
                             </div>
                         </div>
                         <div class="clearfix product-price-cover">
 
                             @php
-                                $amount =$product->selling_price - $product->discount_price;
+                                $amount = $product->selling_price - $product->discount_price;
                                 $discount = ($product->discount_price / $product->selling_price) * 100;
                             @endphp
 
 
-                            @if($product->discount_price == NULL)
+                            @if ($product->discount_price == null)
                                 <div class="product-price primary-color float-left">
-                                    <span class="current-price text-brand">Rs. {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', ',') }}</span>
+                                    <span class="current-price text-brand">Rs.
+                                        {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', ',') }}</span>
                                 </div>
                             @else
                                 @php
@@ -70,52 +91,54 @@
                                     $discountPercentage = round(($product->discount_price / $product->selling_price) * 100);
                                 @endphp
                                 <div class="product-price primary-color float-left">
-                                    <span class="current-price text-brand">Rs. {{ $discountedPrice % 1 === 0 ? number_format($discountedPrice) : number_format($discountedPrice, 2, '.', ',') }}</span>
+                                    <span class="current-price text-brand">Rs.
+                                        {{ $discountedPrice % 1 === 0 ? number_format($discountedPrice) : number_format($discountedPrice, 2, '.', ',') }}</span>
                                     <span>
-                                        <span class="save-price font-md color3 ml-15">{{ $discountPercentage }}%</span>
-                                        <span class="old-price font-md ml-15">Rs. {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', ',') }}</span>
+                                        <span
+                                            class="save-price font-md color3 ml-15">{{ $discountPercentage }}%</span>
+                                        <span class="old-price font-md ml-15">Rs.
+                                            {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', ',') }}</span>
                                     </span>
                                 </div>
                             @endif
-                            
+
 
                         </div>
                         <div class="short-desc mb-30">
                             <p class="font-lg" style="text-align: justify">{{ $product->short_desc }}</p>
                         </div>
 
-                        @if ($product->product_size == NULL)
-                            
+                        @if ($product->product_size == null)
                         @else
-                        <div class="attr-detail attr-size mb-30">
-                            <strong class="mr-10">Size: </strong>
-                            <select name="" class="form-control unicase-form-control" id="dsize">
-                                @foreach($product_size as $size)
-                                <option value="{{ $size }}">{{ ucwords($size) }}</option>
-                                @endforeach
-                            </select>
+                            <div class="attr-detail attr-size mb-30">
+                                <strong class="mr-10">Size: </strong>
+                                <select name="" class="form-control unicase-form-control" id="dsize">
+                                    @foreach ($product_size as $size)
+                                        <option value="{{ $size }}">{{ ucwords($size) }}</option>
+                                    @endforeach
+                                </select>
 
-                        </div>
+                            </div>
                         @endif
 
-                        @if ($product->product_color == NULL)
-                            
+                        @if ($product->product_color == null)
                         @else
-                        <div class="attr-detail attr-size mb-30">
-                            <strong class="mr-10">Color: </strong>
-                            <select name="" class="form-control unicase-form-control" id="dcolor">
-                                @foreach($product_color as $color)
-                                <option value="{{ $color }}">{{ ucwords($color) }}</option>
-                                @endforeach
-                            </select>
-                            
-                        </div>
+                            <div class="attr-detail attr-size mb-30">
+                                <strong class="mr-10">Color: </strong>
+                                <select name="" class="form-control unicase-form-control" id="dcolor">
+                                    @foreach ($product_color as $color)
+                                        <option value="{{ $color }}">{{ ucwords($color) }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
                         @endif
                         <div class="detail-extralink mb-50">
                             <div class="detail-qty border radius">
                                 <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                
-                                <input type="text" name="quantity" id="dqty" class="qty-val" value="1" min="1">
+
+                                <input type="text" name="quantity" id="dqty" class="qty-val" value="1"
+                                    min="1">
 
                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                             </div>
@@ -125,36 +148,55 @@
                                 <input type="hidden" id="vproduct_id" value="{{ $product->vendor_id }}">
 
 
-                                <button type="submit" class="button button-add-to-cart" onClick="addToCartDetails()"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                <button type="submit" class="button button-add-to-cart"
+                                    onClick="addToCartDetails()"><i class="fi-rs-shopping-cart"></i>Add to
+                                    cart</button>
 
-                                <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+                                <a aria-label="Add To Wishlist" class="action-btn hover-up" href=""><i
+                                        class="fi-rs-heart"></i></a>
+                                <a aria-label="Compare" class="action-btn hover-up" href=""><i
+                                        class="fi-rs-shuffle"></i></a>
                             </div>
                         </div>
 
-                        @if ($product->vendor_id == NULL)
-                           <h5 class="mb-5">Sold By: <a href="#"><span class="text-danger">Owner</span></a></h5>
-                           <hr>
+                        @if ($product->vendor_id == null)
+                            <h5 class="mb-5">Sold By: <a href="#"><span class="text-danger">Owner</span></a>
+                            </h5>
+                            <hr>
                         @else
-                           <h5 class="mb-2">Sold By: <a href="#"><span class="text-danger">{{ ucwords($product['vendor']['name']) }}</span></a></h5>
-                           <hr>
+                            <h5 class="mb-2">Sold By: <a href="#"><span
+                                        class="text-danger">{{ ucwords($product['vendor']['name']) }}</span></a>
+                            </h5>
+                            <hr>
                         @endif
 
                         <div class="font-xs">
                             <ul class="mr-50 float-start">
-                                <li class="mb-5"><strong style="font-size: 115%">Brand:</strong> <span class="text-brand" style="font-size: 110%">{{ ucwords($product['brand']['brand_name']) }}</span></li>
-                                <li class="mb-5"><strong style="font-size: 115%">Category:</strong> <span class="text-brand" style="font-size: 110%">{{ ucwords($product['category']['category_name']) }}</span></li>
-                                <li><strong style="font-size: 115%">SubCategory:</strong> <span class="text-brand" style="font-size: 110%">{{ ucwords($product['subcategory']['subcategory_name']) }}</span></li>
+                                <li class="mb-5"><strong style="font-size: 115%">Brand:</strong> <span
+                                        class="text-brand"
+                                        style="font-size: 110%">{{ ucwords($product['brand']['brand_name']) }}</span>
+                                </li>
+                                <li class="mb-5"><strong style="font-size: 115%">Category:</strong> <span
+                                        class="text-brand"
+                                        style="font-size: 110%">{{ ucwords($product['category']['category_name']) }}</span>
+                                </li>
+                                <li><strong style="font-size: 115%">SubCategory:</strong> <span class="text-brand"
+                                        style="font-size: 110%">{{ ucwords($product['subcategory']['subcategory_name']) }}</span>
+                                </li>
                             </ul>
                             <ul class="float-start">
-                                <li class="mb-5"><strong style="font-size: 115%">Product Code:</strong> <a href="#">{{ $product->product_code }}</a></li>
-                                <li class="mb-5"><strong style="font-size: 115%">Tags:</strong> <a href="#" rel="tag">{{ $product->product_tags }}</a></li>
-                                <li><strong style="font-size: 115%">Stock:</strong> <span class="in-stock text-brand ml-5">({{ $product->product_quantity }}) Items in stock</span></li>
+                                <li class="mb-5"><strong style="font-size: 115%">Product Code:</strong> <a
+                                        href="#">{{ $product->product_code }}</a></li>
+                                <li class="mb-5"><strong style="font-size: 115%">Tags:</strong> <a
+                                        href="#" rel="tag">{{ $product->product_tags }}</a></li>
+                                <li><strong style="font-size: 115%">Stock:</strong> <span
+                                        class="in-stock text-brand ml-5">({{ $product->product_quantity }}) Items
+                                        in stock</span></li>
                             </ul>
                         </div>
 
 
-                        </div>
+                    </div>
                     <!-- Detail Info -->
                 </div>
             </div>
@@ -162,25 +204,28 @@
                 <div class="tab-style3">
                     <ul class="nav nav-tabs text-uppercase">
                         <li class="nav-item">
-                            <a class="nav-link active" id="Description-tab" data-bs-toggle="tab" href="#Description">Description</a>
+                            <a class="nav-link active" id="Description-tab" data-bs-toggle="tab"
+                                href="#Description">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="Additional-info-tab" data-bs-toggle="tab" href="#Additional-info">Additional info</a>
+                            <a class="nav-link" id="Additional-info-tab" data-bs-toggle="tab"
+                                href="#Additional-info">Additional info</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="Vendor-info-tab" data-bs-toggle="tab" href="#Vendor-info">Vendor</a>
+                            <a class="nav-link" id="Vendor-info-tab" data-bs-toggle="tab"
+                                href="#Vendor-info">Vendor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Reviews (3)</a>
+                            <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Reviews ({{ count($reviewCount) }})</a>
                         </li>
                     </ul>
                     <div class="tab-content shop_info_tab entry-main-content">
                         <div class="tab-pane fade show active" id="Description">
                             <div class="tab-pane fade show active" id="Description">
-                            <div class="">
-                                {!! $product->long_desc !!}
+                                <div class="">
+                                    {!! $product->long_desc !!}
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <div class="tab-pane fade" id="Additional-info">
                             <table class="font-md">
@@ -274,17 +319,19 @@
                         </div>
                         <div class="tab-pane fade" id="Vendor-info">
                             <div class="vendor-logo d-flex mb-30">
-                                <img src="{{ (!empty($product->vendor->photo)) ? url('upload/vendor_images/'.$product->vendor->photo) : url('upload/no_image.jpg') }}" alt="" />
+                                <img src="{{ !empty($product->vendor->photo) ? url('upload/vendor_images/' . $product->vendor->photo) : url('upload/no_image.jpg') }}"
+                                    alt="" />
                                 <div class="vendor-name ml-15">
 
-                                    @if($product->vendor_id == NULL)
-                                    <h6>
-                                        <a href="#">Owner.</a>
-                                    </h6>
+                                    @if ($product->vendor_id == null)
+                                        <h6>
+                                            <a href="#">Owner.</a>
+                                        </h6>
                                     @else
-                                    <h4 class="mb-1">
-                                        <a href="#" class="text-danger">{{ ucwords($product->vendor->name) }}.</a>
-                                    </h4>
+                                        <h4 class="mb-1">
+                                            <a href="#"
+                                                class="text-danger">{{ ucwords($product->vendor->name) }}.</a>
+                                        </h4>
                                     @endif
                                     <div class="product-rate-cover text-end">
                                         <div class="product-rate d-inline-block">
@@ -294,21 +341,27 @@
                                     </div>
                                 </div>
                             </div>
-                             @if($product->vendor_id == NULL)
+                            @if ($product->vendor_id == null)
                                 <ul class="contact-infor mb-20">
-                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}" alt="" /><strong>Address: </strong> <span></span></li>
-                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Vendor PhoneNo: </strong><span></span></li>
+                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}"
+                                            alt="" /><strong>Address: </strong> <span></span></li>
+                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}"
+                                            alt="" /><strong>Vendor PhoneNo: </strong><span></span></li>
                                 </ul>
-                             @else
+                            @else
                                 <ul class="contact-infor mb-20">
-                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}"  alt="" /><strong>Address: </strong> <span>{{ $product['vendor']['address'] }}</span></li>
-                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Vendor PhoneNo: </strong><span>(+977) {{ $product['vendor']['phone'] }}</span></li>
+                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}"
+                                            alt="" /><strong>Address: </strong>
+                                        <span>{{ $product['vendor']['address'] }}</span></li>
+                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}"
+                                            alt="" /><strong>Vendor PhoneNo: </strong><span>(+977)
+                                            {{ $product['vendor']['phone'] }}</span></li>
                                 </ul>
                             @endif
-                            @if($product->vendor_id == NULL)
+                            @if ($product->vendor_id == null)
                                 <p>Owner Information</p>
                             @else
-                            <p style="text-align: justify">{{ $product['vendor']['vendor_short_info'] }}.</p>
+                                <p style="text-align: justify">{{ $product['vendor']['vendor_short_info'] }}.</p>
                             @endif
                         </div>
                         <div class="tab-pane fade" id="Reviews">
@@ -316,234 +369,245 @@
                             <div class="comments-area">
                                 <div class="row">
                                     <div class="col-lg-8">
-                                        <h4 class="mb-30">Customer questions & answers</h4>
+                                        <h4 class="mb-30">Customer Ratings and Reviews</h4>
                                         <div class="comment-list">
-                                            <div class="single-comment justify-content-between d-flex mb-30">
-                                                <div class="user justify-content-between d-flex">
-                                                    <div class="thumb text-center">
-                                                        <img src="assets/imgs/blog/author-2.png" alt="" />
-                                                        <a href="#" class="font-heading text-brand">Sienna</a>
-                                                    </div>
-                                                    <div class="desc">
-                                                        <div class="d-flex justify-content-between mb-10">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="font-xs text-muted">December 4, 2022 at 3:12 pm </span>
-                                                            </div>
-                                                            <div class="product-rate d-inline-block">
-                                                                <div class="product-rating" style="width: 100%"></div>
-                                                            </div>
-                                                        </div>
-                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="single-comment justify-content-between d-flex mb-30 ml-30">
-                                                <div class="user justify-content-between d-flex">
-                                                    <div class="thumb text-center">
-                                                        <img src="assets/imgs/blog/author-3.png" alt="" />
-                                                        <a href="#" class="font-heading text-brand">Brenna</a>
-                                                    </div>
-                                                    <div class="desc">
-                                                        <div class="d-flex justify-content-between mb-10">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="font-xs text-muted">December 4, 2022 at 3:12 pm </span>
-                                                            </div>
-                                                            <div class="product-rate d-inline-block">
-                                                                <div class="product-rating" style="width: 80%"></div>
-                                                            </div>
-                                                        </div>
-                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="single-comment justify-content-between d-flex">
-                                                <div class="user justify-content-between d-flex">
-                                                    <div class="thumb text-center">
-                                                        <img src="assets/imgs/blog/author-4.png" alt="" />
-                                                        <a href="#" class="font-heading text-brand">Gemma</a>
-                                                    </div>
-                                                    <div class="desc">
-                                                        <div class="d-flex justify-content-between mb-10">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="font-xs text-muted">December 4, 2022 at 3:12 pm </span>
-                                                            </div>
-                                                            <div class="product-rate d-inline-block">
-                                                                <div class="product-rating" style="width: 80%"></div>
+
+                                            @php 
+                                                $reviews = App\Models\Review::where('product_id', $product->id)->latest()->limit(5)->get();
+
+                                                $totalReviews = App\Models\Review::where('product_id', $product->id)->latest()->get();
+                                                $currentProductReviewCount = $totalReviews->count();
+                                            @endphp
+
+                                            @if($currentProductReviewCount == 0)
+                                                <p class="text-danger"><strong>No Reviews for this Product Yet.</strong></p>
+                                            @else
+                                                @foreach($reviews as $item)
+                                                    @if($item->status == 0) 
+                                                        <p class="text-danger"><strong>No Reviews yet.</strong></p>
+                                                    @elseif($item->status == 1) 
+                                                        <div class="single-comment justify-content-between d-flex mb-30">
+                                                            <div class="user justify-content-between d-flex">
+                                                                <div class="thumb text-center">
+                                                                    <img id="showImage" src="{{ !empty($item->user->photo) ? url('upload/user_images/' . $item->user->photo) : url('upload/no_image.jpg') }}" alt="image" width="60">
+                                                                    <br>
+                                                                    <a href="{{ route('dashboard') }}"class="font-heading text-brand">{{ $item->user->name }}</a>
+                                                                </div>
+                                                                <div class="desc">
+                                                                    <div class="d-flex justify-content-between mb-10">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <span class="font-xs text-muted">{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</span>
+                                                                        </div>
+
+                                                                        <div class="product-rate d-inline-block">
+                                                                            @if($item->rating != NULL)
+                                                                                <div class="product-rating" style="width: {{ $item->rating * 20 }}%"></div>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                    <p class="mb-10">{{ $item->comment }}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+
                                         </div>
                                     </div>
+
+                                   @php
+                                        $reviewCount = App\Models\Review::where('product_id', $product->id)->where('status', 1)->latest()->get();
+                                        $average = App\Models\Review::where('product_id', $product->id)->where('status', 1)->avg('rating');
+                                    @endphp
+
                                     <div class="col-lg-4">
                                         <h4 class="mb-30">Customer reviews</h4>
                                         <div class="d-flex mb-30">
                                             <div class="product-rate d-inline-block mr-15">
-                                                <div class="product-rating" style="width: 90%"></div>
+                                                <div class="product-rating" style="width: {{ round($average * 20) }}%"></div>
                                             </div>
-                                            <h6>4.8 out of 5</h6>
+                                            <h6>{{ number_format($average, 1) }} out of 5</h6>
                                         </div>
-                                        <div class="progress">
-                                            <span>5 star</span>
-                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
-                                        </div>
-                                        <div class="progress">
-                                            <span>4 star</span>
-                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                                        </div>
-                                        <div class="progress">
-                                            <span>3 star</span>
-                                            <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">45%</div>
-                                        </div>
-                                        <div class="progress">
-                                            <span>2 star</span>
-                                            <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>
-                                        </div>
-                                        <div class="progress mb-30">
-                                            <span>1 star</span>
-                                            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div>
-                                        </div>
-                                        <a href="#" class="font-xs text-muted">How are ratings calculated?</a>
+                                        @foreach([5, 4, 3, 2, 1] as $star)
+                                            <div class="progress mb-4">
+                                                <span>{{ $star }} star</span>
+                                                <div class="progress-bar" role="progressbar" style="width: {{ round(($reviewCount->where('rating', $star)->count() / $reviewCount->count()) * 100) }}%"
+                                                    aria-valuenow="{{ round(($reviewCount->where('rating', $star)->count() / $reviewCount->count()) * 100) }}"
+                                                    aria-valuemin="0" aria-valuemax="100">
+                                                    {{ round(($reviewCount->where('rating', $star)->count() / $reviewCount->count()) * 100) }}%
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <h5 class="font-xs text-secondary">{{ count($reviewCount) }} Customer Reviews</h5>
                                     </div>
+
                                 </div>
                             </div>
+
                             <!--comment form-->
                             <div class="comment-form">
                                 <h4 class="mb-15">Add a review</h4>
-                                <div class="product-rate d-inline-block mb-30"></div>
-                                <div class="row">
-                                    <div class="col-lg-8 col-md-12">
-                                        <form class="form-contact comment_form" action="#" id="commentForm">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>
+                                @guest
+                                    <p><strong class="text-danger">You need to login before adding product review. <a href="{{ route('login') }}">Login Here</a></strong></p>
+                                @else
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-12">
+                                            <form class="form-contact comment_form" action="{{ route('store.review') }}" method="POST" id="commentForm">
+                                                @csrf 
+                                                <div class="row">
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                                                @if ($product->vendor_id == NULL)
+                                                    <input type="hidden" name="hvendor_id" value="">
+                                                @else
+                                                    <input type="hidden" name="hvendor_id" value="{{ $product->vendor_id }}">
+                                                @endif
+                                                    
+                                                <table class="table" style="width: 50%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="cell-level">&nbsp;</th>
+                                                            <th>1 star</th>
+                                                            <th>2 star</th>
+                                                            <th>3 star</th>
+                                                            <th>4 star</th>
+                                                            <th>5 star</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="cell-level"><strong>Quality</strong></td>
+                                                            <td><input required="" type="radio" name="quality" class="radio-sm" value="1"></td>
+                                                            <td><input required="" type="radio" name="quality" class="radio-sm" value="2"></td>
+                                                            <td><input required="" type="radio" name="quality" class="radio-sm" value="3"></td>
+                                                            <td><input required="" type="radio" name="quality" class="radio-sm" value="4"></td>
+                                                            <td><input required="" type="radio" name="quality" class="radio-sm" value="5"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <textarea required="" class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
+                                                                placeholder="Write Comment"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <input class="form-control" name="name" id="name" type="text" placeholder="Name" />
-                                                    </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="button button-contactForm">Submit
+                                                        Review</button>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <input class="form-control" name="email" id="email" type="email" placeholder="Email" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <input class="form-control" name="website" id="website" type="text" placeholder="Website" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="button button-contactForm">Submit Review</button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
+                                </div> 
+                                @endguest
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-60">
-                <div class="col-12">
-                    <h2 class="section-title style-1 mb-30">Related products</h2>
-                </div>
-                <div class="col-12">
-                    <div class="row related-products">
+                <div class="row mt-60">
+                    <div class="col-12">
+                        <h2 class="section-title style-1 mb-30">Related products</h2>
+                    </div>
+                    <div class="col-12">
+                        <div class="row related-products">
 
-                      @forelse ($relatedProduct as $product)
-                    <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
-                        <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn"
-                            data-wow-delay=".1s">
-                            <div class="product-img-action-wrap">
-                                <div class="product-img product-img-zoom">
-                                    <a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">
-                                        <img class="default-img"
-                                            src = "{{ asset($product->product_thumbnail) }}"
-                                            alt="" />
-                                    </a>
-                                </div>
-                                <div class="product-action-1">
-                                    <a aria-label="Add To Wishlist" class="action-btn"
-                                        href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                    <a aria-label="Compare" class="action-btn" href="shop-compare.html"><i
-                                            class="fi-rs-shuffle"></i></a>
-                                    <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal"
-                                        data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
-                                </div>
-                            
-                            @php
-                                $amount =$product->selling_price - $product->discount_price;
-                                $discount = ($product->discount_price / $product->selling_price) * 100;
-                            @endphp
+                            @forelse ($relatedProduct as $product)
+                                <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                                    <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn"
+                                        data-wow-delay=".1s">
+                                        <div class="product-img-action-wrap">
+                                            <div class="product-img product-img-zoom">
+                                                <a
+                                                    href="{{ url('product/details/' . $product->id . '/' . $product->product_slug) }}">
+                                                    <img class="default-img"
+                                                        src = "{{ asset($product->product_thumbnail) }}"
+                                                        alt="" />
+                                                </a>
+                                            </div>
+                                            <div class="product-action-1">
+                                                <a aria-label="Add To Wishlist" class="action-btn" href=""><i
+                                                        class="fi-rs-heart"></i></a>
+                                                <a aria-label="Compare" class="action-btn" href=""><i
+                                                        class="fi-rs-shuffle"></i></a>
+                                                <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
+                                            </div>
 
-                                <div class="product-badges product-badges-position product-badges-mrg">
-                                    @if ($product->discount_price == NULL)
-                                        <span class="new">New</span>
-                                    @else    
-                                        <span class="hot">{{ round($discount) }} %</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="product-content-wrap">
-                                <div class="product-category">
-                                    <a href="shop-grid-right.html">{{ $product['category']['category_name'] }}</a>
-                                </div>
-                                <h2><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
-                                <div class="product-rate-cover">
-                                    <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 90%"></div>
-                                    </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
-                                </div>
-                                <div>
-                                    @if ($product->vendor_id == NULL)
-                                    <span class="font-small text-muted">By <a
-                                            href="vendor-details-1.html">Admin</a></span>
-                                    @else
-                                    <span class="font-small text-muted">By <a
-                                        href="vendor-details-1.html">{{ $product['vendor']['name'] }}</a></span>
-                                    @endif
-                                </div>
-                                <div class="product-card-bottom">
-                                    @if ($product->discount_price == NULL)
-                                        <div class="product-price">
-                                            <span>Rs. {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', '') }}</span>
-                                        </div>
-                                    @else
-                                        <div class="product-price">
                                             @php
-                                                $discountedPrice = $product->selling_price - $product->discount_price;
+                                                $amount = $product->selling_price - $product->discount_price;
+                                                $discount = ($product->discount_price / $product->selling_price) * 100;
                                             @endphp
-                                            <span>Rs. {{ $discountedPrice % 1 === 0 ? number_format($discountedPrice) : number_format($discountedPrice, 2, '.', '') }}</span>
-                                            <span class="old-price">Rs. {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', '') }}</span>
-                                        </div>
-                                    @endif
 
-                                    
-                                    <div class="add-cart">
-                                        <a class="add" href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}" ><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                            <div class="product-badges product-badges-position product-badges-mrg">
+                                                @if ($product->discount_price == null)
+                                                    <span class="new">New</span>
+                                                @else
+                                                    <span class="hot">{{ round($discount) }} %</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="product-content-wrap">
+                                            <div class="product-category">
+                                                <a href="">{{ $product['category']['category_name'] }}</a>
+                                            </div>
+                                            <h2><a
+                                                    href="{{ url('product/details/' . $product->id . '/' . $product->product_slug) }}">{{ $product->product_name }}</a>
+                                            </h2>
+                                            <div class="product-rate-cover">
+                                                <div class="product-rate d-inline-block">
+                                                    <div class="product-rating" style="width: 90%"></div>
+                                                </div>
+                                                <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                            </div>
+                                            <div>
+                                                @if ($product->vendor_id == null)
+                                                    <span class="font-small text-muted">By <a
+                                                            href="">Admin</a></span>
+                                                @else
+                                                    <span class="font-small text-muted">By <a
+                                                            href="">{{ $product['vendor']['name'] }}</a></span>
+                                                @endif
+                                            </div>
+                                            <div class="product-card-bottom">
+                                                @if ($product->discount_price == null)
+                                                    <div class="product-price">
+                                                        <span>Rs.
+                                                            {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', '') }}</span>
+                                                    </div>
+                                                @else
+                                                    <div class="product-price">
+                                                        @php
+                                                            $discountedPrice = $product->selling_price - $product->discount_price;
+                                                        @endphp
+                                                        <span>Rs.
+                                                            {{ $discountedPrice % 1 === 0 ? number_format($discountedPrice) : number_format($discountedPrice, 2, '.', '') }}</span>
+                                                        <span class="old-price">Rs.
+                                                            {{ $product->selling_price % 1 === 0 ? number_format($product->selling_price) : number_format($product->selling_price, 2, '.', '') }}</span>
+                                                    </div>
+                                                @endif
+
+
+                                                <div class="add-cart">
+                                                    <a class="add"
+                                                        href="{{ url('product/details/' . $product->id . '/' . $product->product_slug) }}"><i
+                                                            class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end product card-->
-                    @empty
-                        <h5 class="text-danger">No Product Found</h5>
+                                <!--end product card-->
+                            @empty
+                                <h5 class="text-danger">No Product Found</h5>
+                            @endforelse
 
-                    @endforelse
-                        
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 @endsection
