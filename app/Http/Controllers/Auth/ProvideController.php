@@ -31,10 +31,11 @@ class ProvideController extends Controller
 
 
         // If the user doesn't exist, create a new user
-        $user = User::updateOrCreate([
+        $user = User::Create([
             'name' => $socialUser->name,
             'username' => User::generateUserNameFromName($socialUser->name),
             'email' => $socialUser->email,
+            'password' => 'password',
             'provider' => $provider,
             'provider_id' => $socialUser->id,
             'provider_token' => $socialUser->token,

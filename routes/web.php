@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\ProvideController;
 use App\Http\Controllers\Backend\ActiveUserController;
 use App\Http\Controllers\Backend\BannerController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Backend\BrandController;
@@ -351,8 +352,43 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/all/user', 'AllUser')->name('all.user');
         Route::get('/all/vendor', 'AllVendor')->name('all.vendor');
     });
+
+
+    // BLOG CATEGORY AND BLOG POSTS
+    Route::controller(BlogController::class)->group(function () {
+        // START BLOG CATEGORY
+        Route::get('/admin/all/blog/category', 'AllBlogCategory')->name('all.blog.category');
+        Route::get('/admin/add/blog/category', 'AddBlogCategory')->name('add.blog.category');
+        Route::post('/admin/store/blog/category', 'StoreBlogCategory')->name('store.blog.category');
+        Route::get('/admin/edit/blog/category/{id}', 'EditBlogCategory')->name('edit.blog.category');
+        Route::post('/admin/update/blog/category', 'UpdateBlogCategory')->name('update.blog.category');
+        Route::get('/admin/delete/blog/category/{id}', 'DeleteBlogCategory')->name('delete.blog.category');
+        // END BLOG CATEGORY
+
+
+        // START BLOG POSTS
+        Route::get('/admin/all/blog/posts', 'AllBlogPosts')->name('all.blog.posts'); 
+        Route::get('/admin/add/blog/post', 'AddBlogPost')->name('add.blog.post');
+        Route::post('/admin/store/blog/post', 'StoreBlogPost')->name('store.blog.post');
+        Route::get('/admin/edit/blog/post/{id}', 'EditBlogPost')->name('edit.blog.post');
+        Route::post('/admin/update/blog/post', 'UpdateBlogPost')->name('update.blog.post');
+        Route::get('/admin/delete/blog/post/{id}', 'DeleteBlogPost')->name('delete.blog.post');
+
+        // END BLOG CATEGORY
+    });
+
+
 });
 // end admin middleware
+
+
+// BLOG FRONTEND -> VIEW
+Route::controller(BlogController::class)->group(function () {
+    Route::get('/blog', 'AllBlog')->name('home.blog'); 
+    Route::get('/post/details/{id}/{slug}', 'BlogDetails'); 
+    Route::get('/post/category/{id}/{slug}', 'PostCategory'); 
+});
+
 
 
 // Product Quickview Modal With Ajax

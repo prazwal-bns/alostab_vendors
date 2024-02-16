@@ -87,7 +87,7 @@
                                             </div>
 
                                             @if($errors->has('email') || $errors->has('password'))
-                                                <p class="message text-danger"><strong>Username or Password Didn't match. Please Try again.</strong></p>
+                                                <p class="" style="color: rgb(255, 0, 0);">Username or Password Didn't match. Please Try again.</p>
                                                 <br/>
                                             @endif
                                     

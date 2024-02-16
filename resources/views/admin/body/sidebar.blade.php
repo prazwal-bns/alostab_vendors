@@ -279,6 +279,17 @@
             </ul>
         </li>
         <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-donate-blood"></i>
+                </div>
+                <div class="menu-title">Manage Blogs</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('all.blog.category') }}"><i class="bx bx-right-arrow-alt"></i>All Blog Categories</a></li>
+                <li> <a href="{{ route('all.blog.posts') }}"><i class="bx bx-right-arrow-alt"></i>All Blog Posts</a></li>
+            </ul>
+        </li>
+        <li>
 
         <li class="menu-label">Charts & Maps</li>
         <li>
