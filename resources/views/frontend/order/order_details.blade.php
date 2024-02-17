@@ -1,5 +1,10 @@
 @extends('dashboard')
 @section('user')
+
+@section('title')
+    Order | Details   
+@endsection
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <div class="page-header breadcrumb-wrap">
         <div class="container">

@@ -1,5 +1,12 @@
 @extends('frontend.master_dashboard')
 @section('main')
+
+@section('title')
+    @foreach ($breadCat as $cat)
+        {{ $cat->blog_category_name }} | Blog Category
+    @endforeach 
+@endsection
+
 <div class="page-header mt-30 mb-75">
     <div class="container">
         <div class="archive-header">
@@ -98,23 +105,7 @@
                     </article>
                     @endforeach
                 </div>
-                <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-start">
-                            <li class="page-item">
-                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-left"></i></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#"><i class="fi-rs-arrow-small-right"></i></a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                
             </div>
             <div class="col-lg-3 primary-sidebar sticky-sidebar">
                 <div class="widget-area">
@@ -136,7 +127,7 @@
                                 $posts = App\Models\BlogPost::where('category_id',$category->id)->get();
                             @endphp
                             <li>
-                                <a href="#"> <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-hot.svg') }}" alt="" />{{ $category->blog_category_name }}</a><span class="count">{{count($posts)}}</span>
+                                <a href="href="{{ url('post/category/'.$category->id.'/'.$category->blog_category_slug) }}""> <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-hot.svg') }}" alt="" />{{ $category->blog_category_name }}</a><span class="count">{{count($posts)}}</span>
                             </li>
                             @endforeach
                         </ul>

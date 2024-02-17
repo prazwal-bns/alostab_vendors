@@ -1,5 +1,10 @@
 @extends('frontend.master_dashboard')
 @section('main')
+
+@section('title')
+    Stripe | Payment  
+@endsection
+
 <style>
     .StripeElement {
     box-sizing: border-box;

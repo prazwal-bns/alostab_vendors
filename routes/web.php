@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\ReturnOrderController;
 use App\Http\Controllers\Backend\ShippingController;
+use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorOrderController;
@@ -390,6 +391,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/published/review', 'PublishedReview')->name('published.review');
 
         Route::get('/delete/review/{id}', 'DeleteReview')->name('delete.review');
+    });
+
+
+    // SITE SETTINGS FOOTER LOGO BACKEND -> ADMIN VIEW
+    Route::controller(SiteSettingController::class)->group(function () {
+        Route::get('/site/setting', 'SiteSetting')->name('site.setting');
+        Route::post('/site/setting/update', 'SiteSettingUpdate')->name('site.setting.update');
+
+        Route::get('/seo/setting', 'SeoSetting')->name('seo.setting');
+        Route::post('/seo/setting/update', 'SeoSettingUpdate')->name('seo.setting.update');
+        
     });
 
 });

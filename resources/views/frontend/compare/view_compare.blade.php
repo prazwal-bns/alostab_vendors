@@ -1,19 +1,10 @@
 @extends('frontend.master_dashboard')
 @section('main')
-<style>
-    .table-compare tr {
-        border-bottom: 2px solid black; /* Add a border at the bottom of each table row */
-    }
 
-    .table-compare td {
-    border: 2px solid black; /* Add a border at the bottom of each table row */
-    }
+@section('title')
+    Compare | Product  
+@endsection
 
-    /* Optional: To remove border from the last row */
-    .table-compare tr:last-child {
-        border-bottom: none;
-    }
-</style>
 <div class="page-header breadcrumb-wrap">
     <div class="container">
         <div class="breadcrumb">
@@ -28,8 +19,8 @@
             <h1 class="heading-2 mb-10">Products Compare</h1>
             <h6 class="text-body mb-40">There are <span class="text-brand" id="compareAmt"></span> products to compare</h6>
             <div class="table-responsive">
-                <table class="table text-center table-compare" style="border: 3px solid black;">
-                    <tbody id="compare" style="border: 2px solid black;">
+                <table class="table text-center table-compare" style="border: 1px solid rgb(108, 108, 108);">
+                    <tbody id="compare" style="border: 1px solid black;">
                         
                     </tbody>
                 </table>

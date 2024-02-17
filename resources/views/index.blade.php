@@ -1,10 +1,15 @@
 @extends('dashboard')
 @section('user')
+
+@section('title')
+   My Account 
+@endsection
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <a href="" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
                 <span></span> My Account
             </div>
         </div>

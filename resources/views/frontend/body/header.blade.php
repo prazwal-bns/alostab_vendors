@@ -1,4 +1,12 @@
 <header class="header-area header-style-1 header-height-2">
+@php
+    $userData = null;
+    if (Auth::check()) {
+        $id = Auth::user()->id; 
+        $userData = App\Models\User::find($id); 
+    }
+@endphp
+
     <div class="mobile-promotion">
         <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
     </div>
@@ -64,8 +72,11 @@
         <div class="container">
             <div class="header-wrap">
                 <div class="logo logo-width-1">
-                    <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
-                            alt="logo" /></a>
+                    @php 
+                        $setting = App\Models\SiteSetting::find(1);
+                    @endphp
+                    {{-- <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a> --}}
+                    <a href="/"><img src = "{{ asset($setting->logo) }}" alt="logo" /></a>
                 </div>
                 <div class="header-right">
                     <div class="search-style-2">
@@ -79,7 +90,7 @@
                     </div>
                     <div class="header-action-right">
                         <div class="header-action-2">
-                            <div class="search-location">
+                            {{-- <div class="search-location">
                                 <form action="#">
                                     <select class="select-active">
                                         <option>Your Location</option>
@@ -98,7 +109,7 @@
                                         <option>New York</option>
                                     </select>
                                 </form>
-                            </div>
+                            </div> --}}
 
                             <div class="header-action-icon-2">
                                 <a href="{{ route('wishlist') }}">
@@ -142,42 +153,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="">
-                                <a href="">
-                                    <img class="svgInject" alt="Nest"
-                                        src = "{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
+
+                            <div class="header-action-icon-2 header-action-icon-apple">
+                                <a href="{{ route('dashboard') }}" style="padding-right: 5px">
+                                    <img id="showImage" src="{{ !empty($userData->photo) ? url('upload/'.$userData->role.'_images/'.$userData->photo) : asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" alt="User Image" class="rounded-circle">
+
                                 </a>
                                 @auth
-                                    <a href="{{ route('dashboard') }}"><span class="lable ml-0">Account</span></a>
-                                    <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                                        <ul>
-                                            <li>
-                                                <a href="{{ route('dashboard') }}"><i class="fi fi-rs-user mr-10"></i>My
-                                                    Account</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('dashboard') }}"><i
-                                                        class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('dashboard') }}"><i class="fi fi-rs-label mr-10"></i>My
-                                                    Voucher</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('dashboard') }}"><i class="fi fi-rs-heart mr-10"></i>My
-                                                    Wishlist</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('dashboard') }}"><i
-                                                        class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('user.logout') }}"><i
-                                                        class="fi fi-rs-sign-out mr-10"></i>Sign
-                                                    out</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <a style="padding-top: 5px;" href="{{ route('dashboard') }}"><span class="lable ml-0">Account</span></a>
                                 @else
                                     <a href="{{ route('login') }}"><span class="lable ml-0">Login </span></a>
                                     <span class="lable" style="margin-left: 3px; margin-right: 3px;"> | </span></a>
@@ -250,7 +233,7 @@
                                 {{-- <ul class="end">
                                     @foreach ($categories as $item)
                                         <li>
-                                            <a href="shop-grid-right.html"> <img
+                                            <a href=""> <img
                                                     src = "{{ asset($item->category_image) }}"
                                                     alt="" />{{ $item->category_name }}</a>
                                         </li>
@@ -261,19 +244,19 @@
                                 <div class="d-flex categori-dropdown-inner">
                                     <ul>
                                         <li>
-                                            <a href="shop-grid-right.html"> <img
+                                            <a href="#"> <img
                                                     src = "{{ asset('frontend/assets/imgs/theme/icons/icon-1.svg') }}"
                                                     alt="" />Milks and Dairies</a>
                                         </li>
                                     </ul>
                                     <ul class="end">
                                         <li>
-                                            <a href="shop-grid-right.html"> <img
+                                            <a href="#"> <img
                                                     src = "{{ asset('frontend/assets/imgs/theme/icons/icon-3.svg') }}"
                                                     alt="" />Wines & Drinks</a>
                                         </li>
                                         <li>
-                                            <a href="shop-grid-right.html"> <img
+                                            <a href="#"> <img
                                                     src = "{{ asset('frontend/assets/imgs/theme/icons/icon-4.svg') }}"
                                                     alt="" />Fresh Seafood</a>
                                         </li>
@@ -335,7 +318,7 @@
 
                 <div class="hotline d-none d-lg-flex">
                     <img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-headphone.svg') }}" alt="hotline" />
-                    <p>587469<span>24/7 Support Center</span></p>
+                    <p>{{ $setting->support_phone }}<span class="mt-1">24/7 Support Center</span></p>
                 </div>
                 <div class="header-action-icon-2 d-block d-lg-none">
                     <div class="burger-icon burger-icon-white">
@@ -363,11 +346,11 @@
                                 <ul>
                                     <li>
                                         <div class="shopping-cart-img">
-                                            <a href="shop-product-right.html"><img alt="Nest"
+                                            <a href="#"><img alt="Nest"
                                                     src = "{{ asset('frontend/assets/imgs/shop/thumbnail-3.jpg') }}" /></a>
                                         </div>
                                         <div class="shopping-cart-title">
-                                            <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
+                                            <h4><a href="#">Plain Striola Shirts</a></h4>
                                             <h3><span>1 × </span>$800.00</h3>
                                         </div>
                                         <div class="shopping-cart-delete">
@@ -376,11 +359,11 @@
                                     </li>
                                     <li>
                                         <div class="shopping-cart-img">
-                                            <a href="shop-product-right.html"><img alt="Nest"
+                                            <a href="#"><img alt="Nest"
                                                     src = "{{ asset('frontend/assets/imgs/shop/thumbnail-4.jpg') }}" /></a>
                                         </div>
                                         <div class="shopping-cart-title">
-                                            <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
+                                            <h4><a href="#">Macbook Pro 2022</a></h4>
                                             <h3><span>1 × </span>$3500.00</h3>
                                         </div>
                                         <div class="shopping-cart-delete">
@@ -393,8 +376,8 @@
                                         <h4>Total <span>$383.00</span></h4>
                                     </div>
                                     <div class="shopping-cart-button">
-                                        <a href="shop-cart.html">View cart</a>
-                                        <a href="shop-checkout.html">Checkout</a>
+                                        <a href="#">View cart</a>
+                                        <a href="#">Checkout</a>
                                     </div>
                                 </div>
                             </div>
@@ -410,7 +393,7 @@
     <div class="mobile-header-wrapper-inner">
         <div class="mobile-header-top">
             <div class="mobile-header-logo">
-                <a href="index.html"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
+                <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
                         alt="logo" /></a>
             </div>
             <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
@@ -432,40 +415,40 @@
                 <nav>
                     <ul class="mobile-menu font-heading">
                         <li class="menu-item-has-children">
-                            <a href="index.html">Home</a>
+                            <a href="/">Home</a>
 
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="shop-grid-right.html">shop</a>
+                            <a href="#">shop</a>
                             <ul class="dropdown">
-                                <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
-                                <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
-                                <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
-                                <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
-                                <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
+                                <li><a href="#">Shop Grid – Right Sidebar</a></li>
+                                <li><a href="#">Shop Grid – Left Sidebar</a></li>
+                                <li><a href="#">Shop List – Right Sidebar</a></li>
+                                <li><a href="#">Shop List – Left Sidebar</a></li>
+                                <li><a href="#">Shop - Wide</a></li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Single Product</a>
                                     <ul class="dropdown">
-                                        <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
-                                        <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
-                                        <li><a href="shop-product-full.html">Product – No sidebar</a></li>
-                                        <li><a href="shop-product-vendor.html">Product – Vendor Infor</a></li>
+                                        <li><a href="#">Product – Right Sidebar</a></li>
+                                        <li><a href="#">Product – Left Sidebar</a></li>
+                                        <li><a href="#">Product – No sidebar</a></li>
+                                        <li><a href="#">Product – Vendor Infor</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="shop-filter.html">Shop – Filter</a></li>
+                                <li><a href="#">Shop – Filter</a></li>
                                 <li><a href="">Shop – Wishlist</a></li>
-                                <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                <li><a href="shop-compare.html">Shop – Compare</a></li>
+                                <li><a href="#">Shop – Cart</a></li>
+                                <li><a href="#">Shop – Checkout</a></li>
+                                <li><a href="#">Shop – Compare</a></li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Shop Invoice</a>
                                     <ul class="dropdown">
-                                        <li><a href="shop-invoice-1.html">Shop Invoice 1</a></li>
-                                        <li><a href="shop-invoice-2.html">Shop Invoice 2</a></li>
-                                        <li><a href="shop-invoice-3.html">Shop Invoice 3</a></li>
-                                        <li><a href="shop-invoice-4.html">Shop Invoice 4</a></li>
-                                        <li><a href="shop-invoice-5.html">Shop Invoice 5</a></li>
-                                        <li><a href="shop-invoice-6.html">Shop Invoice 6</a></li>
+                                        <li><a href="#">Shop Invoice 1</a></li>
+                                        <li><a href="#">Shop Invoice 2</a></li>
+                                        <li><a href="#">Shop Invoice 3</a></li>
+                                        <li><a href="#">Shop Invoice 4</a></li>
+                                        <li><a href="#">Shop Invoice 5</a></li>
+                                        <li><a href="#">Shop Invoice 6</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -477,45 +460,45 @@
                                 <li class="menu-item-has-children">
                                     <a href="#">Women's Fashion</a>
                                     <ul class="dropdown">
-                                        <li><a href="shop-product-right.html">Dresses</a></li>
-                                        <li><a href="shop-product-right.html">Blouses & Shirts</a></li>
-                                        <li><a href="shop-product-right.html">Hoodies & Sweatshirts</a></li>
-                                        <li><a href="shop-product-right.html">Women's Sets</a></li>
+                                        <li><a href="#">Dresses</a></li>
+                                        <li><a href="#">Blouses & Shirts</a></li>
+                                        <li><a href="#">Hoodies & Sweatshirts</a></li>
+                                        <li><a href="#">Women's Sets</a></li>
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Men's Fashion</a>
                                     <ul class="dropdown">
-                                        <li><a href="shop-product-right.html">Jackets</a></li>
-                                        <li><a href="shop-product-right.html">Casual Faux Leather</a></li>
-                                        <li><a href="shop-product-right.html">Genuine Leather</a></li>
+                                        <li><a href="#">Jackets</a></li>
+                                        <li><a href="#">Casual Faux Leather</a></li>
+                                        <li><a href="#">Genuine Leather</a></li>
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Technology</a>
                                     <ul class="dropdown">
-                                        <li><a href="shop-product-right.html">Gaming Laptops</a></li>
-                                        <li><a href="shop-product-right.html">Ultraslim Laptops</a></li>
-                                        <li><a href="shop-product-right.html">Tablets</a></li>
-                                        <li><a href="shop-product-right.html">Laptop Accessories</a></li>
-                                        <li><a href="shop-product-right.html">Tablet Accessories</a></li>
+                                        <li><a href="#">Gaming Laptops</a></li>
+                                        <li><a href="#">Ultraslim Laptops</a></li>
+                                        <li><a href="#">Tablets</a></li>
+                                        <li><a href="#">Laptop Accessories</a></li>
+                                        <li><a href="#">Tablet Accessories</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="blog-category-fullwidth.html">Blog</a>
+                            <a href="#">Blog</a>
                             <ul class="dropdown">
-                                <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
-                                <li><a href="blog-category-list.html">Blog Category List</a></li>
-                                <li><a href="blog-category-big.html">Blog Category Big</a></li>
-                                <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
+                                <li><a href="#">Blog Category Grid</a></li>
+                                <li><a href="#">Blog Category List</a></li>
+                                <li><a href="#">Blog Category Big</a></li>
+                                <li><a href="#">Blog Category Wide</a></li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Single Product Layout</a>
                                     <ul class="dropdown">
-                                        <li><a href="blog-post-left.html">Left Sidebar</a></li>
-                                        <li><a href="blog-post-right.html">Right Sidebar</a></li>
-                                        <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
+                                        <li><a href="#">Left Sidebar</a></li>
+                                        <li><a href="#">Right Sidebar</a></li>
+                                        <li><a href="#">No Sidebar</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -551,10 +534,10 @@
             </div>
             <div class="mobile-header-info-wrap">
                 <div class="single-mobile-header-info">
-                    <a href="page-contact.html"><i class="fi-rs-marker"></i> Our location </a>
+                    <a href=""><i class="fi-rs-marker"></i> Our location </a>
                 </div>
                 <div class="single-mobile-header-info">
-                    <a href="page-login.html"><i class="fi-rs-user"></i>Log In / Sign Up </a>
+                    <a href=""><i class="fi-rs-user"></i>Log In / Sign Up </a>
                 </div>
                 <div class="single-mobile-header-info">
                     <a href="#"><i class="fi-rs-headphones"></i>(+01) - 2345 - 6789 </a>

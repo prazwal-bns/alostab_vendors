@@ -1,5 +1,10 @@
 @extends('frontend.master_dashboard')
 @section('main')
+
+@section('title')
+    Blog | Page  
+@endsection
+
 <div class="page-header mt-30 mb-75">
     <div class="container">
         <div class="archive-header">
@@ -75,7 +80,7 @@
                                 $posts = App\Models\BlogPost::where('category_id',$category->id)->get();
                             @endphp
                             <li>
-                                <a href="#"> <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-hot.svg') }}" alt="" />{{ $category->blog_category_name }}</a><span class="count">{{count($posts)}}</span>
+                                <a href="{{ url('post/category/'.$category->id.'/'.$category->blog_category_slug) }}"> <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-hot.svg') }}" alt="" />{{ $category->blog_category_name }}</a><span class="count">{{count($posts)}}</span>
                             </li>
                             @endforeach
                         </ul>

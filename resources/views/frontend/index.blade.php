@@ -1,6 +1,10 @@
 @extends('frontend.master_dashboard')
 @section('main')
 
+@section('title')
+    Home | Alostab Vendors
+@endsection
+
 @include('frontend.home.home_slider')
 <!--End hero slider-->
 

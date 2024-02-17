@@ -302,6 +302,19 @@
                 <li> <a href="{{ route('published.review') }}"><i class="bx bx-right-arrow-alt"></i>Published Review</a></li>
             </ul>
         </li>
+
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-cart"></i>
+                </div>
+                <div class="menu-title">Manage Site Settings</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('site.setting') }}"><i class="bx bx-right-arrow-alt"></i>Site Setting</a></li>
+                <li> <a href="{{ route('seo.setting') }}"><i class="bx bx-right-arrow-alt"></i>SEO Setting</a></li>
+            </ul>
+        </li>
+
         <li>
 
         <li class="menu-label">Charts & Maps</li>

@@ -7190,6 +7190,11 @@ h6.post-title {
   max-width: 25px;
 }
 
+.header-action-2 .header-action-icon-apple>a img {
+  width: 100%;
+  max-width: 40px;
+}
+
 .header-action-2 .header-action-icon-2 > a span {
   font-size: 14px;
   color: #7E7E7E;

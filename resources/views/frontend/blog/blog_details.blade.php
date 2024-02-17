@@ -1,5 +1,10 @@
 @extends('frontend.master_dashboard')
 @section('main')
+
+@section('title')
+    {{ $blogDetails->post_title }} | Blog   
+@endsection
+
 @php 
     $comments = App\Models\BlogComment::where('blog_id', $blogDetails->id)->latest()->limit(5)->get();
 
