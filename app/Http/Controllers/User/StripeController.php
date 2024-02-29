@@ -8,6 +8,7 @@ use App\Models\ShipCity;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
+use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -159,19 +160,23 @@ class StripeController extends Controller
         ]);
 
         // START -> SEND MAIL
-        $invoice = Order::findOrFail($order_id);
-        $data = [
-            'invoice_no' => $invoice->invoice_number,
-            'amount' => $total_amount,
-            'discount_amount' => $discount_amount,
-            'name' => $invoice->name,
-            'email' => $invoice->email,
-            'address' => $invoice->address,
-            'order_date' => $invoice->order_date,
-        ];
+        try {
+            $invoice = Order::findOrFail($order_id);
+            $data = [
+                'invoice_no' => $invoice->invoice_number,
+                'amount' => $total_amount,
+                'discount_amount' => $discount_amount,
+                'name' => $invoice->name,
+                'email' => $invoice->email,
+                'address' => $invoice->address,
+                'order_date' => $invoice->order_date,
+            ];
 
-        Mail::to($request->email)->send(new OrderMail($data));
+            Mail::to($request->email)->send(new OrderMail($data));
 
+        } catch(Exception $e) {
+            // dd($e);
+        }
         // END -> SEND MAIL
 
 

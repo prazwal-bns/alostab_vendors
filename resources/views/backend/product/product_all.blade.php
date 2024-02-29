@@ -15,7 +15,9 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
+                @if(Auth::user()->canAll('product.add'))
                 <a class="btn btn-success" href="{{route('add.product')}}">Add Product</a>
+                @endif
             </div>
         </div>
     </div>
@@ -53,7 +55,7 @@
                                     // $amount = $item->selling_price - $item->discount_price;
                                     $discount = ($item->discount_price/$item->selling_price) * 100;
                                 @endphp
-                                    <span class="badge rounded-pill bg-danger"> {{round($discount)}} %</span>
+                                    <span class="badge bg-danger" style="font-size: 12px;"> {{round($discount)}} %</span>
                                 @endif
                             </td>
                             <td> @if($item->status ==1)
@@ -63,10 +65,15 @@
                                 @endif
                             </td>
                             <td>
+                                @if(Auth::user()->canAll('product.edit'))
                                 <a href="{{route('edit.product', $item->id)}}" class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i></a>
-                                <a href="{{route('delete.product', $item->id)}}" id="delete" class="btn btn-danger" title="Delete Data"><i class="fa fa-trash"></i></a>
+                                @endif
 
-                                <a href="{{route('edit.category', $item->id)}}" class="btn btn-warning" title="Details"><i class="fa fa-eye"></i></a>
+                                @if(Auth::user()->canAll('product.delete'))
+                                <a href="{{route('delete.product', $item->id)}}" id="delete" class="btn btn-danger" title="Delete Data"><i class="fa fa-trash"></i></a>
+                                @endif
+
+                                {{-- <a href="" class="btn btn-warning" title="Details"><i class="fa fa-eye"></i></a> --}}
                                 
                                 @if($item->status ==1)
                                     <a href="{{route('inactive.product', $item->id)}}" class="btn btn-danger" title="Inactive"><i class="fa-solid fa-thumbs-down"></i></a>

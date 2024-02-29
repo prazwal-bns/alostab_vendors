@@ -8,6 +8,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 
 class AdminController extends Controller
@@ -145,4 +148,130 @@ class AdminController extends Controller
         return redirect()->route('inactive.vendor')->with($notification);
     }
     //end func
+
+    // -----------> ALL ADMINS (Add and All admin user) METHOD <------------------
+    public function AllAdmin(){
+        $allAdminUser = User::where('role','admin')->latest()->get();
+        return view('backend.admin.all_admin',compact('allAdminUser'));
+    }
+    // END FUNCTION
+
+    public function AddAdmin(){
+        $roles = Role::all();
+        return view('backend.admin.add_admin',compact('roles'));
+    }
+    // ENd FUNCTION
+
+
+    public function AdminUserStore(Request $request){
+        $user = new User();
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->password = Hash::make($request->password);
+        $user->role = 'admin';
+        $user->status = 'active';
+        $user->save();
+
+        // if($request->roles){
+        //     $user->assignRole($request->roles);
+        // }
+
+        // Manual / alternative approach -> 
+        if ($request->roles) {
+            // Convert string to array if it's not already an array
+            $roles = is_array($request->roles) ? $request->roles : [$request->roles];
+
+            // Iterate through each role and associate it with the user
+            foreach ($roles as $roleId) {
+                DB::table('model_has_roles')->insert([
+                    'role_id' => $roleId,
+                    'model_type' => 'App\Models\User',
+                    'model_id' => $user->id,
+                ]);
+            }
+        }
+
+        $notification = array(
+            'message' => 'New Admin User Added Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('all.admin')->with($notification);
+    }
+    // ENd FUNCTION
+
+    public function EditAdminRole($id){
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+
+        return view('backend.admin.edit_admin', compact('user','roles')); 
+    }
+    // ENd FUNCTION
+
+    public function AdminUserUpdate(Request $request, $id)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Update user attributes with data from the request
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+
+        // Save the updated user record
+        $user->save();
+
+
+
+        // GIVES ERROR
+        // if($request->roles){
+        //     $user->assignRole($request->roles);
+        // }
+
+
+        // Alternative approach ->
+
+        // Convert string to array if it's not already an array
+        $roles = is_array($request->roles) ? $request->roles : explode(',', $request->roles);
+
+        // Remove all existing roles associated with the user
+        DB::table('model_has_roles')->where('model_id', $user->id)->delete();
+
+        // Add the new roles provided in the request
+        foreach ($roles as $roleId) {
+            DB::table('model_has_roles')->insert([
+                'role_id' => $roleId,
+                'model_type' => 'App\Models\User', 
+                'model_id' => $user->id,
+            ]);
+        }
+
+        // Redirect back with a success message
+        $notification = [
+            'message' => 'Admin User Updated Successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('all.admin')->with($notification);
+    }
+
+    // END FUNCTION
+
+    public function DeleteAdminRole($id){
+        $user = User::findOrFail($id);
+        if(!is_null($user)){
+            $user->delete();
+        }
+        $notification = [
+            'message' => 'Admin User Deleted Successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
+    }
+    // END FUNCTION
 }

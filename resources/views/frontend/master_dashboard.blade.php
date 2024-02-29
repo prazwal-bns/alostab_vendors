@@ -100,9 +100,13 @@
     <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
+
     <!-- Template  JS -->
     <script src="{{ asset('frontend/assets/js/main.js?v=5.3') }}"></script>
     <script src="{{ asset('frontend/assets/js/shop.js?v=5.3') }}"></script>
+
+    {{-- PRODUCT SEARCH --}}
+    <script src="{{ asset('frontend/assets/js/script.js') }}"></script>
 
     {{-- Sweet alert for add to cart --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

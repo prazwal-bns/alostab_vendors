@@ -218,10 +218,6 @@
                                     href="#Description">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="Additional-info-tab" data-bs-toggle="tab"
-                                    href="#Additional-info">Additional info</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" id="Vendor-info-tab" data-bs-toggle="tab"
                                     href="#Vendor-info">Vendor</a>
                             </li>
@@ -238,7 +234,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="Additional-info">
+                            {{-- <div class="tab-pane fade" id="Additional-info">
                                 <table class="font-md">
                                     <tbody>
                                         <tr class="stand-up">
@@ -327,7 +323,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
                             <div class="tab-pane fade" id="Vendor-info">
                                 <div class="vendor-logo d-flex mb-30">
                                     <img src="{{ !empty($product->vendor->photo) ? url('upload/vendor_images/' . $product->vendor->photo) : url('upload/no_image.jpg') }}"
@@ -464,12 +460,6 @@
                                             @foreach ([5, 4, 3, 2, 1] as $star)
                                                 <div class="progress mb-4">
                                                     <span>{{ $star }} star</span>
-
-                                                    {{-- <div class="progress-bar" role="progressbar" style="width: {{ round(($reviewCount->where('rating', $star)->count() / $reviewCount->count()) * 100) }}%"
-                                                    aria-valuenow="{{ round(($reviewCount->where('rating', $star)->count() / $reviewCount->count()) * 100) }}"
-                                                    aria-valuemin="0" aria-valuemax="100">
-                                                    {{ round(($reviewCount->where('rating', $star)->count() / $reviewCount->count()) * 100) }}%
-                                                </div> --}}
 
                                                     <div class="progress-bar" role="progressbar"
                                                         style="width: {{ $reviewCount->count() > 0 ? round(($reviewCount->where('rating', $star)->count() / $reviewCount->count()) * 100) : 0 }}%"

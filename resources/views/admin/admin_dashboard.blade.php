@@ -60,7 +60,9 @@
     </div>
     <!--end wrapper-->
     <!--start switcher-->
-    @include('admin.body.switcher')
+
+    {{-- @include('admin.body.switcher') --}}
+    
     <!--end switcher-->
     <!-- Bootstrap JS -->
     <script src=" {{ asset('adminbackend/assets/js/bootstrap.bundle.min.js') }}"></script>

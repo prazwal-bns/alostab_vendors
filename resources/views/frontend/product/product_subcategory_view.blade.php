@@ -31,7 +31,7 @@
                 <div class="totall-product">
                     <p>We found <strong class="text-brand">{{ count($products) }}</strong> items for you!</p>
                 </div>
-                <div class="sort-by-product-area">
+                {{-- <div class="sort-by-product-area">
                     <div class="sort-by-cover mr-10">
                         <div class="sort-by-product-wrap">
                             <div class="sort-by">
@@ -70,7 +70,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             
             <div class="row product-grid">

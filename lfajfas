@@ -1,0 +1,137 @@
+[33mcommit 7cd8440417a295cda068fd3ac7eee8d233d309d5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Sat Feb 17 13:04:40 2024 +0545
+
+    Dynamic Title, Site Logo, footer,header & SEO
+
+[33mcommit d30dee52ad20aab18738c83a593888c928fb0cc4[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Fri Feb 16 22:39:09 2024 +0545
+
+    Finish Product Reviews Ratings & Blog Comments
+
+[33mcommit b12c48fb03dafc6bd48f5b58e1509f897cd02196[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Fri Feb 16 09:49:25 2024 +0545
+
+    Complete Blog Frontend & Backend
+
+[33mcommit 9ff5c948a97b25c74ff042cf683764ea933428b2[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Mon Feb 12 18:30:26 2024 +0545
+
+    Finish User and Vendor Details & Login Status
+
+[33mcommit ebe895f57b342c69e93a4f3c8021ced61ddc7438[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Sat Feb 10 10:39:44 2024 +0545
+
+    Return Orders, Admin->Vendor Order Status, View Order Details
+
+[33mcommit ed21adc270135c2e6c71f8972c331d7488becc1b[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Thu Feb 8 12:47:23 2024 +0545
+
+    Order Display, Invoice Download Admin & Customer
+
+[33mcommit fb0abcd4bc464e82ab2da2c4a31477182803e8f9[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Sun Feb 4 23:02:48 2024 +0545
+
+    Order View, Admin and Vendor
+
+[33mcommit e4fba4fd6c168b9280e785de3bac7c79162f7475[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Sat Feb 3 20:27:41 2024 +0545
+
+    Complete Payment-> Stripe and Cash on Delivery with Orde EMail
+
+[33mcommit 0e60736bd224c76f44198b74bb98429f7e59120e[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Fri Feb 2 09:28:32 2024 +0545
+
+    Finish Checkout Page,->Stripe
+
+[33mcommit 6760a5096b9a8be14fd807fb39ae8750ffd0651c[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Wed Jan 31 19:20:30 2024 +0545
+
+    Complete Shipping Areas and Coupoun
+
+[33mcommit 7c84484727ab22c9c7b595ace06c1cd2ccac965c[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Mon Jan 29 10:50:52 2024 +0545
+
+    Frontend-MyCart.
+
+[33mcommit 28b9d21298c7dcfcdd049d03433ea7d4264a44a0[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Sun Jan 28 19:55:12 2024 +0545
+
+    Wishlist,compare,addtocart_.
+
+[33mcommit f7b63a57011e1ab6c2244cad0f60c7a057529d9e[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Thu Jan 25 13:52:01 2024 +0545
+
+    Product Quickview, Vendor Details, Cat-Subcat
+
+[33mcommit 37ec9f7fd1136e15a4c176d7d0b471a7613ca02e[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Sun Jan 21 10:40:54 2024 +0545
+
+    Product Hot, Special, Recent, Features
+
+[33mcommit a50e28c21387c3ea4dd63a473d44a579bbc0d9f5[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Sun Jan 21 08:22:08 2024 +0545
+
+    Products Display Portion
+
+[33mcommit 34707dd13562c41a1c2510825d24c00096a97844[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Thu Jan 18 13:55:52 2024 +0545
+
+    Slider Portion
+
+[33mcommit 67660e03b29fd7fb1787afb0431b6d24cb5845b0[m
+Author: Prajwal Banstola <prajwalbns15@gmail.com>
+Date:   Tue Jan 16 19:47:55 2024 +0545
+
+    Socialite Inclusion
+
+[33mcommit 4b1988877457879ec273b5525ce25d8582d8d62b[m
+Author: prajwalbns15@gmail.com <prajwalbns15@gmail.com>
+Date:   Sun Jan 7 20:23:30 2024 +0545
+
+    Made some Modifications
+
+[33mcommit c85f0e7f8d15280fb772094f3e354cbc6a978aee[m
+Author: prajwalbns15@gmail.com <prajwalbns15@gmail.com>
+Date:   Sat Jan 6 19:16:10 2024 +0545
+
+    Finished Product Portion
+
+[33mcommit 444e934e7a2e5d266c4895ef5f06aeb9dfb91795[m
+Author: prajwalbns15@gmail.com <prajwalbns15@gmail.com>
+Date:   Sat Jan 6 17:12:11 2024 +0545
+
+    Verified
+
+[33mcommit c4bf3e2cce67e11f0c6ec02bed70ee23e74f4469[m
+Author: prajwalbns15@gmail.com <prajwalbns15@gmail.com>
+Date:   Sat Jan 6 17:10:44 2024 +0545
+
+    Testing Commit
+
+[33mcommit b0ae6c7f2f5e4f5d1c80dea9f87de2f5257846ba[m
+Author: prajwalbns15@gmail.com <prajwalbns15@gmail.com>
+Date:   Sat Jan 6 17:04:34 2024 +0545
+
+    Initial commit
+
+[33mcommit 477866b22f43640d22b05179aa380511fece2051[m
+Author: prajwalbns15@gmail.com <prajwalbns15@gmail.com>
+Date:   Sat Jan 6 16:59:52 2024 +0545
+
+    first commit

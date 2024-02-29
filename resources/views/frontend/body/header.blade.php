@@ -6,7 +6,6 @@
         $userData = App\Models\User::find($id); 
     }
 @endphp
-
     <div class="mobile-promotion">
         <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
     </div>
@@ -17,9 +16,9 @@
                     <div class="header-info">
                         <ul>
 
-                            <li><a href="">My Cart</a></li>
-                            <li><a href="">Checkout</a></li>
-                            <li><a href="">Order Tracking</a></li>
+                            <li><a href="#">My Cart</a></li>
+                            <li><a href="#">Checkout</a></li>
+                            <li><a href="{{ route('user.track.order') }}">Order Tracking</a></li>
                         </ul>
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                                 </ul>
                             </li>
 
-                            <li>Need help? Call Us: <strong class="text-brand"> + 1800 900</strong></li>
+                            <li>Need help? Call Us: <strong class="text-brand"> +977 9862394599</strong></li>
 
                         </ul>
                     </div>
@@ -79,13 +78,41 @@
                     <a href="/"><img src = "{{ asset($setting->logo) }}" alt="logo" /></a>
                 </div>
                 <div class="header-right">
+
                     <div class="search-style-2">
-                        <form action="#">
+                        {{-- STYLING SEARCH FILTER --}}
+                        <style>
+                            #searchProducts{
+                                position: absolute;
+                                top: 100%;
+                                left: 0;
+                                width: 100%;
+                                background: #ffffff;
+                                z-index: 999;
+                                border-radius: 8px;
+                                margin-top: 5px;
+                            }
+                        </style>
+                        {{-- SCRIPT FOR FOCUSING AND BLUR --}}
+                        <script>
+                            function search_result_show(){
+                                $("#searchProducts").slideDown();
+                            }
+                            function search_result_hide(){
+                                $("#searchProducts").slideUp();
+                            }
+                        </script>
+
+                        <form action="{{ route('search.product') }}" method="POST">
+                            @csrf
                             <select class="select-active">
                                 <option>All Categories</option>
-                                
                             </select>
-                            <input type="text" placeholder="Search for items..." />
+                            <input autocomplete="off" onfocus="search_result_show()" onblur="search_result_hide()" name="search" id="search" placeholder="Search for items..." />
+
+                            <div id="searchProducts">
+
+                            </div>
                         </form>
                     </div>
                     <div class="header-action-right">
@@ -113,20 +140,21 @@
 
                             <div class="header-action-icon-2">
                                 <a href="{{ route('wishlist') }}">
-                                    <img class="svgInject" alt="Nest"
-                                        src = "{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
+                                    <img class="svgInject" alt="Nest" src = "{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
                                     <span class="pro-count blue" id="wishQty">0</span>
                                 </a>
                                 <a href="{{ route('wishlist') }}"><span class="lable">Wishlist</span></a>
                             </div>
 
                             <div class="header-action-icon-2">
-                                <a href="{{ route('compare') }}">
-                                    <img class="svgInject" alt="Nest" src = "{{ asset('frontend/assets/imgs/theme/icons/icon-compare.svg') }}" />
+                                <a href="{{ route('compare') }}" style="display: inline-block;">
+                                    {{-- <img class="svgInject" alt="Nest" src = "{{ asset('frontend/assets/imgs/theme/icons/icon-compare.svg') }}" /> --}}
+                                   <i class="fi-rs-shuffle" style="font-size: 24px;"></i>
                                     <span class="pro-count blue" id="compareQty">0</span>
                                 </a>
                                 <a href="{{ route('compare') }}"><span class="lable">Compare</span></a>
                             </div>
+
 
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="{{ route('myCart') }}">

@@ -15,7 +15,9 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
+                @if(Auth::user()->canAll('category.add'))
                 <a class="btn btn-success" href="{{route('add.category')}}">Add Category</a>
+                @endif
             </div>
         </div>
     </div>
@@ -40,8 +42,14 @@
                             <td>{{$item->category_name}}</td>
                             <td><img src="{{asset($item->category_image)}}" width="75" alt="category_img"></td>
                             <td>
+
+                                @if(Auth::user()->canAll('category.edit'))
                                 <a href="{{route('edit.category', $item->id)}}" class="btn btn-info">Edit</a>
+                                @endif
+
+                                @if(Auth::user()->canAll('category.delete'))
                                 <a href="{{route('delete.category', $item->id)}}" id="delete" class="btn btn-danger">Delete</a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

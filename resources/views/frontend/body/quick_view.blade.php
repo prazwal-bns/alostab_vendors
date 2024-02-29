@@ -68,7 +68,16 @@ aria-hidden="true">
                                 <div class="font-xs">
                                     <ul>
                                         <li class="mb-5">Product Code: <span class="text-brand" id="pcode"></span></li>
-                                        <li class="mb-5">Stock:<span class="badg badge-pill badge-success p-2" id="available" style="background: green; color: white;"> </span> <span class="badg badge-pill badge-danger " id="stockout" style="background: red; color: white;"> </span></li>
+                                        {{-- <li class="mb-5">Stock:<span class="badge badge-pill badge-success p-2" id="available" style="background: green; color: white;"> </span> <span class="badg badge-pill badge-danger " id="stockout" style="background: red; color: white;"> </span></li> --}}
+
+                                        {{-- <li class="mb-5"> <span class="mr-5">Stock:</span><span class="badge badge-pill badge-success p-2" id="available" style="background: green; color: white; font-size:12px;"> </span> <span class="badge badge-pill badge-danger" id="stockout" style="background: red; color: white; font-size:12px;"> </span></li> --}}
+
+                                        <li class="mb-5">
+                                            <span class="mr-5">Stock:</span>
+                                            <span class="badge badge-pill p-2" id="available" style="font-size: 12px; background: green; color: white;"></span>
+                                            <span class="badge badge-pill" id="stockout" style="font-size: 12px; background: red; color: white;"></span>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </div>

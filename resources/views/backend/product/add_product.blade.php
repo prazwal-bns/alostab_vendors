@@ -166,8 +166,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-check">
                                                         <input class="form-check-input" name="hot_deals" type="checkbox"
-                                                            value="1" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault"> Hot
+                                                            value="1" id="flexCheckDefault1">
+                                                        <label class="form-check-label" for="flexCheckDefault1"> Hot
                                                             Deals</label>
                                                     </div>
                                                 </div>
@@ -175,9 +175,9 @@
                                                 <div class="col-md-6">
                                                     <div class="form-check">
                                                         <input class="form-check-input" name="featured" type="checkbox"
-                                                            value="1" id="flexCheckDefault">
+                                                            value="1" id="flexCheckDefault2">
                                                         <label class="form-check-label"
-                                                            for="flexCheckDefault">Featured</label>
+                                                            for="flexCheckDefault2">Featured</label>
                                                     </div>
                                                 </div>
 
@@ -187,8 +187,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-check">
                                                         <input class="form-check-input" name="special_offer"
-                                                            type="checkbox" value="1" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">Special
+                                                            type="checkbox" value="1" id="flexCheckDefault3">
+                                                        <label class="form-check-label" for="flexCheckDefault3">Special
                                                             Offer</label>
                                                     </div>
                                                 </div>
@@ -197,8 +197,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-check">
                                                         <input class="form-check-input" name="special_deals"
-                                                            type="checkbox" value="1" id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">Special
+                                                            type="checkbox" value="1" id="flexCheckDefault4">
+                                                        <label class="form-check-label" for="flexCheckDefault4">Special
                                                             Deals</label>
                                                     </div>
                                                 </div>

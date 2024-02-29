@@ -15,7 +15,9 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
+                @if(Auth::user()->canAll('slider.add'))
                 <a class="btn btn-success" href="{{route('add.slider')}}">Add Slider</a>
+                @endif
             </div>
         </div>
     </div>
@@ -42,8 +44,13 @@
                             <td>{{$item->short_title}}</td>
                             <td><img src="{{asset($item->slider_image)}}" width="200" alt="slider_img"></td>
                             <td>
+                                @if(Auth::user()->canAll('slider.edit'))
                                 <a href="{{route('edit.slider', $item->id)}}" class="btn btn-info">Edit</a>
+                                @endif
+
+                                @if(Auth::user()->canAll('slider.delete'))
                                 <a href="{{route('delete.slider', $item->id)}}" id="delete" class="btn btn-danger">Delete</a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

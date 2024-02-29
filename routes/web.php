@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\ReturnOrderController;
+use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\SliderController;
@@ -245,6 +246,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/active/product/{id}','ActiveProduct')->name('active.product');
 
         Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
+
+        // FOR PRODUCT STOCK
+        Route::get('/product/stock','ProductStock')->name('product.stock');
        
     });
 
@@ -404,6 +408,51 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         
     });
 
+
+    // USER ROLES AND PERMISSIONS
+    Route::controller(RoleController::class)->group(function () {
+        // FOR PERMISSION
+        Route::get('/all/permission', 'AllPermission')->name('all.permission');
+        Route::get('/add/permission', 'AddPermission')->name('add.permission');
+        Route::post('/store/permission', 'StorePermission')->name('store.permission');
+        Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+        
+        Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
+        
+        Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
+
+        // ROLES
+        Route::get('/all/roles', 'AllRoles')->name('all.roles');
+        Route::get('/add/roles', 'AddRoles')->name('add.roles');
+        Route::post('/store/roles', 'StoreRoles')->name('store.roles');
+        Route::get('/edit/roles/{id}', 'EditRoles')->name('edit.roles');
+        Route::post('/update/roles', 'UpdateRoles')->name('update.roles');
+        Route::get('/delete/roles/{id}', 'DeleteRoles')->name('delete.roles');
+
+        
+        // ADD ROLES IN PERMISSION
+        Route::get('/add/roles/permission', 'AddRolesPermission')->name('add.roles.permission');
+        Route::post('/store/roles/permission', 'StoreRolePermission')->name('store.role.permission');
+        Route::get('/all/roles/permission', 'AllRolesPermission')->name('all.roles.permission');
+        
+        Route::get('/admin/edit/roles/{role_id}', 'AdminEditRoles')->name('admin.edit.roles');
+        Route::post('/admin/update/roles/{role_id}', 'AdminUpdateRoles')->name('admin.update.roles');
+        Route::get('/admin/delete/roles/{role_id}', 'AdminDeleteRoles')->name('admin.delete.roles');
+        
+    });
+
+    // Manage Admin User -> Add, All admins
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/all/admin', 'AllAdmin')->name('all.admin');
+        Route::get('/add/admin', 'AddAdmin')->name('add.admin');
+        Route::post('/admin/user/store', 'AdminUserStore')->name('admin.user.store');
+        Route::get('/edit/admin/role/{id}', 'EditAdminRole')->name('edit.admin.role');
+        
+        Route::post('/admin/user/update/{id}', 'AdminUserUpdate')->name('admin.user.update');
+        Route::get('/delete/admin/role/{id}', 'DeleteAdminRole')->name('delete.admin.role');
+    });
+
+
 });
 // end admin middleware
 
@@ -420,6 +469,15 @@ Route::controller(BlogController::class)->group(function () {
 // RATINGS AND REVIEW FRONTEND -> VIEW
 Route::controller(ReviewController::class)->group(function () {
     Route::post('/store/review', 'StoreReview')->name('store.review'); 
+});
+
+
+// PRODUCT SEARCH ALL ROUTES
+Route::controller(IndexController::class)->group(function () {
+    Route::post('/search', 'SearchProduct')->name('search.product'); 
+
+    // AJAX -> fa -> fashion
+    Route::post('/search-product', 'AdvanceProductSearch'); 
 });
 
 
@@ -504,11 +562,16 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         Route::get('/user/change/password', 'UserChangePassword')->name('user.change.password');
         Route::get('/user/order/page', 'UserOrderPage')->name('user.order.page');
 
-        Route::get('user/order_details/{order_id}', 'UserOrderDetails');
-        Route::get('user/invoice_download/{order_id}', 'UserInvoiceDownload');
+        Route::get('/user/order_details/{order_id}', 'UserOrderDetails');
+        Route::get('/user/invoice_download/{order_id}', 'UserInvoiceDownload');
 
-        Route::post('return/order/{order_id}', 'ReturnOrder')->name('return.order');
-        Route::get('return/order/page', 'ReturnOrderPage')->name('return.order.page');
+        Route::post('/return/order/{order_id}', 'ReturnOrder')->name('return.order');
+        Route::get('/return/order/page', 'ReturnOrderPage')->name('return.order.page');
+
+
+        // ORDER TRACKING
+        Route::get('/user/track/order', 'UserTrackOrder')->name('user.track.order');
+        Route::post('/order/tracking', 'OrderTracking')->name('order.tracking');
     });
 
 });

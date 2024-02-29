@@ -15,7 +15,9 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
+                @if(Auth::user()->canAll('subcategory.add'))
                 <a class="btn btn-success" href="{{route('add.subcategory')}}">Add Sub Category</a>
+                @endif
             </div>
         </div>
     </div>
@@ -41,8 +43,13 @@
                                     <td>{{ $item['Category']['category_name'] ?? 'N/A' }}</td>
                                     <td>{{ $item->subcategory_name }}</td>
                                     <td>
+                                        @if(Auth::user()->canAll('subcategory.edit'))
                                         <a href="{{ route('edit.subcategory', $item->id) }}" class="btn btn-info">Edit</a>
+                                        @endif
+
+                                        @if(Auth::user()->canAll('subcategory.delete'))
                                         <a href="{{ route('delete.subcategory', $item->id) }}" id="delete" class="btn btn-danger">Delete</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
