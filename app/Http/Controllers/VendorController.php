@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\VendorRegNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification as Notification;
 
 class VendorController extends Controller
 {
@@ -103,6 +105,8 @@ class VendorController extends Controller
     // end func
     public function VendorRegister(Request $request)
     {
+        $vUser = User::where('role', 'admin')->get();
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -124,6 +128,8 @@ class VendorController extends Controller
             'message' => 'Vendor has been successfully registered',
             'alert-type' => 'success'
         );
+
+        Notification::send($vUser, new VendorRegNotification($request));
 
         return redirect()->route('vendor.login')->with(($notification));
 

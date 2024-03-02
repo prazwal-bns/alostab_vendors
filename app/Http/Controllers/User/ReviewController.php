@@ -4,9 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Review;
+use App\Models\User;
+use App\Notifications\ReviewNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification as Notification;
 
 class ReviewController extends Controller
 {
@@ -32,6 +35,9 @@ class ReviewController extends Controller
             'message' => 'Review Submitted Successfully.',
             'alert-type' => 'success'
         );
+
+        $rrUser = User::where('role', 'admin')->get();
+        Notification::send($rrUser, new ReviewNotification($request));
 
         return redirect()->back()->with($notification);
     }

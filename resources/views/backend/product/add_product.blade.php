@@ -99,12 +99,12 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="inputPrice" class="form-label">Product Price</label>
-                                            <input type="text" name="selling_price" class="form-control" id="inputPrice"
+                                            <input type="number" name="selling_price" class="form-control" id="selling_price"
                                                 placeholder="00.00">
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="form-group col-md-6">
                                             <label for="inputCompareatprice" class="form-label">Discount Price </label>
-                                            <input type="text" name="discount_price" class="form-control"
+                                            <input type="number" name="discount_price" class="form-control"
                                                 id="inputCompareatprice" placeholder="00.00">
                                         </div>
                                         <div class="form-group col-md-6">
@@ -268,6 +268,12 @@
                     subcategory_id: {
                         required: true,
                     },
+                    discount_price: {
+                        max: function() {
+                            var sellingPrice = parseFloat($('#selling_price').val());
+                            return sellingPrice;
+                        }
+                    },
                 },
                 messages: {
                     product_name: {
@@ -284,6 +290,9 @@
                     },
                     selling_price: {
                         required: 'Please Enter Selling Price',
+                    },
+                    discount_price: {
+                        max: 'Discount price cannot be greater than the selling price',
                     },
                     product_code: {
                         required: 'Please Enter Product Code',

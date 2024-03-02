@@ -82,12 +82,12 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="inputPrice" class="form-label">Product Price</label>
-                                            <input type="text" name="selling_price" class="form-control" id="inputPrice"
+                                            <input type="number" name="selling_price" class="form-control" id="inputPrice"
                                                 value="{{ $products->selling_price }}">
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="form-group col-md-6">
                                             <label for="inputCompareatprice" class="form-label">Discount Price </label>
-                                            <input type="text" name="discount_price" class="form-control"
+                                            <input type="number" name="discount_price" class="form-control"
                                                 id="inputCompareatprice" value="{{ $products->discount_price }}">
                                         </div>
                                         <div class="form-group col-md-6">
@@ -324,6 +324,12 @@
                     selling_price: {
                         required: true,
                     },
+                    discount_price: {
+                        max: function() {
+                            var sellingPrice = parseFloat($('#selling_price').val());
+                            return sellingPrice;
+                        }
+                    },
                     product_code: {
                         required: true,
                     },
@@ -355,6 +361,9 @@
                     },
                     selling_price: {
                         required: 'Please Enter Selling Price',
+                    },
+                    discount_price: {
+                        max: 'Discount price cannot be greater than the selling price',
                     },
                     product_code: {
                         required: 'Please Enter Product Code',

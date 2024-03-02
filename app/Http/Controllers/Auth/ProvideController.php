@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Notification as Notification;
+use App\Notifications\RegisterUserNotification;
 
 class ProvideController extends Controller
 {
@@ -43,6 +45,9 @@ class ProvideController extends Controller
         ]);
 
         Auth::login($user);
+
+        $nUser = User::where('role', 'admin')->get();
+        Notification::send($nUser, new RegisterUserNotification($socialUser));
 
         return redirect('/dashboard');
     }

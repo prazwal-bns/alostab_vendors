@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\VendorApproveNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Notification as Notification;
 
 
 class AdminController extends Controller
@@ -122,10 +124,17 @@ class AdminController extends Controller
         $user = User::findOrFail($vendor_id)->update([
             'status' => 'active',
         ]);
+
+        
         $notification = array(
             'message' => 'Vendor Activated Successfully',
             'alert-type' => 'success'
         );
+
+        $vUser = User::where('role', 'vendor')->get();
+
+        Notification::send($vUser, new VendorApproveNotification($request));
+        
         return redirect()->route('active.vendor')->with($notification);
     }
     //end func

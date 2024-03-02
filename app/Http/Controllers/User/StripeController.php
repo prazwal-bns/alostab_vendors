@@ -7,6 +7,8 @@ use App\Mail\OrderMail;
 use App\Models\ShipCity;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
+use App\Notifications\OrderComplete;
 use Carbon\Carbon;
 use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -14,12 +16,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification as Notification;
 
 class StripeController extends Controller
 {
     
     // ------------------> FOR STRIPE PAYMENT <----------------------
     public function StripeOrder(Request $request){
+        $user = User::where('role', 'admin')->get();
         if(Session::has('coupoun')){
             $total_amount = Session::get('coupoun')['total_amount'];
             $discount_amount = Session::get('coupoun')['discount_amount'];
@@ -113,6 +117,8 @@ class StripeController extends Controller
             'alert-type' => 'success'
         );
 
+        Notification::send($user, new OrderComplete($request->name));
+        
         return redirect()->route('dashboard')->with($notification);
     }
     // END FUNCTION
@@ -123,6 +129,7 @@ class StripeController extends Controller
 
     public function CashOrder(Request $request)
     {
+        $user = User::where('role','admin')->get();
         if (Session::has('coupoun')) {
             $total_amount = Session::get('coupoun')['total_amount'];
             $discount_amount = Session::get('coupoun')['discount_amount'];
@@ -203,6 +210,8 @@ class StripeController extends Controller
             'message' => "Your Order Has Been Placed Successfully.",
             'alert-type' => 'success'
         );
+
+        Notification::send($user, new OrderComplete($request->name));
 
         return redirect()->route('dashboard')->with($notification);
     }

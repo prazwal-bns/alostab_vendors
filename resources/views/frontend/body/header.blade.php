@@ -227,11 +227,8 @@
                         <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                             <div class="d-flex categori-dropdown-inner">
                                 <ul>
-                                    @php
-                                        $thCategories = App\Models\Category::orderBy('category_name', 'ASC')->limit(5)->get();
-                                    @endphp
-                                    
-                                    @foreach ($thCategories as $item)
+                                    @foreach ($categories as $item)
+                                        @if($loop->index < 5)
                                         <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">
                                             <li>
                                             <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}"> <img
@@ -239,15 +236,13 @@
                                                     alt="" />{{ $item->category_name }}</a>
                                             </li>
                                         </a>
+                                        @endif
                                     @endforeach
                                 </ul>
 
-                                 <ul>
-                                    @php
-                                        $teCategories = App\Models\Category::orderBy('category_name', 'DESC')->limit(4)->get();
-                                    @endphp
-                                    
-                                    @foreach ($teCategories as $item)
+                                 <ul class="end">                                   
+                                    @foreach ($categories as $item)
+                                        @if($loop->index > 4)
                                         <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">
                                             <li>
                                             <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}"> <img
@@ -255,18 +250,10 @@
                                                     alt="" />{{ $item->category_name }}</a>
                                             </li>
                                         </a>
+                                        @endif
                                     @endforeach
                                 </ul>
                                 
-                                {{-- <ul class="end">
-                                    @foreach ($categories as $item)
-                                        <li>
-                                            <a href=""> <img
-                                                    src = "{{ asset($item->category_image) }}"
-                                                    alt="" />{{ $item->category_name }}</a>
-                                        </li>
-                                    @endforeach
-                                </ul> --}}
                             </div>
                             {{-- <div class="more_slide_open" style="display: none">
                                 <div class="d-flex categori-dropdown-inner">
