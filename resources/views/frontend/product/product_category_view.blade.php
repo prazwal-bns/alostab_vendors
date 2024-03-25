@@ -27,6 +27,11 @@
 <div class="container mb-30">
     <div class="row flex-row-reverse">
         <div class="col-lg-4-5">
+            <div class="shop-product-fillter">
+                <div class="totall-product">
+                    <p>We found <strong class="text-brand">{{ count($products) }}</strong> items for you!</p>
+                </div>
+            </div>
             {{-- <div class="shop-product-fillter">
                 <div class="totall-product">
                     <p>We found <strong class="text-brand">{{ count($products) }}</strong> items for you!</p>

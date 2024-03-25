@@ -298,7 +298,7 @@
                     </div>
                     <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                         <nav>
-                            <ul>
+                            {{-- <ul>
 
                                 <li>
                                     <a class="active" href="/">Home </a>
@@ -325,7 +325,39 @@
                                 <li>
                                     <a href="{{ route('home.blog') }}">Blog</a>
                                 </li>
+                            </ul> --}}
+
+                            <ul>
+                                <li>
+                                    <a class="{{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
+                                </li>
+                                @php
+                                    $categories = App\Models\Category::orderBy('category_name', 'ASC')->limit(6)->get();
+                                @endphp
+
+                                @foreach ($categories as $category)
+                                    <li>
+                                        <a class="{{ request()->is('product/category/'.$category->id.'/'.$category->category_slug) ? 'active' : '' }}" href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }} <i class="fi-rs-angle-down"></i></a>
+                                        @php
+                                            $subcategories = App\Models\Subcategory::where('category_id',$category->id)->orderBy('subcategory_name', 'ASC')->get();
+                                        @endphp
+                                                                    
+                                        <ul class="sub-menu">
+                                            @foreach ($subcategories as $subcategory)
+                                                <li><a href="{{ url('product/subcategory/'.$subcategory->id.'/'.$subcategory->subcategory_slug) }}">{{ $subcategory->subcategory_name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
+                                <li>
+                                    <a class="{{ request()->routeIs('home.blog') ? 'active' : '' }}" href="{{ route('home.blog') }}">Blog</a>
+                                </li>
+
+                                <li>
+                                    <a class="{{ request()->routeIs('home.blog') ? 'active' : '' }}" href="{{ route('shop.page') }}">Shop</a>
+                                </li>
                             </ul>
+
                         </nav>
                     </div>
                 </div>

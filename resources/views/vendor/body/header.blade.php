@@ -1,4 +1,6 @@
 <header>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <div class="topbar d-flex align-items-center">
         <nav class="navbar navbar-expand">
             <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
@@ -22,7 +24,7 @@
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false"> <i class='bx bx-category'></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end">
+                        {{-- <div class="dropdown-menu dropdown-menu-end">
                             <div class="row row-cols-3 g-3 p-3">
                                 <div class="col text-center">
                                     <div class="app-box mx-auto bg-gradient-cosmic text-white"><i
@@ -60,8 +62,9 @@
                                     <div class="app-title">Alerts</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </li>
+                    
                     <li class="nav-item dropdown dropdown-large">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,6 +78,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a href="javascript:;">
+                                
                                 <div class="msg-header">
                                     <p class="msg-header-title">Notifications</p>
                                     <p class="msg-header-clear ms-auto">Marks all as read</p>
@@ -89,8 +93,13 @@
                                 @forelse ($user->notifications as $notification)
                                     <a class="dropdown-item" href="javascript:;">
                                     <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-danger text-danger"><i class="bx bx-cart-alt"></i>
+                                        {{-- <div class="notify bg-light-danger text-danger"><i class="bx bx-cart-alt"></i>
+                                        </div> --}}
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="notify bg-light-danger text-danger"><i class="{{ $notification->data['icon'] ?? 'bx bx-bell' }}"></i></i>
                                         </div>
+
                                         <div class="flex-grow-1">
                                             <h6 class="msg-name">Message: <span class="msg-time float-end">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span></h6>
                                             <p class="msg-info">{{ $notification->data['message'] }}</p>
@@ -103,12 +112,13 @@
                             </div>
 
                             
-                            <a href="javascript:;">
+                            <a style="display: none;" href="javascript:;">
                                 <div class="text-center msg-footer">View All Notifications</div>
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown dropdown-large">
+
+                    <li class="nav-item dropdown dropdown-large" style="display: none;">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="alert-count">8</span>
@@ -317,4 +327,25 @@
             </div>
         </nav>
     </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Handle click event on "Mark all as read"
+        $('.msg-header-clear').on('click', function() {
+            // Send an AJAX request to mark all notifications as read
+            $.ajax({
+                url: '{{ route('vendor_mark_all_notifications_read') }}', // Replace this with your route
+                type: 'GET',
+                success: function(response) {
+                    // Update the notification count to 0
+                    $('.alert-count').text('0');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
 </header>

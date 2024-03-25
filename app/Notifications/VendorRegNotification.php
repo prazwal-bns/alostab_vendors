@@ -48,7 +48,9 @@ class VendorRegNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'New Vendor Registration Request.'
+            'message' => 'New Vendor Registration Request.',
+            'icon' => 'bx bx-user',
+            'page-link' => 'inactive.vendor'
         ];
     }
 }

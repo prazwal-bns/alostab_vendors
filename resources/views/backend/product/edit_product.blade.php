@@ -324,12 +324,12 @@
                     selling_price: {
                         required: true,
                     },
-                    discount_price: {
+                    /*discount_price: {
                         max: function() {
                             var sellingPrice = parseFloat($('#selling_price').val());
                             return sellingPrice;
                         }
-                    },
+                    },*/
                     product_code: {
                         required: true,
                     },
@@ -362,9 +362,9 @@
                     selling_price: {
                         required: 'Please Enter Selling Price',
                     },
-                    discount_price: {
+                    /*discount_price: {
                         max: 'Discount price cannot be greater than the selling price',
-                    },
+                    },*/
                     product_code: {
                         required: 'Please Enter Product Code',
                     },

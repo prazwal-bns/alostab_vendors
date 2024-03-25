@@ -135,4 +135,14 @@ class VendorController extends Controller
 
     }
     // end func
+
+    public function VendorMarkAllRead()
+    {
+        Auth::user()->unreadNotifications->markAsRead();
+        return response()->json(['message' => 'All notifications marked as read']);
+    }
+    // END FUNCTION
+
+
+
 }

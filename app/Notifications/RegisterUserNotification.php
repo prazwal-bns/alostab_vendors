@@ -48,7 +48,9 @@ class RegisterUserNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'New user registered on our site.'
+            'message' => 'New user registered on our site.',
+            'icon' => 'bx bx-user',
+            'page-link' => 'all.user',
         ];
     }
 }

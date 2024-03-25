@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use App\Models\Wishlist;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,16 @@ class WishlistController extends Controller
     public function WishlistRemove($id){
         Wishlist::where('user_id',Auth::id())->where('id',$id)->delete();
         return response()->json(['success' => 'Product Removed Successfully From Your Wishlist.']);
+    }
+    // end function
+
+    public function
+    GetProductReviews($product_id)
+    {
+        // Retrieve reviews for the specified product_id
+        $reviews = Review::where('product_id', $product_id)->where('status', 1)->get();
+
+        return response()->json($reviews);
     }
     // end function
 }

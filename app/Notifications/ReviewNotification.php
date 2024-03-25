@@ -48,7 +48,10 @@ class ReviewNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'A New Product Review has been added.'
+            'message' => 'A New Product Review has been added.',
+            'icon' => 'bx bx-bell',
+            'page-link' => 'pending.review',
         ];
+        
     }
 }

@@ -48,7 +48,9 @@ class VendorApproveNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Admin Approved Your Account.'
+            'message' => 'Admin Approved Your Account.',
+            'icon' => 'bx bx-check',
+            'page-link' => 'vendor.dashboard',
         ];
     }
 }

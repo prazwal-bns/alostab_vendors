@@ -283,4 +283,10 @@ class AdminController extends Controller
         return redirect()->back()->with($notification);
     }
     // END FUNCTION
+
+
+    public function MarkAllRead(){
+        Auth::user()->unreadNotifications->markAsRead();
+        return response()->json(['message' => 'All notifications marked as read']);
+    }
 }

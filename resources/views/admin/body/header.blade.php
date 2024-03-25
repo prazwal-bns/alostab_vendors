@@ -1,4 +1,5 @@
 <header>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="topbar d-flex align-items-center">
         <nav class="navbar navbar-expand">
             <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
@@ -64,9 +65,12 @@
                         </div> --}}
                     </li>
                     <li class="nav-item dropdown dropdown-large">
+                        @php 
+                            $notCount = Auth::user()->unreadNotifications()->count();
+                        @endphp
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="alert-count">7</span>
+                            <span class="alert-count">{{ $notCount }}</span>
                             <i class='bx bx-bell'></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
@@ -82,12 +86,19 @@
                                 @endphp
 
                                 @forelse ($user->notifications as $notification)
-                                    <a class="dropdown-item" href="javascript:;">
+                                    <a class="dropdown-item" href="{{ isset($notification->data['page-link']) ? route($notification->data['page-link']) : route('admin.dashboard') }}">
+
+                                    {{-- <div class="notify bg-light-danger text-danger">
+                                        <i class="{{ $notification->data['icon'] ?? 'bx bx-bell' }}"></i>
+                                    </div> --}}
+
                                     <div class="d-flex align-items-center">
-                                        <div class="notify bg-light-danger text-danger"><i class="bx bx-cart-alt"></i>
-                                        </div>
+                                        <div class="notify bg-light-danger text-danger"><i class="{{ $notification->data['icon'] ?? 'bx bx-bell' }}"></i></i>
+                                    </div>
+
+
                                         <div class="flex-grow-1">
-                                            <h6 class="msg-name">Message: <span class="msg-time float-end">{{ $notification->message }}</span></h6>
+                                            <h6 class="msg-name">Message: <span class="msg-time float-end">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span></h6>
                                             <p class="msg-info">{{ $notification->data['message'] }}</p>
                                         </div>
                                     </div>
@@ -97,7 +108,7 @@
                                 @endforelse
                                 
                             </div>
-                            <a href="javascript:;">
+                            <a style="display: none;" href="javascript:;">
                                 <div class="text-center msg-footer">View All Notifications</div>
                             </a>
                         </div>
@@ -311,4 +322,25 @@
             </div>
         </nav>
     </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // Handle click event on "Mark all as read"
+        $('.msg-header-clear').on('click', function() {
+            // Send an AJAX request to mark all notifications as read
+            $.ajax({
+                url: '{{ route('mark_all_notifications_read') }}', // Replace this with your route
+                type: 'GET',
+                success: function(response) {
+                    // Update the notification count to 0
+                    $('.alert-count').text('0');
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
 </header>
+

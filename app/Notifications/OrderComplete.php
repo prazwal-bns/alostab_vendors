@@ -46,10 +46,22 @@ class OrderComplete extends Notification
      *
      * @return array<string, mixed>
      */
+    // public function toArray(object $notifiable): array
+    // {
+    //     return [
+    //         'message' => 'New Order has been Placed.',
+    //         'icon' => 'bx bx-cart',
+    //         'page-link' => 'pending.order',
+    //     ];
+    // }
+
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'New Order has been Placed.'
+            'message' => 'New Order has been Placed.',
+            'icon' => 'bx bx-cart',
+            'page-link' => 'pending.order',
         ];
     }
+
 }

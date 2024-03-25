@@ -24,6 +24,7 @@ use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\CoupounController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\User\AllUserController;
 use App\Http\Controllers\User\CheckOutController;
 use App\Http\Controllers\User\CompareController;
@@ -95,6 +96,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // Vendor Dashboard
 Route::middleware(['auth', 'role:vendor'])->group(function () {
     Route::get('/vendor/dashboard', [VendorController::class, 'VendorDashboard'])->name('vendor.dashboard');
+
+    Route::get('/vendor/mark-all-notifications-read', [VendorController::class, 'VendorMarkAllRead'])->name('vendor_mark_all_notifications_read');
+
     Route::get('/vendor/logout', [VendorController::class, 'VendorDestroy'])->name('vendor.logout');
     Route::get('/vendor/profile', [VendorController::class, 'VendorProfile'])->name('vendor.profile');
 
@@ -318,7 +322,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // MANAGE ORDER
     Route::controller(OrderController::class)->group(function () {
-        // SHIPPING DISTRICT
+        // Pending Order
         Route::get('/pending/order', 'PendingOrder')->name('pending.order');
         Route::get('/admin/confirmed/order', 'AdminConfirmOrder')->name('admin.confirmed.order');
         Route::get('/admin/processing/order', 'AdminProcessingOrder')->name('admin.processing.order');
@@ -452,6 +456,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/delete/admin/role/{id}', 'DeleteAdminRole')->name('delete.admin.role');
     });
 
+    // Manage Admin User -> Add, All admins
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/mark-all-notifications-read', 'MarkAllRead')->name('mark_all_notifications_read');
+    });
+
 
 });
 // end admin middleware
@@ -480,6 +489,12 @@ Route::controller(IndexController::class)->group(function () {
     Route::post('/search-product', 'AdvanceProductSearch'); 
 });
 
+
+// ALL PRODUCT SHOP
+Route::controller(ShopController::class)->group(function () {
+    Route::get('/shop', 'ShopPage')->name('shop.page');
+    Route::post('/shop/filter', 'ShopFilter')->name('shop.filter');
+});
 
 
 // Product Quickview Modal With Ajax
@@ -527,6 +542,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::controller(WishlistController::class)->group(function(){
         Route::get('/wishlist','AllWishlist')->name('wishlist');
         Route::get('/get-wishlist-product/','GetWishListProduct');
+        Route::get('/get-product-reviews/{product_id}', 'GetProductReviews');
+
 
         Route::get('/wishlist-remove/{id}','WishlistRemove');
     });
