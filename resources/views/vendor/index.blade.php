@@ -5,6 +5,8 @@
     $id = Auth::user()->id;
     $vendorId = App\Models\User::find($id);
     $status = $vendorId->status;
+
+    $customer = App\Models\User::where('status', 'active')->where('role', 'user')->get();
 @endphp
 
     <div class="page-content">
@@ -21,38 +23,19 @@
                 <div class="card radius-10 bg-gradient-deepblue">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <h5 class="mb-0 text-white">9526</h5>
+                            <h5 class="mb-0 text-white">Rs. {{ number_format($todaysOrder, 2) }}</h5>
                             <div class="ms-auto">
-                                <i class='bx bx-cart fs-3 text-white'></i>
-                            </div>
-                        </div>
-                        <div class="progress my-3 bg-light-transparent" style="height:3px;">
-                            <div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Total Orders</p>
-                            <p class="mb-0 ms-auto">+4.2%<span><i class='bx bx-up-arrow-alt'></i></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card radius-10 bg-gradient-orange">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <h5 class="mb-0 text-white">$8323</h5>
-                            <div class="ms-auto">
+                                {{-- <i class='bx bx-cart fs-3 text-white'></i> --}}
                                 <i class='bx bx-dollar fs-3 text-white'></i>
                             </div>
                         </div>
                         <div class="progress my-3 bg-light-transparent" style="height:3px;">
-                            <div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25"
+                            <div class="progress-bar bg-white" role="progressbar" style="width: 35%" aria-valuenow="25"
                                 aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Total Revenue</p>
-                            <p class="mb-0 ms-auto">+1.2%<span><i class='bx bx-up-arrow-alt'></i></span></p>
+                            <p class="mb-0">Today's Sale</p>
+                            {{-- <p class="mb-0 ms-auto">+4.2%<span><i class='bx bx-up-arrow-alt'></i></span></p> --}}
                         </div>
                     </div>
                 </div>
@@ -61,38 +44,60 @@
                 <div class="card radius-10 bg-gradient-ohhappiness">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <h5 class="mb-0 text-white">6200</h5>
+                            <h5 class="mb-0 text-white">Rs. {{ number_format($totalRevenue, 2) }}</h5>
                             <div class="ms-auto">
-                                <i class='bx bx-group fs-3 text-white'></i>
+                                <i class='bx bx-dollar fs-3 text-white'></i>
                             </div>
                         </div>
                         <div class="progress my-3 bg-light-transparent" style="height:3px;">
-                            <div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25"
+                            <div class="progress-bar bg-white" role="progressbar" style="width: 68%" aria-valuenow="25"
                                 aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Visitors</p>
-                            <p class="mb-0 ms-auto">+5.2%<span><i class='bx bx-up-arrow-alt'></i></span></p>
+                            <p class="mb-0">Total Revenue</p>
+                            {{-- <p class="mb-0 ms-auto">+5.2%<span><i class='bx bx-up-arrow-alt'></i></span></p> --}}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card radius-10 bg-gradient-ibiza">
+                <div class="card radius-10 split-bg-danger">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <h5 class="mb-0 text-white">5630</h5>
+                            <h5 class="mb-0 text-white">{{ count($returnRequestedOrders) }} Request</h5>
                             <div class="ms-auto">
-                                <i class='bx bx-envelope fs-3 text-white'></i>
+                                {{-- <i class='bx bx-envelope fs-3 text-white'></i> --}}
+                                <i class='bx bx-cart fs-3 text-white'></i>
                             </div>
                         </div>
                         <div class="progress my-3 bg-light-transparent" style="height:3px;">
-                            <div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25"
+                            <div class="progress-bar bg-white" role="progressbar" style="width: 30%" aria-valuenow="25"
                                 aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="d-flex align-items-center text-white">
-                            <p class="mb-0">Messages</p>
-                            <p class="mb-0 ms-auto">+2.2%<span><i class='bx bx-up-arrow-alt'></i></span></p>
+                            <p class="mb-0">Returned Requested Orders</p>
+                            {{-- <p class="mb-0 ms-auto">+2.2%<span><i class='bx bx-up-arrow-alt'></i></span></p> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card radius-10 bg-gradient-moonlit">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <h5 class="mb-0 text-white">{{ count($pendingOrders) }} Orders</h5>
+                            <div class="ms-auto">
+                                {{-- <i class='bx bx-envelope fs-3 text-white'></i> --}}
+                                <i class='bx bx-cart fs-3 text-white'></i>
+                            </div>
+                        </div>
+                        <div class="progress my-3 bg-light-transparent" style="height:3px;">
+                            <div class="progress-bar bg-white" role="progressbar" style="width: 40%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex align-items-center text-white">
+                            <p class="mb-0">Pending Orders</p>
+                            {{-- <p class="mb-0 ms-auto">+2.2%<span><i class='bx bx-up-arrow-alt'></i></span></p> --}}
                         </div>
                     </div>
                 </div>
@@ -100,225 +105,168 @@
         </div><!--end row-->
 
 
-
-        <div class="card radius-10">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h5 class="mb-0">Orders Summary</h5>
+        <div class="row">
+            <div class="col-lg-8">
+            <div class="card radius-10">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0">Orders Summary</h5>
+                        </div>
+                        <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+                        </div>
                     </div>
-                    <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Date</th>
+                                            <th>Customer Name</th>
+                                            <th>Invoice No.</th>
+                                            <th>Amount</th>
+                                            <th>Payment</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($vendorOrders as $key => $order)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $order->order_date }}</td>
+                                                <td>{{ $order->user ? $order->user->name : 'N/A' }}</td>
+                                                <td>{{ $order->invoice_number }}</td>
+                                                <td>Rs. {{ $order->amount }}</td>
+                                                <td>{{ $order->payment_method }}</td>
+                                                <td>
+                                                    <div class="badge bg-light-info text-danger w-80" style="font-size: 14px">
+                                                        {{ $order->status }}</div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                     </div>
                 </div>
-                <hr>
-                <div class="table-responsive">
-                    <table class="table align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Order id</th>
-                                <th>Product</th>
-                                <th>Customer</th>
-                                <th>Date</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#897656</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="recent-product-img">
-                                            <img src=" {{ asset('adminbackend/assets/images/icons/chair.png') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-1 font-14">Light Blue Chair</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Brooklyn Zeo</td>
-                                <td>12 Jul 2020</td>
-                                <td>$64.00</td>
-                                <td>
-                                    <div class="badge rounded-pill bg-light-info text-info w-100">In Progress
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
-                                                class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class="bx bx-down-arrow-alt"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#987549</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="recent-product-img">
-                                            <img src=" {{ asset('adminbackend/assets/images/icons/shoes.png') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-1 font-14">Green Sport Shoes</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Martin Hughes</td>
-                                <td>14 Jul 2020</td>
-                                <td>$45.00</td>
-                                <td>
-                                    <div class="badge rounded-pill bg-light-success text-success w-100">
-                                        Completed</div>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
-                                                class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class="bx bx-down-arrow-alt"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#685749</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="recent-product-img">
-                                            <img src=" {{ asset('adminbackend/assets/images/icons/headphones.png') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-1 font-14">Red Headphone 07</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Shoan Stephen</td>
-                                <td>15 Jul 2020</td>
-                                <td>$67.00</td>
-                                <td>
-                                    <div class="badge rounded-pill bg-light-danger text-danger w-100">
-                                        Cancelled</div>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
-                                                class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class="bx bx-down-arrow-alt"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#887459</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="recent-product-img">
-                                            <img src=" {{ asset('adminbackend/assets/images/icons/idea.png') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-1 font-14">Mini Laptop Device</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Alister Campel</td>
-                                <td>18 Jul 2020</td>
-                                <td>$87.00</td>
-                                <td>
-                                    <div class="badge rounded-pill bg-light-success text-success w-100">
-                                        Completed</div>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
-                                                class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class="bx bx-down-arrow-alt"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#335428</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="recent-product-img">
-                                            <img src=" {{ asset('adminbackend/assets/images/icons/user-interface.png') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-1 font-14">Purple Mobile Phone</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Keate Medona</td>
-                                <td>20 Jul 2020</td>
-                                <td>$75.00</td>
-                                <td>
-                                    <div class="badge rounded-pill bg-light-info text-info w-100">In Progress
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
-                                                class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class="bx bx-down-arrow-alt"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#224578</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="recent-product-img">
-                                            <img src=" {{ asset('adminbackend/assets/images/icons/watch.png') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-1 font-14">Smart Hand Watch</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Winslet Maya</td>
-                                <td>22 Jul 2020</td>
-                                <td>$80.00</td>
-                                <td>
-                                    <div class="badge rounded-pill bg-light-danger text-danger w-100">
-                                        Cancelled</div>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
-                                                class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class="bx bx-down-arrow-alt"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#447896</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="recent-product-img">
-                                            <img src=" {{ asset('adminbackend/assets/images/icons/tshirt.png') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="ms-2">
-                                            <h6 class="mb-1 font-14">T-Shirt Blue</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Emy Jackson</td>
-                                <td>28 Jul 2020</td>
-                                <td>$96.00</td>
-                                <td>
-                                    <div class="badge rounded-pill bg-light-success text-success w-100">
-                                        Completed</div>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
-                                                class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class="bx bx-down-arrow-alt"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+            </div>
+
+            {{-- CHART --}}
+            @php
+                use App\Models\Order;
+                use Illuminate\Support\Facades\Auth;
+
+                $months = [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+
+                $salesData = [];
+
+                $vendorId = Auth::id(); // Assuming you are using Laravel's Auth facade
+
+                foreach ($months as $month) {
+                    $totalSales = Order::whereHas('orderItems', function ($query) use ($month, $vendorId) {
+                        $query->where('vendor_id', $vendorId);
+                    })->where('order_month', $month)->count();
+
+                    $salesData[] = $totalSales;
+                }
+            @endphp
+
+            
+            
+            @php
+            $data = [
+                'labels' => $months,
+                'datasets' => [
+                    [
+                        'label' => 'Monthly Sales',
+                        'data' => $salesData,
+                        'backgroundColor' => 'rgba(51, 228, 0 , 0.5)',
+                        'borderColor' => 'rgba(255, 0, 0 , 1)',
+                        'borderWidth' => 2.2,
+                    ],
+                ],
+            ];
+            @endphp
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Sales in Various Months</h5>
+                        <canvas id="salesChart" width="500" height="500"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('salesChart').getContext('2d');
+    var salesChart = new Chart(ctx, {
+        type: 'line',
+        data: @json($data), 
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(6, 45, 4, 0.2)', // Grid line color
+                    },
+                    ticks: {
+                        color: 'black', // Y-axis label color
+                    },
+                    title: {
+                        display: true,
+                        text: 'Total Sales', // Y-axis label
+                        color: 'black', // Y-axis label color
+                        font: {
+                            size: 14, // Y-axis label font size
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.2)', // Grid line color
+                    },
+                    ticks: {
+                        color: 'black', // X-axis label color
+                    },
+                    title: {
+                        display: true,
+                        text: 'Months', // X-axis label
+                        color: 'black', // X-axis label color
+                        font: {
+                            size: 14, // X-axis label font size
+                        }
+                    }
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0.4, // Adjust line tension for curve
+                    borderWidth: 2, // Line width
+                    borderColor: 'rgba(75, 192, 192, 1)', // Line color
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Background color
+                },
+                point: {
+                    radius: 5, // Point radius
+                    backgroundColor: 'white', // Point background color
+                    borderColor: 'rgba(75, 192, 192, 1)', // Point border color
+                    borderWidth: 2, // Point border width
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: 'red', // Legend label color
+                    }
+                }
+            }
+        }
+    });
+</script>
 @endsection

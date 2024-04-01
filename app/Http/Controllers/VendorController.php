@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\User;
 use App\Notifications\VendorRegNotification;
 use Illuminate\Http\RedirectResponse;
@@ -14,9 +15,40 @@ use Illuminate\Support\Facades\Notification as Notification;
 class VendorController extends Controller
 {
     public function VendorDashboard(){
-        return view('vendor.index');
+        $vendorId = Auth::id();
+
+        $date = date('d F Y');
+
+        $todaysOrder = Order::whereHas('orderItems', function ($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->where('return_order', 0)->where('order_date', $date)->sum('amount');
+
+
+        $totalRevenue = Order::whereHas('orderItems', function ($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->where('return_order', 0)->sum('amount');
+
+
+        $returnRequestedOrders = Order::whereHas('orderItems', function ($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->where('return_order', 1)->get();
+
+
+        $pendingOrders = Order::whereHas('orderItems', function ($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->where('status', 'pending')->get();
+
+
+        $vendorOrders = Order::whereHas('orderItems', function ($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->where('status', 'pending')->orderBy('id', 'DESC')->limit(10)->get();
+
+
+        return view('vendor.index', compact('todaysOrder', 'totalRevenue', 'returnRequestedOrders','pendingOrders', 'vendorOrders'));
     }
     // end func
+
+
     public function VendorLogin(){
         return view('vendor.vendor_login');
     }

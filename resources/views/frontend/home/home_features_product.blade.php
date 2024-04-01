@@ -1,6 +1,7 @@
 @php
     $featured = App\Models\Product::where('featured',1)->orderBy('id','DESC')->limit(6)->get();
 @endphp
+<div id="featuredProduct">
 <section class="section-padding pb-5">
     <div class="container">
         <div class="section-title wow animate__animated animate__fadeIn">
@@ -12,7 +13,7 @@
                 <div class="banner-img style-2">
                     <div class="banner-text">
                         <h2 class="mb-100">Bring our products into your home</h2>
-                        <a href="shop-grid-right.html" class="btn btn-xs">Shop Now <i
+                        <a href="" class="btn btn-xs">Shop Now <i
                                 class="fi-rs-arrow-small-right"></i></a>
                     </div>
                 </div>
@@ -60,7 +61,7 @@
                                     </div>
                                     <div class="product-content-wrap">
                                         <div class="product-category">
-                                                <a href="shop-grid-right.html">{{ $product['category']['category_name'] }}</a>
+                                                <a href="">{{ $product['category']['category_name'] }}</a>
                                             </div>
                                             <h2><a href="{{ url('product/details/' . $product->id . '/' . $product->product_slug) }}">{{ $product->product_name }}</a>
                                             </h2>
@@ -125,3 +126,4 @@
         </div>
     </div>
 </section>
+</div>

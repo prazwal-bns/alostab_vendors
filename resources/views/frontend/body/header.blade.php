@@ -16,8 +16,8 @@
                     <div class="header-info">
                         <ul>
 
-                            <li><a href="#">My Cart</a></li>
-                            <li><a href="#">Checkout</a></li>
+                            <li><a href="{{ route('myCart') }}">My Cart</a></li>
+                            <li><a href="{{ route('checkout') }}">Checkout</a></li>
                             <li><a href="{{ route('user.track.order') }}">Order Tracking</a></li>
                         </ul>
                     </div>
@@ -117,26 +117,6 @@
                     </div>
                     <div class="header-action-right">
                         <div class="header-action-2">
-                            {{-- <div class="search-location">
-                                <form action="#">
-                                    <select class="select-active">
-                                        <option>Your Location</option>
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>Arizona</option>
-                                        <option>Delaware</option>
-                                        <option>Florida</option>
-                                        <option>Georgia</option>
-                                        <option>Hawaii</option>
-                                        <option>Indiana</option>
-                                        <option>Maryland</option>
-                                        <option>Nevada</option>
-                                        <option>New Jersey</option>
-                                        <option>New Mexico</option>
-                                        <option>New York</option>
-                                    </select>
-                                </form>
-                            </div> --}}
 
                             <div class="header-action-icon-2">
                                 <a href="{{ route('wishlist') }}">
@@ -175,8 +155,8 @@
                                             <h4>Total:  <span>Rs.  <span id="cartSubTotal"> </span></span></h4>
                                         </div>
                                         <div class="shopping-cart-button">
-                                            <a href="" class="outline">View cart</a>
-                                            <a href="">Checkout</a>
+                                            <a href="{{ route('myCart') }}" class="outline">View cart </a> 
+                                            <a href="{{ route('checkout') }}">| Checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -298,35 +278,6 @@
                     </div>
                     <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                         <nav>
-                            {{-- <ul>
-
-                                <li>
-                                    <a class="active" href="/">Home </a>
-
-                                </li>
-                                @php
-                                    $categories = App\Models\Category::orderBy('category_name', 'ASC')->limit(6)->get();
-                                @endphp
-
-                                @foreach ($categories as $category)
-                                    <li>
-                                        <a href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }} <i class="fi-rs-angle-down"></i></a>
-                                        @php
-                                            $subcategories = App\Models\Subcategory::where('category_id',$category->id)->orderBy('subcategory_name', 'ASC')->get();
-                                        @endphp
-                                        
-                                        <ul class="sub-menu">
-                                            @foreach ($subcategories as $subcategory)
-                                                <li><a href="{{ url('product/subcategory/'.$subcategory->id.'/'.$subcategory->subcategory_slug) }}">{{ $subcategory->subcategory_name }}</a></li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                @endforeach
-                                <li>
-                                    <a href="{{ route('home.blog') }}">Blog</a>
-                                </li>
-                            </ul> --}}
-
                             <ul>
                                 <li>
                                     <a class="{{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
@@ -354,7 +305,7 @@
                                 </li>
 
                                 <li>
-                                    <a class="{{ request()->routeIs('home.blog') ? 'active' : '' }}" href="{{ route('shop.page') }}">Shop</a>
+                                    <a class="{{ request()->routeIs('shop.page') ? 'active' : '' }}" href="{{ route('shop.page') }}">Shop</a>
                                 </li>
                             </ul>
 
@@ -374,7 +325,8 @@
                         <span class="burger-icon-bottom"></span>
                     </div>
                 </div>
-                <div class="header-action-right d-block d-lg-none">
+
+                {{-- <div class="header-action-right d-block d-lg-none">
                     <div class="header-action-2">
                         <div class="header-action-icon-2">
                             <a href="">
@@ -430,7 +382,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -466,113 +418,33 @@
 
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#">shop</a>
+                            <a href="{{ route('shop.page') }}">Shop</a>
+                        </li>
+                        
+                        <li class="menu-item-has-children">
+                            <a href="#">Categories</a>
                             <ul class="dropdown">
-                                <li><a href="#">Shop Grid – Right Sidebar</a></li>
-                                <li><a href="#">Shop Grid – Left Sidebar</a></li>
-                                <li><a href="#">Shop List – Right Sidebar</a></li>
-                                <li><a href="#">Shop List – Left Sidebar</a></li>
-                                <li><a href="#">Shop - Wide</a></li>
+                                @foreach($categories as $category)
                                 <li class="menu-item-has-children">
-                                    <a href="#">Single Product</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Product – Right Sidebar</a></li>
-                                        <li><a href="#">Product – Left Sidebar</a></li>
-                                        <li><a href="#">Product – No sidebar</a></li>
-                                        <li><a href="#">Product – Vendor Infor</a></li>
-                                    </ul>
+                                    <a href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }}</a>
                                 </li>
-                                <li><a href="#">Shop – Filter</a></li>
-                                <li><a href="">Shop – Wishlist</a></li>
-                                <li><a href="#">Shop – Cart</a></li>
-                                <li><a href="#">Shop – Checkout</a></li>
-                                <li><a href="#">Shop – Compare</a></li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Shop Invoice</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Shop Invoice 1</a></li>
-                                        <li><a href="#">Shop Invoice 2</a></li>
-                                        <li><a href="#">Shop Invoice 3</a></li>
-                                        <li><a href="#">Shop Invoice 4</a></li>
-                                        <li><a href="#">Shop Invoice 5</a></li>
-                                        <li><a href="#">Shop Invoice 6</a></li>
-                                    </ul>
-                                </li>
+                                @endforeach
                             </ul>
                         </li>
 
                         <li class="menu-item-has-children">
-                            <a href="#">Mega menu</a>
-                            <ul class="dropdown">
-                                <li class="menu-item-has-children">
-                                    <a href="#">Women's Fashion</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Dresses</a></li>
-                                        <li><a href="#">Blouses & Shirts</a></li>
-                                        <li><a href="#">Hoodies & Sweatshirts</a></li>
-                                        <li><a href="#">Women's Sets</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Men's Fashion</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Jackets</a></li>
-                                        <li><a href="#">Casual Faux Leather</a></li>
-                                        <li><a href="#">Genuine Leather</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Technology</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Gaming Laptops</a></li>
-                                        <li><a href="#">Ultraslim Laptops</a></li>
-                                        <li><a href="#">Tablets</a></li>
-                                        <li><a href="#">Laptop Accessories</a></li>
-                                        <li><a href="#">Tablet Accessories</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Blog</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Blog Category Grid</a></li>
-                                <li><a href="#">Blog Category List</a></li>
-                                <li><a href="#">Blog Category Big</a></li>
-                                <li><a href="#">Blog Category Wide</a></li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Single Product Layout</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Left Sidebar</a></li>
-                                        <li><a href="#">Right Sidebar</a></li>
-                                        <li><a href="#">No Sidebar</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <a href="{{ route('home.blog') }}">Blog</a>
                         </li>
                         <li class="menu-item-has-children">
                             <a href="#">Pages</a>
                             <ul class="dropdown">
-                                <li><a href="">About Us</a></li>
-                                <li><a href="">Contact</a></li>
                                 <li><a href="">My Account</a></li>
-                                <li><a href="">Login</a></li>
-                                <li><a href="">Register</a></li>
-                                <li><a href="">Forgot password</a></li>
-                                <li><a href="">Reset password</a></li>
+                                <li><a href="{{ route('login') }}">Login</a></li>
+                                <li><a href="{{ route('login') }}">Register</a></li>
                                 <li><a href="">Purchase Guide</a></li>
                                 <li><a href="">Privacy Policy</a></li>
                                 <li><a href="">Terms of Service</a></li>
                                 <li><a href="">404 Page</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Language</a>
-                            <ul class="dropdown">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -584,10 +456,11 @@
                     <a href=""><i class="fi-rs-marker"></i> Our location </a>
                 </div>
                 <div class="single-mobile-header-info">
-                    <a href=""><i class="fi-rs-user"></i>Log In / Sign Up </a>
+                    <a href="{{ route('login') }}"><i class="fi-rs-user"></i>Log In  </a>
+                    <a href="{{ route('register') }}"><i class="fi-rs-user"></i>Sign Up </a>
                 </div>
                 <div class="single-mobile-header-info">
-                    <a href="#"><i class="fi-rs-headphones"></i>(+01) - 2345 - 6789 </a>
+                    <a href="#"><i class="fi-rs-headphones"></i>(+977) 9862394599 </a>
                 </div>
             </div>
             <div class="mobile-social-icon mb-50">

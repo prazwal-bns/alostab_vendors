@@ -11,7 +11,7 @@
             <div class="row align-items-center">
                 <div class="col-xl-6">
                     <div class="breadcrumb mb-2">
-                        <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                        <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
                         <span></span> Shop <span></span> {{ $subCatBreadCrumb->category->category_name }} <span></span> {{ $subCatBreadCrumb->subcategory_name }}
                     </div>
                     <h1 class="mb-15">{{ $subCatBreadCrumb->subcategory_name }}</h1>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="product-content-wrap">
                                 <div class="product-category">
-                                    <a href="shop-grid-right.html">{{ $product['category']['category_name'] }}</a>
+                                    <a href="">{{ $product['category']['category_name'] }}</a>
                                 </div>
                                 <h2><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
 
@@ -142,10 +142,10 @@
                                 <div>
                                     @if ($product->vendor_id == NULL)
                                     <span class="font-small text-muted">By <a
-                                            href="vendor-details-1.html">Admin</a></span>
+                                            href="">Admin</a></span>
                                     @else
                                     <span class="font-small text-muted">By <a
-                                        href="vendor-details-1.html">{{ $product['vendor']['name'] }}</a></span>
+                                        href="">{{ $product['vendor']['name'] }}</a></span>
                                     @endif
                                 </div>
                                 <div class="product-card-bottom">

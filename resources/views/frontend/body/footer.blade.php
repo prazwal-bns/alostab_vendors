@@ -36,7 +36,7 @@
                         </div>
                         <div class="banner-text">
                             <h3 class="icon-box-title">Best prices & offers</h3>
-                            <p>Orders $50 or more</p>
+                            <p>Orders and more</p>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="banner-text">
                             <h3 class="icon-box-title">Easy returns</h3>
-                            <p>Within 30 days</p>
+                            <p>Within 7 days</p>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="banner-text">
                             <h3 class="icon-box-title">Safe delivery</h3>
-                            <p>Within 30 days</p>
+                            <p>Within 3 days</p>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                             <li><img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-email-2.svg') }}"
                                     alt="" /><strong>Email:</strong><span> {{$setting->email}}</span></li>
                             <li><img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-clock.svg') }}"
-                                    alt="" /><strong>Hours:</strong><span> 10:00 - 18:00, Mon - Sat</span>
+                                    alt="" /><strong>Hours:</strong><span> 10:00 - 18:00, Sun - Fri</span>
                             </li>
                         </ul>
                     </div>
@@ -142,25 +142,21 @@
                     <h4 class=" widget-title">Company</h4>
                     <ul class="footer-list mb-sm-5 mb-md-0">
                         <li><a href="#">About Us</a></li>
-                        <li><a href="#">Delivery Information</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms &amp; Conditions</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Support Center</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="{{ route('vendor.all') }}">Our Vendors</a></li>
+                        <li><a href="mailto:alostabvendors@gmail.com">Contact Us</a></li>
+                        <li><a href="{{ $setting->facebook }}">Facebook</a></li>
+                        <li><a href="{{ $setting->twitter }}">Twitter</a></li>
                     </ul>
                 </div>
                 <div class="footer-link-widget col wow animate__animated animate__fadeInUp"
                     data-wow-delay=".2s">
                     <h4 class="widget-title">Account</h4>
                     <ul class="footer-list mb-sm-5 mb-md-0">
-                        <li><a href="#">Sign In</a></li>
-                        <li><a href="#">View Cart</a></li>
-                        <li><a href="#">My Wishlist</a></li>
-                        <li><a href="#">Track My Order</a></li>
-                        <li><a href="#">Help Ticket</a></li>
-                        <li><a href="#">Shipping Details</a></li>
-                        <li><a href="#">Compare products</a></li>
+                        <li><a href="{{ route('login') }}">Sign In</a></li>
+                        <li><a href="{{ route('myCart') }}">View Cart</a></li>
+                        <li><a href="{{ route('wishlist') }}">My Wishlist</a></li>
+                        <li><a href="{{ route('user.track.order') }}">Track My Order</a></li>
+                        <li><a href="{{ route('compare') }}">Compare products</a></li>
                     </ul>
                 </div>
                 <div class="footer-link-widget col wow animate__animated animate__fadeInUp"
@@ -168,23 +164,22 @@
                     <h4 class="widget-title">Corporate</h4>
                     <ul class="footer-list mb-sm-5 mb-md-0">
                         <li><a href="{{route('become.vendor')}}">Become a Vendor</a></li>
-                        <li><a href="#">Affiliate Program</a></li>
-                        <li><a href="#">Farm Business</a></li>
-                        <li><a href="#">Farm Careers</a></li>
-                        <li><a href="#">Our Suppliers</a></li>
-                        <li><a href="#">Accessibility</a></li>
-                        <li><a href="#">Promotions</a></li>
+                        <li><a href="{{ route('home.blog') }}">View Our Blogs</a></li>
+                        <li><a href="{{ route('shop.page') }}">View All Products</a></li>
+                        <li><a href="#featured">Promotions</a></li>
+                        <li><a href="#featuredProduct">Featured Products</a></li>
                     </ul>
                 </div>
-                <div class="footer-link-widget col wow animate__animated animate__fadeInUp"
-                    data-wow-delay=".4s">
-                    <h4 class="widget-title">Popular</h4>
+
+                @php
+                    $footerCategories = App\Models\Category::orderBy('category_name', 'ASC')->limit(5)->get();
+                @endphp
+                <div class="footer-link-widget col wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
+                    <h4 class="widget-title">Popular Categories</h4>
                     <ul class="footer-list mb-sm-5 mb-md-0">
-                        <li><a href="#">Electronics</a></li>
-                        <li><a href="#">Clothings</a></li>
-                        <li><a href="#">Gaming Accessories</a></li>
-                        <li><a href="#">Smart Phones</a></li>
-                        <li><a href="#">Books</a></li>
+                        @foreach($footerCategories as $category)
+                            <li><a href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -225,7 +220,7 @@
                             src = "{{ asset('frontend/assets/imgs/theme/icons/icon-youtube-white.svg') }}"
                             alt="" /></a>
                 </div>
-                <p class="font-sm">Discover. Thrive.-Your Gateway to Limitless Shopping</p>
+                <p class="font-sm">Elevate Your Shopping Experience with Alostab Vendors</p>
             </div>
         </div>
     </div>

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification as Notification;
+use Illuminate\Support\Facades\Redirect;
 
 class StripeController extends Controller
 {
@@ -39,7 +40,7 @@ class StripeController extends Controller
 
         $charge = \Stripe\Charge::create([
             'amount' => $total_amount*100,
-            'currency' => 'inr',
+            'currency' => 'npr',
             'description' => 'Alostab Vendors',
             'source' => $token,
             'metadata' => ['order_id' => uniqid()],
@@ -130,6 +131,25 @@ class StripeController extends Controller
     public function CashOrder(Request $request)
     {
         $user = User::where('role','admin')->get();
+
+        $this->OrderSuccess($request);
+
+        $notification = array(
+            'message' => "Your Order Has Been Placed Successfully.",
+            'alert-type' => 'success'
+        );
+        
+
+        Notification::send($user, new OrderComplete($request->name));
+
+        return redirect()->route('dashboard')->with($notification);
+    }
+    // END FUNCTION   
+
+
+    // --------------> OrderSucess <-------------------------
+    public function OrderSuccess($request) {
+        // dd($request->input());   
         if (Session::has('coupoun')) {
             $total_amount = Session::get('coupoun')['total_amount'];
             $discount_amount = Session::get('coupoun')['discount_amount'];
@@ -150,8 +170,8 @@ class StripeController extends Controller
             'post_code' => $request->post_code,
             'notes' => $request->notes,
 
-            'payment_type' => 'Cash On Delivery',
-            'payment_method' => 'Cash On Delivery',
+            'payment_type' => $request->payment_type ?? 'Cash On Delivery',
+            'payment_method' => $request->payment_method ?? 'Cash On Delivery',
             'currency' => 'Rs.',
             'amount' => $total_amount,
             'discount_amount' => $discount_amount,
@@ -180,9 +200,7 @@ class StripeController extends Controller
             ];
 
             Mail::to($request->email)->send(new OrderMail($data));
-
-        } catch(Exception $e) {
-            // dd($e);
+        } catch (Exception $e) {
         }
         // END -> SEND MAIL
 
@@ -205,17 +223,92 @@ class StripeController extends Controller
             Session::forget('coupoun');
         }
         Cart::destroy();
+    } 
 
-        $notification = array(
-            'message' => "Your Order Has Been Placed Successfully.",
-            'alert-type' => 'success'
-        );
 
-        Notification::send($user, new OrderComplete($request->name));
 
-        return redirect()->route('dashboard')->with($notification);
+    // For Khalti Payment 
+
+    public function KhaltiVerification(Request $request)
+    {
+        // Retrieve dynamic amount from session
+        if (Session::has('coupoun')) {
+            $total_amount = Session::get('coupoun')['total_amount'];
+            $discount_amount = Session::get('coupoun')['discount_amount'];
+        } else {
+            $total_amount = round(Cart::total());
+            $discount_amount = 0;
+        }
+
+        $total_amount_paisa = (int) ($total_amount * 100);
+
+        
+        $url = "https://a.khalti.com/api/v2/epayment/initiate/";
+        session(['khaltiPayment' => $request->input()]);
+        $requestBackURL = str_replace(" ", "","http://127.0.0.1:8000/khalti/callback");
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+            "return_url": "'. $requestBackURL . '",
+            "website_url": "http://127.0.0.1:8000",
+            "amount": "10000",
+            "purchase_order_id": "Order01",
+            "purchase_order_name": "test",
+            "customer_info": {
+                "name": "Alostab Vendors",
+                "email": "alostabvendors@gmail.com",
+                "phone": "9800000001"
+            }
+        }',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: key 189c72dd39804d72aaba91de589b2882',
+                'Content-Type: application/json',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $response_data = json_decode($response, true);
+
+        if ($response_data && isset($response_data['payment_url'])) {
+            return Redirect::to($response_data['payment_url']);
+        } else {
+            return "Error initiating payment.";
+        }
     }
-    // END FUNCTION   
-    
-    
+
+    public function KhaltiCallback(Request $request) {
+        // dd($request->input('status'));
+        $user = User::where('role', 'admin')->get();
+        if($request->input('status') == 'Completed'){
+
+            $request->merge(session('khaltiPayment'));
+            $request->merge(["payment_method"=>"Khalti"]);
+            $request->merge(["payment_type" => "Khalti Online"]);
+            $this->OrderSuccess($request);
+            
+            $notification = array(
+                'message' => "Your Order Has Been Placed Successfully.",
+                'alert-type' => 'success'
+            );
+
+           
+            Session::forget('khaltiPayment');
+            Notification::send($user, new OrderComplete($request->name));
+
+            
+            return redirect()->route('dashboard')->with($notification);
+        }
+    }
+
 }

@@ -1,98 +1,119 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Khalti</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-	<script src="https://khalti.com/static/khalti-checkout.js"></script>
-</head>
-<body>
-	<br>
-	<h1 style="text-align:center; color: #773292;">
-		Pay With Khalti
-	</h1>
-	<br>
-	<hr>
-	<br>
-	<div class="container">
-		<div class="row justify-content-md-center">
-    		<div class="col col-lg-4">
-				<form >
-				  	
-				  	<div class="form-group" id="pay-button">
-				  		<p id="error-amount" style="color: red;"></p>
-					    <label for="amount" style="text-align:center; color: #773292; padding: 0px 0px 20px 0px;"><strong>Enter Amount : </strong> </label>
-					    <input type="number" step="any" class="form-control" id="amount" placeholder="Enter Amount">
-				  	</div>
-					<br>
-				  	<button id="payment-button" style="background-color: #773292; color: #fff; border: none; padding: 5px 10px; border-radius: 2px">Pay with Khalti</button>
-00000
-				</form>
-			</div>
-		</div>
-	</div>
+@extends('frontend.master_dashboard')
 
-</body>
-	<script>
+@section('title')
+    Khalti | Payment  
+@endsection
 
-		var config = {
-    		// replace the publicKey with yours
-            "publicKey": "{{env('KHALTI_TEST_PUBLIC', '')}}",
-            "productIdentity": "1234567890",
-            "productName": "Account Topup",
-            "productName": "Dragon",
-            "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
-            "eventHandler": {
-                onSuccess (payload) {
-                    // hit merchant api for initiating verfication
-                    console.log(payload);
-                    $.ajax({
-                       	url: "{{route('khalti.verification')}}",
-                       	type: 'POST',
-                       	data: {
-                       		amount: payload.amount,
-                       		mobile: payload.mobile,
-                       		user_id : payload.product_identity,
-                       		token : payload.token
-                       		},
-                       	success: function(data) 
-                       	{
-                       		console.log(data);
-                          //redirect to sucess page
-                       	},
-                       	error: function(data) 
-                       	{
-                       		console.log("error");
-                          //redirext to error page
-                       	}
-                   });
-                },
-                onError (error) {
-                    console.log(error);
-                    //redirect as needed
-                },
-                onClose () {
-                    console.log('widget is closing');
-                    //redirect as needed
-                }
-            }
-		};
-        var checkout = new KhaltiCheckout(config);
-        var btn = document.getElementById("payment-button");
-        btn.onclick = function (e) {
-        	e.preventDefault();
-        	var amount = parseFloat($('#amount').val() * 100.00);
-        	if (amount < 5000) {
-        		$('#error-amount').text('Please Enter amount greater than Rs 50 !!')
-        		return false;
-        	}
-            checkout.show({amount: amount});
-        }
+<style>
+    .khalti-payment-button {
+        background-color: #5c2e91 !important;
+        color: white ;
+        border: none ;
+        padding: 10px 30px ;
+        text-align: center ;
+        text-decoration: none ;
+        display: inline-block ;
+        font-size: 16px ;
+        margin: 4px 2px ;
+        cursor: pointer ;
+        border-radius: 4px ;
+    }
+</style>
 
-    </script>
-</html>
+@section('main')
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <span></span> Khalti Payment
+            </div>
+        </div>
+    </div>
+    <div class="container mb-80 mt-50">
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Order details section -->
+                <div class="border p-40 cart-totals ml-30 mb-50">
+                    <div class="d-flex align-items-end justify-content-between mb-30">
+                        <h4>Your Order</h4>
+                        <h6 class="text-muted">Your Order Details</h6>
+                    </div>
+                    <div class="divider-2 mb-30"></div>
+                    <div class="table-responsive order_table checkout">
+                        <table class="table no-border">
+                            <tbody>
+                                @if(Session::has('coupoun'))
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Subtotal</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end">Rs. {{ $cartTotal }}</h4>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Coupoun Name</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h6 class="text-danger text-end">{{ session()->get('coupoun')['coupoun_name']}} ({{ session()->get('coupoun')['coupoun_discount'] }}%) </h6>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Coupon Discount</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end">Rs. {{ session()->get('coupoun')['discount_amount'] }}</h4>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Grand Total</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end">Rs. {{ session()->get('coupoun')['total_amount'] }}</h4>
+                                    </td>
+                                </tr>
+                                @else 
+                                    <tr>
+                                    <td class="cart_total_label">
+                                        <h6 class="text-muted">Grand Total</h6>
+                                    </td>
+                                    <td class="cart_total_amount">
+                                        <h4 class="text-brand text-end">Rs. {{ $cartTotal}}</h4>
+                                    </td>
+                                </tr>
+                                @endif
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form action="{{ route('khalti.payment') }}" method="post">
+                    @csrf
+                    <!-- Pay with Khalti button -->
+                    <input type="hidden" name="name" value="{{ $data['shipping_name'] }}">
+                    <input type="hidden" name="email" value="{{ $data['shipping_email'] }}">
+                    <input type="hidden" name="phone" value="{{ $data['shipping_phone'] }}">
+                    <input type="hidden" name="post_code" value="{{ $data['post_code'] }}">
+                    
+                    <input type="hidden" name="district_id" value="{{ $data['district_id'] }}">
+                    <input type="hidden" name="city_id" value="{{ $data['city_id'] }}">
+                    <input type="hidden" name="state_id" value="{{ $data['state_id'] }}">
+                    <input type="hidden" name="address" value="{{ $data['shipping_address'] }}">
+                    <input type="hidden" name="notes" value="{{ $data['notes'] }}">
+                    <div class="border p-40 cart-totals ml-30 mb-50 text-center">
+                        <h4 class="mb-2">Pay with Khalti Payment Gateway</h4>
+                        <button type="submit" class="khalti-payment-button">Pay With Khalti</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection

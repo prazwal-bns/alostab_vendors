@@ -261,83 +261,6 @@
         </li>
         @endif
 
-        {{-- <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-                </div>
-                <div class="menu-title">Components</div>
-            </a>
-            <ul>
-                <li> <a href="component-alerts.html"><i class="bx bx-right-arrow-alt"></i>Alerts</a>
-                </li>
-                <li> <a href="component-accordions.html"><i class="bx bx-right-arrow-alt"></i>Accordions</a>
-                </li>
-                <li> <a href="component-badges.html"><i class="bx bx-right-arrow-alt"></i>Badges</a>
-                </li>
-                <li> <a href="component-buttons.html"><i class="bx bx-right-arrow-alt"></i>Buttons</a>
-                </li>
-                <li> <a href="component-cards.html"><i class="bx bx-right-arrow-alt"></i>Cards</a>
-                </li>
-                <li> <a href="component-carousels.html"><i class="bx bx-right-arrow-alt"></i>Carousels</a>
-                </li>
-                <li> <a href="component-list-groups.html"><i class="bx bx-right-arrow-alt"></i>List Groups</a>
-                </li>
-                <li> <a href="component-media-object.html"><i class="bx bx-right-arrow-alt"></i>Media
-                        Objects</a>
-                </li>
-                <li> <a href="component-modals.html"><i class="bx bx-right-arrow-alt"></i>Modals</a>
-                </li>
-                <li> <a href="component-navs-tabs.html"><i class="bx bx-right-arrow-alt"></i>Navs & Tabs</a>
-                </li>
-                <li> <a href="component-navbar.html"><i class="bx bx-right-arrow-alt"></i>Navbar</a>
-                </li>
-                <li> <a href="component-paginations.html"><i class="bx bx-right-arrow-alt"></i>Pagination</a>
-                </li>
-                <li> <a href="component-popovers-tooltips.html"><i class="bx bx-right-arrow-alt"></i>Popovers
-                        & Tooltips</a>
-                </li>
-                <li> <a href="component-progress-bars.html"><i class="bx bx-right-arrow-alt"></i>Progress</a>
-                </li>
-                <li> <a href="component-spinners.html"><i class="bx bx-right-arrow-alt"></i>Spinners</a>
-                </li>
-                <li> <a href="component-notifications.html"><i class="bx bx-right-arrow-alt"></i>Notifications</a>
-                </li>
-                <li> <a href="component-avtars-chips.html"><i class="bx bx-right-arrow-alt"></i>Avatrs &
-                        Chips</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bx bx-repeat"></i>
-                </div>
-                <div class="menu-title">Content</div>
-            </a>
-            <ul>
-                <li> <a href="content-grid-system.html"><i class="bx bx-right-arrow-alt"></i>Grid System</a>
-                </li>
-                <li> <a href="content-typography.html"><i class="bx bx-right-arrow-alt"></i>Typography</a>
-                </li>
-                <li> <a href="content-text-utilities.html"><i class="bx bx-right-arrow-alt"></i>Text
-                        Utilities</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"> <i class="bx bx-donate-blood"></i>
-                </div>
-                <div class="menu-title">Icons</div>
-            </a>
-            <ul>
-                <li> <a href="icons-line-icons.html"><i class="bx bx-right-arrow-alt"></i>Line Icons</a>
-                </li>
-                <li> <a href="icons-boxicons.html"><i class="bx bx-right-arrow-alt"></i>Boxicons</a>
-                </li>
-                <li> <a href="icons-feather-icons.html"><i class="bx bx-right-arrow-alt"></i>Feather Icons</a>
-                </li>
-            </ul>
-        </li> --}}
 
         @if(Auth::user()->canAll('report.menu'))
         <li class="menu-label">Report Generation</li>
@@ -388,7 +311,7 @@
         @if(Auth::user()->canAll('site.menu'))
         <li>
             <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bx bx-cart"></i>
+                <div class="parent-icon"><i class="bx bx-support"></i>
                 </div>
                 <div class="menu-title">Manage Site Settings</div>
             </a>
@@ -424,7 +347,7 @@
                 <div class="menu-title">Role & Permission</div>
             </a>
             <ul>
-                <li> <a href="{{ route('all.permission') }}"><i class="bx bx-right-arrow-alt"></i>All Permission</a></li>
+                {{-- <li> <a href="{{ route('all.permission') }}"><i class="bx bx-right-arrow-alt"></i>All Permission</a></li> --}}
                 <li> <a href="{{route('all.roles')}}"><i class="bx bx-right-arrow-alt"></i>All Roles</a></li>
 
                 <li> <a href="{{route('add.roles.permission')}}"><i class="bx bx-right-arrow-alt"></i>Add Roles & Permission</a></li>
@@ -448,14 +371,6 @@
             </ul>
         </li>
         @endif
-
-        <li>
-            <a href="https://themeforest.net/user/codervent" target="_blank">
-                <div class="parent-icon"><i class="bx bx-support"></i>
-                </div>
-                <div class="menu-title">Support</div>
-            </a>
-        </li>
     </ul>
     <!--end navigation-->
 </div>

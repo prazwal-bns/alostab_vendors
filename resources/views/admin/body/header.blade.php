@@ -303,14 +303,11 @@
                     <li><a class="dropdown-item" href="{{ route('admin.change.password') }}"><i
                                 class="bx bx-cog"></i><span>Change Password</span></a>
                     </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i
+                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i
                                 class='bx bx-home-circle'></i><span>Dashboard</span></a>
                     </li>
                     <li><a class="dropdown-item" href="javascript:;"><i
                                 class='bx bx-dollar-circle'></i><span>Earnings</span></a>
-                    </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i
-                                class='bx bx-download'></i><span>Downloads</span></a>
                     </li>
                     <li>
                         <div class="dropdown-divider mb-0"></div>

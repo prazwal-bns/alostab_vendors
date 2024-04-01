@@ -38,11 +38,10 @@ class CheckOutController extends Controller
         $data['notes'] = $request->notes;
 
         $cartTotal = Cart::total();
-
         if($request->payment_option == 'stripe'){
             return view('frontend.payment.stripe',compact('data','cartTotal'));
         }
-        elseif($request->payment_option== 'khalti'){
+        elseif($request->payment_option== 'khalti') {
             return view('frontend.payment.khalti',compact('data','cartTotal'));
         }
         else{

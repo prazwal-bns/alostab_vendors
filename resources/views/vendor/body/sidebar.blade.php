@@ -8,7 +8,7 @@
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
         <div>
-            <img src=" {{ asset('adminbackend/assets/images/prev-logo-icon.png') }}" height="25" alt="logo icon">
+            <img src=" {{ asset('adminbackend/assets/images/nvendor.png') }}" height="25" alt="logo icon">
             {{-- <img src=" {{ asset('adminbackend/assets/images/logo-icon.png') }}" height="30" alt="logo icon"> --}}
         </div>
         <div>
@@ -62,10 +62,10 @@
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="bx bx-cart"></i>
                 </div>
-                <div class="menu-title">Manage Reviews</div>
+                <div class="menu-title">View Reviews</div>
             </a>
             <ul>
-                <li> <a href="{{ route('vendor.all.review') }}"><i class="bx bx-right-arrow-alt"></i>Pending Reviews</a></li>
+                <li> <a href="{{ route('vendor.all.review') }}"><i class="bx bx-right-arrow-alt"></i>View All Reviews</a></li>
                 {{-- <li> <a href="{{ route('published.review') }}"><i class="bx bx-right-arrow-alt"></i>Published Review</a></li> --}}
             </ul>
         </li>
@@ -75,13 +75,13 @@
         @endif
 
         
-        <li>
+        {{-- <li>
             <a href="https://themeforest.net/user/codervent" target="_blank">
                 <div class="parent-icon"><i class="bx bx-support"></i>
                 </div>
                 <div class="menu-title">Support</div>
             </a>
-        </li>
+        </li> --}}
     </ul>
     <!--end navigation-->
 </div>

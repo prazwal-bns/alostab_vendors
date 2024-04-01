@@ -38,8 +38,6 @@
                                 <div class="border p-4 rounded">
                                     <div class="text-center">
                                         <h3 class="">Admin Sign in</h3>
-                                        <p>Don't have an account yet? <a href="authentication-signup.html"> Sign up
-                                                here</a>
                                         </p>
                                     </div>
                                     {{-- <div class="d-grid">

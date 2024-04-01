@@ -8,7 +8,7 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
                 <span></span> Checkout
             </div>
         </div>
@@ -110,7 +110,7 @@
                                         <td class="image product-thumbnail"><img src="{{ asset($item->options->image) }}"
                                                 height="80" alt="#"></td>
                                         <td>
-                                            <h6 class="w-160 mb-5"><a href="shop-product-full.html"
+                                            <h6 class="w-160 mb-5"><a href=""
                                                     class="text-heading">{{ $item->name }}</a></h6></span>
                                             <div class="product-rate-cover">
 
@@ -222,13 +222,13 @@
                         </div>
                     </div>
                     <div class="payment-logo d-flex">
-                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/payment-paypal.svg') }}"
+                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/coddd.svg') }}"
                             alt="">
-                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/payment-visa.svg') }}"
+                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/khaltii.svg') }}"
                             alt="">
-                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/payment-master.svg') }}"
+                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/stripe-logo 1.svg') }}"
                             alt="">
-                        <img src="{{ asset('frontend/assets/imgs/theme/icons/payment-zapper.svg') }}" alt="">
+                        {{-- <img src="{{ asset('frontend/assets/imgs/theme/icons/payment-zapper.svg') }}" alt=""> --}}
                     </div>
                     <button type="submit" class="btn btn-fill-out btn-block mt-30">Place an Order<i
                             class="fi-rs-sign-out ml-15"></i></button>

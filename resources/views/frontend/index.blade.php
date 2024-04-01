@@ -77,7 +77,7 @@
                             </div>
                             <div class="product-content-wrap">
                                 <div class="product-category">
-                                    <a href="shop-grid-right.html">{{ $product['category']['category_name'] }}</a>
+                                    <a href="">{{ $product['category']['category_name'] }}</a>
                                 </div>
                                 <h2><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                 <div class="product-rate-cover">
@@ -108,10 +108,10 @@
                                 <div>
                                     @if ($product->vendor_id == NULL)
                                     <span class="font-small text-muted">By <a
-                                            href="vendor-details-1.html">Admin</a></span>
+                                            href="">Admin</a></span>
                                     @else
                                     <span class="font-small text-muted">By <a
-                                        href="vendor-details-1.html">{{ $product['vendor']['name'] }}</a></span>
+                                        href="">{{ $product['vendor']['name'] }}</a></span>
                                     @endif
                                 </div>
                                 <div class="product-card-bottom">
@@ -200,7 +200,7 @@
                             </div>
                             <div class="product-content-wrap">
                                 <div class="product-category">
-                                    <a href="shop-grid-right.html">{{ $product['category']['category_name'] }}</a>
+                                    <a href="">{{ $product['category']['category_name'] }}</a>
                                 </div>
                                 <h2><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                 <div class="product-rate-cover">
@@ -230,10 +230,10 @@
                                 <div>
                                     @if ($product->vendor_id == NULL)
                                     <span class="font-small text-muted">By <a
-                                            href="vendor-details-1.html">Admin</a></span>
+                                            href="">Admin</a></span>
                                     @else
                                     <span class="font-small text-muted">By <a
-                                        href="vendor-details-1.html">{{ $product['vendor']['name'] }}</a></span>
+                                        href="">{{ $product['vendor']['name'] }}</a></span>
                                     @endif
                                 </div>
                                 <div class="product-card-bottom">
@@ -322,7 +322,7 @@
                             </div>
                             <div class="product-content-wrap">
                                 <div class="product-category">
-                                    <a href="shop-grid-right.html">{{ $product['category']['category_name'] }}</a>
+                                    <a href="">{{ $product['category']['category_name'] }}</a>
                                 </div>
                                 <h2><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                 <div class="product-rate-cover">
@@ -352,10 +352,10 @@
                                 <div>
                                     @if ($product->vendor_id == NULL)
                                     <span class="font-small text-muted">By <a
-                                            href="vendor-details-1.html">Admin</a></span>
+                                            href="">Admin</a></span>
                                     @else
                                     <span class="font-small text-muted">By <a
-                                        href="vendor-details-1.html">{{ $product['vendor']['name'] }}</a></span>
+                                        href="">{{ $product['vendor']['name'] }}</a></span>
                                     @endif
                                 </div>
                                 <div class="product-card-bottom">
