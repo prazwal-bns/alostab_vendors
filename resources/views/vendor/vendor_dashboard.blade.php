@@ -60,7 +60,7 @@
     </div>
     <!--end wrapper-->
     <!--start switcher-->
-    @include('vendor.body.switcher')
+    {{-- @include('vendor.body.switcher') --}}
     <!--end switcher-->
 
 

@@ -1,4 +1,9 @@
 <header>
+<style>
+    .search-bar-box {
+        width: 90%;
+    }
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="topbar d-flex align-items-center">
         <nav class="navbar navbar-expand">
@@ -6,9 +11,8 @@
             </div>
             <div class="search-bar flex-grow-1">
                 <div class="position-relative search-bar-box">
-                    <input type="text" class="form-control search-control" placeholder="Type to search..."> <span
-                        class="position-absolute top-50 search-show translate-middle-y"><i
-                            class='bx bx-search'></i></span>
+                    <input type="text" class="form-control search-control" placeholder="Admin Dashboard ..."> <span
+                        class="position-absolute top-50 search-show translate-middle-y"></span>
                     <span class="position-absolute top-50 search-close translate-middle-y"><i
                             class='bx bx-x'></i></span>
                 </div>

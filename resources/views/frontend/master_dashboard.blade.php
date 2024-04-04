@@ -445,68 +445,87 @@
         }
     </script>
     {{-- // END WISHLIST ADD --}}
-
+    
 
      {{--  START WISHLIST VIEW DATA --}}
     <script type="text/javascript">
-        function wishlist(){
-            $.ajax({
-                type: "GET",
-                dataType: 'json',
-                url: "/get-wishlist-product/",
+        function wishlist() {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/get-wishlist-product/",
+            success: function (response) {
+                $('#wishQty').text(response.wishQty);
+                $('#wishAmt').text(response.wishQty);
+                var rows = "";
 
-                success:function(response){
-                    
-                    $('#wishQty').text(response.wishQty);
-                    $('#wishAmt').text(response.wishQty);
-                    var rows = ""
-
-                    $.each(response.wishlist, function(key, value) {
+                $.each(response.wishlist, function (key, value) {
                     // Calculate the final price considering the discount
                     let finalPrice = value.product.selling_price;
                     if (value.product.discount_price) {
                         finalPrice = value.product.selling_price - value.product.discount_price;
                     }
 
-                    // Construct the table row with the calculated price
-                    rows += `<tr class="pt-30">
-                        <td class="custome-checkbox pl-40"> 
-                        </td>
-                        <td class="image product-thumbnail pt-40"><img src="/${value.product.product_thumbnail}" alt="#" /></td>
-                        <td class="product-des product-name">
-                            <h6><a class="product-name mb-10" href="">${value.product.product_name}</a></h6>
-                            <div class="product-rate-cover">
-                                <div class="product-rate d-inline-block">
-                                    <div class="product-rating" style="width: 90%"></div>
-                                </div>
-                                <span class="font-small ml-5 text-muted"> (4.0)</span>
-                            </div>
-                        </td>
-                        <td class="price" data-title="Price">
-                            <h3 class="text-brand">Rs. ${finalPrice}</h3>
-                        </td>
-
-                        <td class="text-center detail-info" data-title="Stock">
-                            ${value.product.product_quantity > 0
-                                ? `<span class="stock-status in-stock mb-0"> In Stock </span>`
-                                :
-                                `<span class="stock-status out-stock mb-0"> Stock Out</span>`
+                    // Fetch product ratings asynchronously
+                    $.ajax({
+                        type: "GET",
+                        dataType: 'json',
+                        url: "/get-product-reviews/" + value.product.id,
+                        success: function (ratingResponse) {
+                            let averageRating = 0;
+                            if (ratingResponse.length > 0) {
+                                averageRating = ratingResponse.reduce((total, review) => total + review.rating, 0) / ratingResponse.length;
                             }
-                        </td>
-                        <td class="action text-center" data-title="Remove">
-                            <a type="submit" id="${value.id}" onclick="wishlistRemove(this.id)" class="text-body"><i class="fi-rs-trash"></i></a>
-                        </td>
-                    </tr>`;
+
+                            // Construct the product details URL
+                            let productUrl = "{{ url('product/details/') }}" + '/' + value.product.id + '/' + value.product.product_slug;
+
+                            // Construct the table row with the calculated price and rating
+                            rows += `<tr class="pt-30">
+                                <td class="custome-checkbox pl-40"> 
+                                </td>
+                                <td class="image product-thumbnail pt-40"><img src="/${value.product.product_thumbnail}" alt="#" /></td>
+                                
+                                <td class="product-des product-name">
+                                    <h6><a class="product-name mb-10" href="${productUrl}">${value.product.product_name}</a></h6>
+
+                                    <div class="product-rate-cover">
+                                        <div class="product-rate d-inline-block">
+                                            <div class="product-rating" style="width: ${averageRating * 20}%"></div>
+                                        </div>
+                                        <span class="font-small ml-5 text-muted">${averageRating.toFixed(1)}</span>
+                                    </div>
+                                </td>
+                                <td class="price" data-title="Price">
+                                    <h3 class="text-brand">Rs. ${finalPrice}</h3>
+                                </td>
+
+                                <td class="text-center detail-info" data-title="Stock">
+                                    ${value.product.product_quantity > 0
+                                        ? `<span class="stock-status in-stock mb-0"> In Stock </span>`
+                                        :
+                                        `<span class="stock-status out-stock mb-0"> Stock Out</span>`
+                                    }
+                                </td>
+                                <td class="action text-center" data-title="Remove">
+                                    <a type="submit" id="${value.id}" onclick="wishlistRemove(this.id)" class="text-body"><i class="fi-rs-trash"></i></a>
+                                </td>
+                            </tr>`;
+
+                            $('#wishlist').html(rows);
+                        },
+                        error: function (error) {
+                            console.error("Error fetching product ratings:", error);
+                        }
+                    });
                 });
-
-                    $('#wishlist').html(rows);
-                }
-            })
-        }
-        wishlist();
-        
-
-
+            },
+            error: function (error) {
+                console.error("Error fetching wishlist data:", error);
+            }
+        });
+    }
+    wishlist();
 
         // END WISHLIST VIEW DATA 
     

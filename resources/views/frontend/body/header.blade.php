@@ -6,6 +6,11 @@
         $userData = App\Models\User::find($id); 
     }
 @endphp
+
+
+
+
+
     <div class="mobile-promotion">
         <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
     </div>
@@ -103,10 +108,17 @@
                             }
                         </script>
 
+@php
+    $categories = App\Models\Category::orderBy('category_name', 'ASC')->get();
+@endphp
+
                         <form action="{{ route('search.product') }}" method="POST">
                             @csrf
                             <select class="select-active">
                                 <option>All Categories</option>
+                                @foreach ($categories as $item)
+                                    <option><a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">{{ $item->category_name }}</a></option>
+                                @endforeach
                             </select>
                             <input autocomplete="off" onfocus="search_result_show()" onblur="search_result_hide()" name="search" id="search" placeholder="Search for items..." />
 
@@ -184,10 +196,9 @@
 
 
 
-    @php
-        $categories = App\Models\Category::orderBy('category_name', 'ASC')->get();
-    @endphp
-
+@php
+    $categories = App\Models\Category::orderBy('category_name', 'ASC')->get();
+@endphp
 
 
 

@@ -222,12 +222,9 @@
                         </div>
                     </div>
                     <div class="payment-logo d-flex">
-                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/coddd.svg') }}"
-                            alt="">
-                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/khaltii.svg') }}"
-                            alt="">
-                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/stripe-logo 1.svg') }}"
-                            alt="">
+                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/stripe-logo 1.svg') }}" alt="">
+                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/khaltii.svg') }}" alt="">
+                        <img class="mr-15" src="{{ asset('frontend/assets/imgs/theme/icons/coddd.svg') }}" alt="">
                         {{-- <img src="{{ asset('frontend/assets/imgs/theme/icons/payment-zapper.svg') }}" alt=""> --}}
                     </div>
                     <button type="submit" class="btn btn-fill-out btn-block mt-30">Place an Order<i

@@ -9,7 +9,7 @@
     <div class="container">
         <div class="breadcrumb">
             <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-            <span></span> Shop <span></span> Fillter
+            <span></span> Shop <span></span> Wishlist
         </div>
     </div>
 </div>

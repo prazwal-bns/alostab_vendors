@@ -37,9 +37,8 @@
                                         <div class="card-body">
                                             <p>
                                                 From your account dashboard. you can easily check &amp; view your <a
-                                                    href="#">recent orders</a>,<br />
-                                                manage your <a href="#">shipping and billing addresses</a> and <a
-                                                    href="#">edit your password and account details.</a>
+                                                    href="{{ route('user.order.page') }}">recent orders</a>,<br />
+                                                return defected <a href="{{ route('return.order.page') }}">products</a> and <a href="{{ route('user.change.password') }}">edit your password </a> and <a href="{{ route('user.account.page') }}"> account details.</a>
                                             </p>
                                         </div>
                                     </div>

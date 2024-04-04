@@ -201,7 +201,7 @@
                     <p>{{ $setting->support_phone }}<span class="mt-1">24/7 Support Center</span></p>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block">
+            <div class="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block pr-25">
                 <div class="mobile-social-icon">
                     <h6>Follow Us</h6>
                     <a href="{{ $setting->facebook }}"><img

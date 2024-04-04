@@ -63,13 +63,12 @@ class WishlistController extends Controller
     }
     // end function
 
-    public function
-    GetProductReviews($product_id)
+    public function GetProductReviews($product_id)
     {
         // Retrieve reviews for the specified product_id
         $reviews = Review::where('product_id', $product_id)->where('status', 1)->get();
 
         return response()->json($reviews);
     }
-    // end function
+    // // end function
 }

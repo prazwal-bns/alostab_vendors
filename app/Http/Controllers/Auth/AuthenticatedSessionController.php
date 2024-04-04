@@ -47,6 +47,8 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended($url)->with($notification);
     }
 
+
+
     /**
      * Destroy an authenticated session.
      */
