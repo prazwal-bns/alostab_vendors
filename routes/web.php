@@ -56,6 +56,8 @@ use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', [IndexController::class, 'Index']);
 
+Route::get('/about', [IndexController::class, 'AboutPage'])->name('about.page');
+
 // Frontend All Product Details Route
 Route::get('/product/details/{id}/{slug}', [IndexController::class, 'ProductDetails']);
 

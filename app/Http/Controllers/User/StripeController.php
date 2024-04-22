@@ -187,21 +187,21 @@ class StripeController extends Controller
         ]);
 
         // START -> SEND MAIL
-        // try {
-        //     $invoice = Order::findOrFail($order_id);
-        //     $data = [
-        //         'invoice_no' => $invoice->invoice_number,
-        //         'amount' => $total_amount,
-        //         'discount_amount' => $discount_amount,
-        //         'name' => $invoice->name,
-        //         'email' => $invoice->email,
-        //         'address' => $invoice->address,
-        //         'order_date' => $invoice->order_date,
-        //     ];
+        try {
+            $invoice = Order::findOrFail($order_id);
+            $data = [
+                'invoice_no' => $invoice->invoice_number,
+                'amount' => $total_amount,
+                'discount_amount' => $discount_amount,
+                'name' => $invoice->name,
+                'email' => $invoice->email,
+                'address' => $invoice->address,
+                'order_date' => $invoice->order_date,
+            ];
 
-        //     Mail::to($request->email)->send(new OrderMail($data));
-        // } catch (Exception $e) {
-        // }
+            Mail::to($request->email)->send(new OrderMail($data));
+        } catch (Exception $e) {
+        }
         // END -> SEND MAIL
 
 
@@ -305,8 +305,7 @@ class StripeController extends Controller
            
             Session::forget('khaltiPayment');
             Notification::send($user, new OrderComplete($request->name));
-
-            
+     
             return redirect()->route('dashboard')->with($notification);
         }
     }

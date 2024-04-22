@@ -24,6 +24,34 @@
         }
     });
 
+    /*------ Ratings -------- */
+    $(document).on('click', '.rate-1', function () {
+        $('.rating i').removeClass('text-warning');
+        $('.rate-1 i').addClass('text-warning');
+        
+    })
+    $(document).on('click', '.rate-2', function () {
+        $('.rating i').removeClass('text-warning');
+        $('.rate-1 i, .rate-2 i').addClass('text-warning');
+
+    })
+    $(document).on('click', '.rate-3', function () {
+        $('.rating i').removeClass('text-warning');
+        $('.rate-1 i, .rate-2 i, .rate-3 i').addClass('text-warning');
+
+    })
+    $(document).on('click', '.rate-4', function () {
+        $('.rating i').removeClass('text-warning');
+        $('.rate-1 i, .rate-2 i, .rate-3 i, .rate-4 i').addClass('text-warning');
+
+    })
+    $(document).on('click', '.rate-5', function () {
+        $('.rating i').removeClass('text-warning');
+        $('.rate-1 i, .rate-2 i, .rate-3 i, .rate-4 i, .rate-5 i').addClass('text-warning');
+
+    })
+
+
     /*------ ScrollUp -------- */
     $.scrollUp({
         scrollText: '<i class="fi-rs-arrow-small-up"></i>',

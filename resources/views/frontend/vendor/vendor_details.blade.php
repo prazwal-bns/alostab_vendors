@@ -25,44 +25,7 @@
                     <p>We found <strong class="text-brand">{{ count($vendor_product) }}</strong> Products for you</p>
                 </div>
                 <div class="sort-by-product-area">
-                    <div class="sort-by-cover mr-10">
-                        <div class="sort-by-product-wrap">
-                            <div class="sort-by">
-                                <span><i class="fi-rs-apps"></i>Show:</span>
-                            </div>
-                            <div class="sort-by-dropdown-wrap">
-                                <span> 50 <i class="fi-rs-angle-small-down"></i></span>
-                            </div>
-                        </div>
-                        <div class="sort-by-dropdown">
-                            <ul>
-                                <li><a class="active" href="#">50</a></li>
-                                <li><a href="#">100</a></li>
-                                <li><a href="#">150</a></li>
-                                <li><a href="#">200</a></li>
-                                <li><a href="#">All</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="sort-by-cover">
-                        <div class="sort-by-product-wrap">
-                            <div class="sort-by">
-                                <span><i class="fi-rs-apps-sort"></i>Sort by:</span>
-                            </div>
-                            <div class="sort-by-dropdown-wrap">
-                                <span> Featured <i class="fi-rs-angle-small-down"></i></span>
-                            </div>
-                        </div>
-                        <div class="sort-by-dropdown">
-                            <ul>
-                                <li><a class="active" href="#">Featured</a></li>
-                                <li><a href="#">Price: Low to High</a></li>
-                                <li><a href="#">Price: High to Low</a></li>
-                                <li><a href="#">Release Date</a></li>
-                                <li><a href="#">Avg. Rating</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="row product-grid">
@@ -105,12 +68,32 @@
                                     <a href="">{{ $product['category']['category_name'] }}</a>
                                 </div>
                                 <h2><a href="{{ url('product/details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
+                                
                                 <div class="product-rate-cover">
+
+                                @php
+                                    $reviewCount = App\Models\Review::where('product_id',$product->id)->where('status',1)->latest()->get();
+                                    $average = App\Models\Review::where('product_id',$product->id)->where('status',1)->avg('rating');
+                                @endphp
                                     <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 90%"></div>
+                                        @if($average == 0)
+                                        
+                                        @elseif($average == 1 || $average < 2)
+                                            <div class="product-rating" style="width: 20%"></div>
+                                        @elseif($average == 2 || $average < 3)
+                                            <div class="product-rating" style="width: 40%"></div>
+                                        @elseif($average == 3 || $average < 4)
+                                            <div class="product-rating" style="width: 60%"></div>
+                                        @elseif($average == 4 || $average < 5)
+                                            <div class="product-rating" style="width: 80%"></div>
+                                        @elseif($average == 5 || $average < 5)
+                                            <div class="product-rating" style="width: 100%"></div>
+                                        @endif
                                     </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
+
+                                    <span class="font-small ml-5 text-muted">{{ count($reviewCount) }} reviews</span>
                                 </div>
+
                                 <div>
                                     @if ($product->vendor_id == NULL)
                                     <span class="font-small text-muted">By <a
@@ -178,11 +161,40 @@
                         <span class="text-secondary"><strong>Since: {{ $vendor->vendor_join }}</strong></span>
                     </div>
                     <h4 class="mb-5"><a href="" class="text-heading">{{ $vendor->name }}</a></h4>
+
+                    {{-- @php
+                        $vendorreviewCount = App\Models\Review::where('vendor_id', $vendor->id)->where('status', 1)->latest()->get();
+                        $vendoraverage = App\Models\Review::where('vendor_id', $vendor->id)->where('status', 1)->avg('rating');
+                    @endphp --}}
+                    @php
+                    // Get all products for the current vendor
+                    $vendorProducts = App\Models\Product::where('vendor_id', $vendor->id)->get();
+
+                    $totalRatings = 0;
+                    $ratingsCount = 0;
+
+                    // Loop through each product and calculate total ratings and count
+                    foreach ($vendorProducts as $product) {
+                        $productRatings = App\Models\Review::where('product_id', $product->id)->where('status', 1)->get();
+                        foreach ($productRatings as $rating) {
+                            $totalRatings += $rating->rating;
+                            $ratingsCount++;
+                        }
+                    }
+
+                        // Calculate the average rating
+                        $averageRating = $ratingsCount > 0 ? $totalRatings / $ratingsCount : 0;
+                    @endphp
+
                     <div class="product-rate-cover mb-15">
                         <div class="product-rate d-inline-block">
-                            <div class="product-rating" style="width: 90%"></div>
+                            @if ($averageRating == 0)
+                                No ratings yet
+                            @else
+                                <div class="product-rating" style="width: {{ $averageRating * 20 }}%"></div>
+                            @endif
                         </div>
-                        <span class="font-small ml-5 text-muted"> (4.0)</span>
+                        <span class="font-small ml-5 text-muted"> Total Reviews: {{ $ratingsCount }} reviews</span>
                     </div>
                     <div class="vendor-des mb-30">
                         <p class="font-sm text-heading" style="text-align: justify">{{ $vendor->vendor_short_info }}</p>

@@ -467,57 +467,58 @@
                     }
 
                     // Fetch product ratings asynchronously
-                    $.ajax({
-                        type: "GET",
-                        dataType: 'json',
-                        url: "/get-product-reviews/" + value.product.id,
-                        success: function (ratingResponse) {
-                            let averageRating = 0;
-                            if (ratingResponse.length > 0) {
-                                averageRating = ratingResponse.reduce((total, review) => total + review.rating, 0) / ratingResponse.length;
-                            }
+                   $.ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    url: "/get-product-reviews/" + value.product.id,
+                    success: function (ratingResponse) {
+                        let reviewCount = ratingResponse.reviewCount.length;
+                        let averageRating = ratingResponse.average;
 
-                            // Construct the product details URL
-                            let productUrl = "{{ url('product/details/') }}" + '/' + value.product.id + '/' + value.product.product_slug;
+                        // Calculate the width of the product rating bar based on the average rating
+                        let ratingWidth = (averageRating / 5) * 100; // Assuming ratings are from 0 to 5
 
-                            // Construct the table row with the calculated price and rating
-                            rows += `<tr class="pt-30">
-                                <td class="custome-checkbox pl-40"> 
-                                </td>
-                                <td class="image product-thumbnail pt-40"><img src="/${value.product.product_thumbnail}" alt="#" /></td>
-                                
-                                <td class="product-des product-name">
-                                    <h6><a class="product-name mb-10" href="${productUrl}">${value.product.product_name}</a></h6>
+                        // Construct the product details URL
+                        let productUrl = "{{ url('product/details/') }}" + '/' + value.product.id + '/' + value.product.product_slug;
 
-                                    <div class="product-rate-cover">
-                                        <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width: ${averageRating * 20}%"></div>
-                                        </div>
-                                        <span class="font-small ml-5 text-muted">${averageRating.toFixed(1)}</span>
+                        // Construct the table row with the calculated price and rating
+                        let row = `<tr class="pt-30">
+                            <td class="custome-checkbox pl-40"></td>
+                            <td class="image product-thumbnail pt-40"><img src="/${value.product.product_thumbnail}" alt="#" /></td>
+                            
+                            <td class="product-des product-name">
+                                <h6><a class="product-name mb-10" href="${productUrl}">${value.product.product_name}</a></h6>
+
+                                <div class="product-rate-cover">
+                                    <div class="product-rate d-inline-block">
+                                        <div class="product-rating" style="width: ${ratingWidth}%"></div>
                                     </div>
-                                </td>
-                                <td class="price" data-title="Price">
-                                    <h3 class="text-brand">Rs. ${finalPrice}</h3>
-                                </td>
+                                    <span class="font-small ml-5 text-muted">${averageRating.toFixed(1)}</span>
+                                </div>
+                            </td>
+                            <td class="price" data-title="Price">
+                                <h3 class="text-brand">Rs. ${finalPrice}</h3>
+                            </td>
 
-                                <td class="text-center detail-info" data-title="Stock">
-                                    ${value.product.product_quantity > 0
-                                        ? `<span class="stock-status in-stock mb-0"> In Stock </span>`
-                                        :
-                                        `<span class="stock-status out-stock mb-0"> Stock Out</span>`
-                                    }
-                                </td>
-                                <td class="action text-center" data-title="Remove">
-                                    <a type="submit" id="${value.id}" onclick="wishlistRemove(this.id)" class="text-body"><i class="fi-rs-trash"></i></a>
-                                </td>
-                            </tr>`;
+                            <td class="text-center detail-info" data-title="Stock">
+                                ${value.product.product_quantity > 0
+                                    ? `<span class="stock-status in-stock mb-0"> In Stock </span>`
+                                    : `<span class="stock-status out-stock mb-0"> Stock Out</span>`
+                                }
+                            </td>
+                            <td class="action text-center" data-title="Remove">
+                                <a type="submit" id="${value.id}" onclick="wishlistRemove(this.id)" class="text-body"><i class="fi-rs-trash"></i></a>
+                            </td>
+                        </tr>`;
 
-                            $('#wishlist').html(rows);
-                        },
-                        error: function (error) {
-                            console.error("Error fetching product ratings:", error);
-                        }
-                    });
+                        // Append the row to the wishlist table
+                        $('#wishlist').append(row);
+                    },
+                    error: function (error) {
+                        console.error("Error fetching product ratings:", error);
+                    }
+                });
+
                 });
             },
             error: function (error) {
@@ -603,19 +604,17 @@
 
  {{--  START COMPARE VIEW DATA --}}
     <script type="text/javascript">
-        function compare(){
-            $.ajax({
-                type: "GET",
-                dataType: 'json',
-                url: "/get-compare-product/",
+        function compare() {
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "/get-compare-product/",
+            success: function(response) {
+                $('#compareQty').text(response.compareQty);
+                $('#compareAmt').text(response.compareQty);
+                var rows = "";
 
-                success:function(response){
-                    
-                    $('#compareQty').text(response.compareQty);
-                    $('#compareAmt').text(response.compareQty);
-                    var rows = ""
-
-                    $.each(response.comparelist, function(key, value) {
+                $.each(response.comparelist, function(key, value) {
                     // Calculate the final price considering the discount
                     let finalPrice = value.product.selling_price;
                     if (value.product.discount_price) {
@@ -624,53 +623,29 @@
 
                     // Construct the table row with the calculated price
                     rows += `
-                        <tr class="pr_image">
-                            <td class="text-body font-sm fw-600 font-heading mw-200"><h6>Preview</h6></td>
+                        <tr>
                             <td class="row_img"><img src="/${value.product.product_thumbnail}" alt="compare-img" height="300" /></td>
-                        </tr>
-                        <tr class="pr_title">
-                            <td class="text-body font-sm fw-600 font-heading"><h6>Name</h6></td>
-                            <td class="product_name">
-                                <h6><a href="#" class="text-heading">${value.product.product_name}</a></h6>
+                            <td class="product_name"><h6><a href="#" class="text-heading">${value.product.product_name}</a></h6></td>
+                            <td class="product_price"><h3 class="price text-brand">Rs. ${finalPrice}</h3></td>
+                            <td class="row_stock">
+                                ${value.product.product_quantity > 0 ?
+                                `<span class="stock-status in-stock mb-0">In Stock</span>` :
+                                `<span class="stock-status out-stock mb-0">Out of Stock</span>`}
                             </td>
-                        </tr>
-                        <tr class="pr_price">
-                            <td class="text-body font-sm fw-600 font-heading"><h6>Price</h6></td>
-                            <td class="product_price">
-                                <h3 class="price text-brand">Rs. ${finalPrice}</h3>
-                            </td>
-                        </tr>
-
-                        <tr class="description">
-                            <td class="text-body font-sm fw-600 font-heading"><h6>Description</h6></td>
-                            <td class="row_text font-xs">
-                                <p class="font-sm text-muted">${value.product.short_desc}</p>
-                            </td>
-                        </tr>
-
-                        <tr class="pr_stock">
-                            <td class="text-body font-sm fw-600 font-heading"><h6>Stock status</h6></td>
-                            ${value.product.product_quantity > 0
-                                ? `<td class="row_stock"><span class="stock-status in-stock mb-0">In Stock</span></td>`
-                                :
-                                `<td class="row_stock"><span class="stock-status out-stock mb-0">Out of Stock</span></td>`
-
-                            }
-                        </tr>
-                        <tr class="pr_remove text-body">
-                            <td class="text-body font-sm fw-600 font-heading"><h6>Remove</h6></td>
                             <td class="row_remove">
-                                <a type="submit" id="${value.id}" onclick="removeCompareList(this.id)" class="text-body"><i class="fi-rs-trash mr-5"></i><span>Remove</span> </a>
+                                <a type="submit" id="${value.id}" onclick="removeCompareList(this.id)" class="text-body"><i class="fi-rs-trash mr-5"></i><span>Remove</span></a>
                             </td>
                         </tr>
                     `;
                 });
 
-                    $('#compare').html(rows);
-                }
-            })
-        }
-        compare();
+                $('#compare').html(rows);
+            }
+        });
+    }
+
+    compare(); // Call the compare function to load comparison data initially
+
         // END COMPARELIST VIEW DATA 
     
         // REMOVE COMPARELIST START

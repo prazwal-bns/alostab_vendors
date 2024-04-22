@@ -11,8 +11,10 @@
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend/assets/imgs/theme/favicon.svg')}}" />
+
+    <!--favicon-->
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset ('frontend/assets/imgs/theme/favicon.svg')}}" />
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css?v=5.3')}}" />
     {{-- Toastr --}}

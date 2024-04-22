@@ -138,4 +138,8 @@ class IndexController extends Controller
     }
     // end func
 
+    public function AboutPage(){
+        return view('frontend.about.about_page');
+    }
+
 }

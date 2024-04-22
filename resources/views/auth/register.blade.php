@@ -18,9 +18,7 @@
 </head>
 
 <body>
-    
     @include('frontend.body.header')
-
     <main class="main pages">
         <div class="page-header breadcrumb-wrap">
             <div class="container">

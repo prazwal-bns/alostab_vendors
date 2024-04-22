@@ -12404,3 +12404,11 @@ footer .hotline img {
   }
 }
 /*# sourceMappingURL=main.css.map */
+.rating {
+  display: flex;
+  justify-content: center;
+}
+.rating i {
+  color: rgba(0,0,0, .2);
+  font-size: 40px;
+}

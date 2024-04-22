@@ -515,22 +515,48 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
+                                                                    
                                                                     <td class="cell-level"><strong>Quality</strong></td>
-                                                                    <td><input required="" type="radio"
-                                                                            name="quality" class="radio-sm"
-                                                                            value="1"></td>
-                                                                    <td><input required="" type="radio"
-                                                                            name="quality" class="radio-sm"
-                                                                            value="2"></td>
-                                                                    <td><input required="" type="radio"
-                                                                            name="quality" class="radio-sm"
-                                                                            value="3"></td>
-                                                                    <td><input required="" type="radio"
-                                                                            name="quality" class="radio-sm"
-                                                                            value="4"></td>
-                                                                    <td><input required="" type="radio"
-                                                                            name="quality" class="radio-sm"
-                                                                            value="5"></td>
+                                                                    <td>
+                                                                        <label class="rating rate-1">
+                                                                            <input required="" type="radio"
+                                                                            name="quality" class="d-none radio-sm"
+                                                                            value="1">
+                                                                            <i class="fa-solid fa-star"></i>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="rating rate-2">
+                                                                            <input required="" type="radio"
+                                                                            name="quality" class="d-none radio-sm"
+                                                                            value="2">
+                                                                            <i class="fa-solid fa-star"></i>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="rating rate-3">
+                                                                            <input required="" type="radio"
+                                                                            name="quality" class="d-none radio-sm"
+                                                                            value="3">
+                                                                            <i class="fa-solid fa-star"></i>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="rating rate-4">
+                                                                            <input required="" type="radio"
+                                                                            name="quality" class="d-none radio-sm"
+                                                                            value="4">
+                                                                            <i class="fa-solid fa-star"></i>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="rating rate-5">
+                                                                            <input required="" type="radio"
+                                                                            name="quality" class="d-none radio-sm"
+                                                                            value="5">
+                                                                            <i class="fa-solid fa-star"></i>
+                                                                        </label>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

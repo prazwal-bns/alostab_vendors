@@ -20,34 +20,34 @@
 </head>
 <style>
   /* Adjustments for Login Buttons */
-.login-buttons {
-    display: flex;
-    align-items: center;
-}
+    .login-buttons {
+        display: flex;
+        align-items: center;
+    }
 
-/* Adjustments for Google Login Section */
-.social-login {
-    display: flex;
-    align-items: center;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    padding: 15px;
-}
+    /* Adjustments for Google Login Section */
+    .social-login {
+        display: flex;
+        align-items: center;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 15px;
+    }
 
-.google-login-link {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
+    .google-login-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
 
-.google-login-img {
-    margin-right: 10px;
-    height: 20px; /* Set the height of the image */
-}
+    .google-login-img {
+        margin-right: 10px;
+        height: 20px; /* Set the height of the image */
+    }
 
-.google-login-text {
-    font-weight: bold;
-}
+    .google-login-text {
+        font-weight: bold;
+    }
 
 </style>
 <body>
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-content pt-90 pb-90">
+        <div class="page-content pt-50 pb-90">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
@@ -80,10 +80,10 @@
                                         <form id="myForm" method="POST" action="{{ route('login') }}">
                                             @csrf
                                             <div class="form-group">
-                                                <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" placeholder="Username or Email *"  />
+                                                <input value="{{ old('email') }}" type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" autocomplete="email" name="email" placeholder="Username or Email *"  />
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" placeholder="Your password *" />
+                                                <input type="password" autocomplete="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" placeholder="Your password *" />
                                             </div>
 
                                             @if($errors->has('email') || $errors->has('password'))

@@ -15,7 +15,6 @@
                     </ol>
                 </nav>
             </div>
-
         </div>
         <!--end breadcrumb-->
 
@@ -23,16 +22,12 @@
             <div class="card-body p-4">
                 <h5 class="card-title">Add New Product</h5>
                 <hr />
-
                 <form id="myForm" method="post" action="{{ route('store.product') }}" enctype="multipart/form-data">
                     @csrf
-
                     <div class="form-body mt-4">
                         <div class="row">
                             <div class="col-lg-8">
                                 <div class="border border-3 p-4 rounded">
-
-
                                     <div class="form-group mb-3">
                                         <label for="inputProductTitle" class="form-label">Product Name</label>
                                         <input type="text" name="product_name" class="form-control"

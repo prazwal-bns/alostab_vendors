@@ -5,8 +5,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset ('frontend/assets/imgs/theme/favicon.svg')}}" />
+
     <!--favicon-->
-    <link rel="icon" href=" {{ asset('adminbackend/assets/images/favicon-32x32.png" type="image/png') }}" />
+    {{-- <link rel="icon" href=" {{ asset('adminbackend/assets/images/favicon-32x32.png" type="image/png') }}" /> --}}
     <!--plugins-->
     <link href=" {{ asset('adminbackend/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
     <link href=" {{ asset('adminbackend/assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />

@@ -6,11 +6,6 @@
         $userData = App\Models\User::find($id); 
     }
 @endphp
-
-
-
-
-
     <div class="mobile-promotion">
         <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
     </div>
@@ -45,7 +40,7 @@
                             <li>
                                 <a class="language-dropdown-active" href="#">English <i
                                         class="fi-rs-angle-small-down"></i></a>
-                                <ul class="language-dropdown">
+                                {{-- <ul class="language-dropdown">
                                     <li>
                                         <a href="#"><img
                                                 src = "{{ asset('frontend/assets/imgs/theme/flag-fr.png') }} "
@@ -61,7 +56,7 @@
                                                 src = "{{ asset('frontend/assets/imgs/theme/flag-ru.png') }} "
                                                 alt="" />Pусский</a>
                                     </li>
-                                </ul>
+                                </ul> --}}
                             </li>
 
                             <li>Need help? Call Us: <strong class="text-brand"> +977 9862394599</strong></li>

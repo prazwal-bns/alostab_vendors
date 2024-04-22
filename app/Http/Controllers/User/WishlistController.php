@@ -63,12 +63,23 @@ class WishlistController extends Controller
     }
     // end function
 
+    // public function GetProductReviews($product_id)
+    // {
+    //     // Retrieve reviews for the specified product_id
+    //     $reviews = Review::where('product_id', $product_id)->where('status', 1)->get();
+
+    //     return response()->json($reviews);
+    // }
+    // // // end function
+
     public function GetProductReviews($product_id)
     {
-        // Retrieve reviews for the specified product_id
-        $reviews = Review::where('product_id', $product_id)->where('status', 1)->get();
+        $reviewCount = Review::where('product_id', $product_id)->where('status', 1)->latest()->get();
+        $average = Review::where('product_id', $product_id)->where('status', 1)->avg('rating');
 
-        return response()->json($reviews);
+        return response()->json([
+            'reviewCount' => $reviewCount,
+            'average' => $average, // Optionally, you can return the reviews as well
+        ]);
     }
-    // // end function
 }

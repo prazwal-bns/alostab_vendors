@@ -141,7 +141,7 @@
                     data-wow-delay=".1s">
                     <h4 class=" widget-title">Company</h4>
                     <ul class="footer-list mb-sm-5 mb-md-0">
-                        <li><a href="#">About Us</a></li>
+                        <li><a href="{{ route('about.page') }}">About Us</a></li>
                         <li><a href="{{ route('vendor.all') }}">Our Vendors</a></li>
                         <li><a href="mailto:alostabvendors@gmail.com">Contact Us</a></li>
                         <li><a href="{{ $setting->facebook }}">Facebook</a></li>
