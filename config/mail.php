@@ -86,6 +86,9 @@ return [
                 'log',
             ],
         ],
+        'sandbox' => [
+            'transport' => 'sandbox',
+        ],
     ],
 
     /*
