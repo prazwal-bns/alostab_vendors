@@ -2,16 +2,22 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Database\Seeder;
 
 class SubCategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        $categories = Category::all();
+
+        foreach ($categories as $category) {
+            SubCategory::factory()
+                ->count(fake()->numberBetween(2, 4))
+                ->create([
+                    'category_id' => $category->id,
+                ]);
+        }
     }
 }

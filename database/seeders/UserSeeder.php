@@ -2,23 +2,58 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => Str::random(10) . '@gmail.com',
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin',
+                'username' => 'admin',
+                'password' => Hash::make('111'),
+                'role' => 'admin',
+                'status' => 'active',
+                'email_verified_at' => now(),
+                'photo' => 'upload/admin_images/default.png',
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'vendor@gmail.com'],
+            [
+                'name' => 'Alostab Vendor',
+                'username' => 'vendor',
+                'password' => Hash::make('111'),
+                'role' => 'vendor',
+                'status' => 'active',
+                'email_verified_at' => now(),
+                'photo' => 'upload/vendor_images/default.png',
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'user@gmail.com'],
+            [
+                'name' => 'User',
+                'username' => 'user',
+                'password' => Hash::make('111'),
+                'role' => 'user',
+                'status' => 'active',
+                'email_verified_at' => now(),
+                'photo' => 'upload/user_images/default.png',
+            ]
+        );
+
+        User::factory()->count(2)->admin()->create();
+        User::factory()->count(10)->vendor()->create();
+        User::factory()->count(35)->customer()->create([
             'password' => Hash::make('password'),
+            'status' => 'active',
         ]);
     }
 }

@@ -20,16 +20,23 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->name();
+
         return [
-            'name' => fake()->name(),
+            'name' => $name,
+            'username' => Str::slug($name) . fake()->unique()->numberBetween(10, 999),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'provider' => null,
+            'provider_id' => null,
+            'provider_token' => null,
             'phone' => fake()->phoneNumber,
             'address' => fake()->address,
-            'photo' => fake()->imageUrl('60', '60'),
-            'role' => fake()->randomElement(['admin', 'vendor', 'user']),
+            'photo' => 'upload/user_images/default.png',
+            'role' => 'user',
             'status' => fake()->randomElement(['active', 'inactive']),
+            'last_seen' => now()->subMinutes(fake()->numberBetween(1, 120))->toDateTimeString(),
             'remember_token' => Str::random(10),
         ];
     }
@@ -41,6 +48,33 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'admin',
+            'status' => 'active',
+            'photo' => 'upload/admin_images/default.png',
+        ]);
+    }
+
+    public function vendor(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'vendor',
+            'status' => 'active',
+            'photo' => 'upload/vendor_images/default.png',
+        ]);
+    }
+
+    public function customer(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'user',
+            'status' => 'active',
+            'photo' => 'upload/user_images/default.png',
         ]);
     }
 }

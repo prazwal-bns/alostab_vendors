@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
+use App\Models\Slider;
 use Illuminate\Database\Seeder;
 
-class BrandSeeder extends Seeder
+class SliderSeeder extends Seeder
 {
     public function run(): void
     {
-        Brand::factory()->count(15)->create();
+        Slider::factory()->count(5)->create();
     }
 }
