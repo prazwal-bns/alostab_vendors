@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ship_cities', function (Blueprint $table) {
             $table->id();
             $table->string('city_name');
-            $table->unsignedBigInteger('district_id');
+            $table->foreignId('district_id')->constrained('ship_districts')->cascadeOnDelete();
             $table->timestamps();
         });
     }

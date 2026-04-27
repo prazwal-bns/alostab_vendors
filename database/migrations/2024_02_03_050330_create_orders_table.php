@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('district_id');
-            $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('state_id');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('district_id')->constrained('ship_districts')->restrictOnDelete();
+            $table->foreignId('city_id')->constrained('ship_cities')->restrictOnDelete();
+            $table->foreignId('state_id')->constrained('ship_states')->restrictOnDelete();
 
             $table->string('name');
             $table->string('email');
@@ -31,9 +31,9 @@ return new class extends Migration
             $table->string('currency');
             $table->float('amount',8,2);
             $table->integer('discount_amount')->nullable();
-            $table->string('order_number')->nullable();
+            $table->string('order_number')->nullable()->index();
 
-            $table->string('invoice_number');
+            $table->string('invoice_number')->index();
             $table->string('order_date');
             $table->string('order_month');
             $table->string('order_year');

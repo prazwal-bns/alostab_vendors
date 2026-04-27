@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('brand_id');
-            $table->integer('category_id');
-            $table->integer('subcategory_id');
+            $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('subcategory_id')->constrained('sub_categories')->cascadeOnDelete();
             $table->string('product_name');
-            $table->string('product_slug');
-            $table->string('product_code');
+            $table->string('product_slug')->index();
+            $table->string('product_code')->index();
             $table->string('product_quantity');
             $table->string('product_tags')->nullable();
             $table->string('product_size')->nullable();
@@ -28,12 +28,12 @@ return new class extends Migration
             $table->text('short_desc');
             $table->text('long_desc');
             $table->string('product_thumbnail');
-            $table->string('vendor_id')->nullable();
-            $table->integer('hot_deals');
-            $table->integer('featured');
-            $table->integer('special_offer');
-            $table->integer('special_deals')->nullable();
-            $table->integer('status')->default(0);
+            $table->foreignId('vendor_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->boolean('hot_deals')->default(false);
+            $table->boolean('featured')->default(false);
+            $table->boolean('special_offer')->default(false);
+            $table->boolean('special_deals')->default(false);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

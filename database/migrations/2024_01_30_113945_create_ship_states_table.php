@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ship_states', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('district_id');
-            $table->unsignedBigInteger('city_id');
+            $table->foreignId('district_id')->constrained('ship_districts')->cascadeOnDelete();
+            $table->foreignId('city_id')->constrained('ship_cities')->cascadeOnDelete();
             $table->string('state_name');
             $table->timestamps();
         });
