@@ -34,7 +34,7 @@ class VendorOrderController extends Controller
 
 
     public function VendorOrderDetails($order_id){
-        $order = Order::with('District', 'City', 'State', 'User')->where('id', $order_id)->first();
+        $order = Order::with('District', 'City', 'State', 'User')->where('id', $order_id)->firstOrFail();
         $orderItem = OrderItem::with('Product')->where('order_id', $order_id)->orderBy('id', 'DESC')->get();
 
         return view('vendor.backend.orders.vendor_order_details', compact('order', 'orderItem'));

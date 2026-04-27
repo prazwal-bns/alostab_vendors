@@ -12,14 +12,14 @@ class UserController extends Controller
 {
     public function UserDashboard(){
         $id = Auth::user()->id; // gives authentic user id --> logged in user
-        $userData = User::find($id); // User data obtained from id
+        $userData = User::findOrFail($id); // User data obtained from id
         return view('index', compact('userData'));
     }
     // end func
     public function UserProfileStore(Request $request)
     {
         $id = Auth::user()->id;
-        $data = User::find($id);
+        $data = User::findOrFail($id);
         $data->username = $request->username;
         $data->name = $request->name;
         $data->email = $request->email;

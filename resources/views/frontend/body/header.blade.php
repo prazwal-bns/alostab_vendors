@@ -73,9 +73,10 @@
                 <div class="logo logo-width-1">
                     @php 
                         $setting = App\Models\SiteSetting::find(1);
+                        $siteLogo = $setting?->logo ? asset($setting->logo) : asset('frontend/assets/imgs/theme/logo.svg');
                     @endphp
                     {{-- <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a> --}}
-                    <a href="/"><img src = "{{ asset($setting->logo) }}" alt="logo" /></a>
+                    <a href="/"><img src="{{ $siteLogo }}" alt="logo" /></a>
                 </div>
                 <div class="header-right">
 
@@ -322,7 +323,7 @@
 
                 <div class="hotline d-none d-lg-flex">
                     <img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-headphone.svg') }}" alt="hotline" />
-                    <p>{{ $setting->support_phone }}<span class="mt-1">24/7 Support Center</span></p>
+                    <p>{{ $setting?->support_phone ?? '+977 9862394599' }}<span class="mt-1">24/7 Support Center</span></p>
                 </div>
                 <div class="header-action-icon-2 d-block d-lg-none">
                     <div class="burger-icon burger-icon-white">

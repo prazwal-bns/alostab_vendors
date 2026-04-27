@@ -12,22 +12,22 @@ class Order extends Model
 
     public function District()
     {
-        return $this->belongsTo(ShipDistrict::class, 'district_id', 'id');
+        return $this->belongsTo(ShipDistrict::class, 'district_id', 'id')->withDefault();
     }
 
     public function City()
     {
-        return $this->belongsTo(ShipCity::class, 'city_id', 'id');
+        return $this->belongsTo(ShipCity::class, 'city_id', 'id')->withDefault();
     }
 
     public function State()
     {
-        return $this->belongsTo(ShipState::class, 'state_id', 'id');
+        return $this->belongsTo(ShipState::class, 'state_id', 'id')->withDefault();
     }
 
     public function User()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withDefault();
     }
 
     public function orderItems()

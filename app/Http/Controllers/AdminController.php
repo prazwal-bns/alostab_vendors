@@ -42,7 +42,7 @@ class AdminController extends Controller
     public function AdminProfile()
     {
         $id = Auth::user()->id; // gives authentic user id --> logged in user
-        $adminData = User::find($id); // User data obtained from id
+        $adminData = User::findOrFail($id); // User data obtained from id
         return view('admin.admin_profile', compact('adminData'));
     }
     // end func
@@ -50,7 +50,7 @@ class AdminController extends Controller
     public function AdminProfileStore(Request $request)
     {
         $id = Auth::user()->id;
-        $data = User::find($id);
+        $data = User::findOrFail($id);
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;

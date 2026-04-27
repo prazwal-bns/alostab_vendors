@@ -15,7 +15,7 @@ class AllUserController extends Controller
 {
     public function UserAccount(){
         $id = Auth::user()->id; // gives authentic user id --> logged in user
-        $userData = User::find($id); // User data obtained from id
+        $userData = User::findOrFail($id); // User data obtained from id
         return view('frontend.userDashboard.account_details',compact('userData'));
     }
     // END FUNCTION
@@ -33,7 +33,7 @@ class AllUserController extends Controller
     // END FUNCITON
 
     public function UserOrderDetails($order_id){
-        $order = Order::with('District','City','State','User')->where('id',$order_id)->where('user_id',Auth::id())->first();
+        $order = Order::with('District','City','State','User')->where('id',$order_id)->where('user_id',Auth::id())->firstOrFail();
         $orderItem = OrderItem::with('Product')->where('order_id',$order_id)->orderBy('id','DESC')->get();
 
         return view('frontend.order.order_details',compact('order', 'orderItem'));
@@ -41,7 +41,7 @@ class AllUserController extends Controller
     // END FUNCITON
 
     public function UserInvoiceDownload($order_id){
-        $order = Order::with('District','City','State','User')->where('id',$order_id)->where('user_id',Auth::id())->first();
+        $order = Order::with('District','City','State','User')->where('id',$order_id)->where('user_id',Auth::id())->firstOrFail();
         $orderItem = OrderItem::with('Product')->where('order_id',$order_id)->orderBy('id','DESC')->get();
 
         $pdf = Pdf::loadView('frontend.order.order_invoice', compact('order','orderItem'))->setPaper('a4')->setOption([

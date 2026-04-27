@@ -34,13 +34,34 @@ class IndexController extends Controller
 
     public function Index(){
         $skip_category_zero = Category::skip(0)->first();
-        $skip_product_zero = Product::where('status',1)->where('category_id',$skip_category_zero->id)->orderBy('id','DESC')->limit(5)->get();
+        $skip_product_zero = collect();
+        if ($skip_category_zero) {
+            $skip_product_zero = Product::where('status', 1)
+                ->where('category_id', $skip_category_zero->id)
+                ->orderBy('id', 'DESC')
+                ->limit(5)
+                ->get();
+        }
 
         $skip_category_one = Category::skip(1)->first();
-        $skip_product_one = Product::where('status', 1)->where('category_id', $skip_category_one->id)->orderBy('id', 'DESC')->limit(5)->get();
+        $skip_product_one = collect();
+        if ($skip_category_one) {
+            $skip_product_one = Product::where('status', 1)
+                ->where('category_id', $skip_category_one->id)
+                ->orderBy('id', 'DESC')
+                ->limit(5)
+                ->get();
+        }
 
         $skip_category_three = Category::skip(3)->first();
-        $skip_product_three = Product::where('status', 1)->where('category_id', $skip_category_three->id)->orderBy('id', 'DESC')->limit(5)->get();
+        $skip_product_three = collect();
+        if ($skip_category_three) {
+            $skip_product_three = Product::where('status', 1)
+                ->where('category_id', $skip_category_three->id)
+                ->orderBy('id', 'DESC')
+                ->limit(5)
+                ->get();
+        }
         
         $hot_deals = Product::where('hot_deals',1)->where('discount_price','!=',NULL)->orderBy('id','DESC')->limit(3)->get();
 
@@ -70,10 +91,9 @@ class IndexController extends Controller
     // end func
 
     public function ProductByCategory(Request $request, $id, $slug){
+        $breadCrumb = Category::findOrFail($id);
         $products = Product::where('status',1)->where('category_id',$id)->orderBy('id','DESC')->get();
         $categories = Category::orderBy('category_name','ASC')->get();
-
-        $breadCrumb = Category::where('id',$id)->first();
         
         $newProduct = Product::orderBy('id','DESC')->limit(3)->get();
 
@@ -83,10 +103,9 @@ class IndexController extends Controller
     // end func
 
     public function ProductBySubCategory(Request $request, $id, $slug){
+        $subCatBreadCrumb = SubCategory::findOrFail($id);
         $products = Product::where('status',1)->where('subcategory_id',$id)->orderBy('id','DESC')->get();
         $categories = Category::orderBy('category_name','ASC')->get();
-
-        $subCatBreadCrumb = SubCategory::where('id',$id)->first();
         
         $newProduct = Product::orderBy('id','DESC')->limit(3)->get();
 

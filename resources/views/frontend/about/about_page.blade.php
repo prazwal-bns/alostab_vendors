@@ -8,6 +8,7 @@
 
 @php 
     $setting = App\Models\SiteSetting::find(1);
+    $siteLogo = $setting?->logo ? asset($setting->logo) : asset('frontend/assets/imgs/theme/logo.svg');
 @endphp
 
 <div class="page-header breadcrumb-wrap">
@@ -24,7 +25,7 @@
         <div class="col-lg-1-5 primary-sidebar sticky-sidebar">
             <div class="sidebar-widget widget-store-info mb-30 bg-3 border-0">
                 <div class="vendor-logo mb-30">
-                    <a href="/"><img src="{{ asset($setting->logo) }}" alt="logo" /></a>
+                    <a href="/"><img src="{{ $siteLogo }}" alt="logo" /></a>
                 </div>
                 <div class="vendor-info">
                     <div class="product-category">

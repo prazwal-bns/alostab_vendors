@@ -117,20 +117,21 @@
                         <div class="logo mb-30">
                         @php 
                             $setting = App\Models\SiteSetting::find(1);
+                            $siteLogo = $setting?->logo ? asset($setting->logo) : asset('frontend/assets/imgs/theme/logo.svg');
                         @endphp
 
                             {{-- <a href="/" class="mb-15"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a> --}}
-                            <a href="/" class="mb-15 mr-30 pr-10"><img src = "{{ asset($setting->logo) }}" alt="" /></a>
+                            <a href="/" class="mb-15 mr-30 pr-10"><img src="{{ $siteLogo }}" alt="" /></a>
                             <p class="font-lg text-heading">Awesome e-commerce store website</p>
                         </div>
                         <ul class="contact-infor">
                             <li><img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}"
-                                    alt="" /><strong>Address: </strong> <span>{{ $setting->company_address }}</span></li>
+                                    alt="" /><strong>Address: </strong> <span>{{ $setting?->company_address ?? '' }}</span></li>
                             <li><img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}"
-                                    alt="" /><strong>Call Us:</strong><span> {{ $setting->phone_one }}</span>
+                                    alt="" /><strong>Call Us:</strong><span> {{ $setting?->phone_one ?? '' }}</span>
                             </li>
                             <li><img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-email-2.svg') }}"
-                                    alt="" /><strong>Email:</strong><span> {{$setting->email}}</span></li>
+                                    alt="" /><strong>Email:</strong><span> {{ $setting?->email ?? '' }}</span></li>
                             <li><img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-clock.svg') }}"
                                     alt="" /><strong>Hours:</strong><span> 10:00 - 18:00, Sun - Fri</span>
                             </li>
@@ -144,8 +145,8 @@
                         <li><a href="{{ route('about.page') }}">About Us</a></li>
                         <li><a href="{{ route('vendor.all') }}">Our Vendors</a></li>
                         <li><a href="mailto:alostabvendors@gmail.com">Contact Us</a></li>
-                        <li><a href="{{ $setting->facebook }}">Facebook</a></li>
-                        <li><a href="{{ $setting->twitter }}">Twitter</a></li>
+                        <li><a href="{{ $setting?->facebook ?? '#' }}">Facebook</a></li>
+                        <li><a href="{{ $setting?->twitter ?? '#' }}">Twitter</a></li>
                     </ul>
                 </div>
                 <div class="footer-link-widget col wow animate__animated animate__fadeInUp"
@@ -191,26 +192,26 @@
                 <div class="footer-bottom"></div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6">
-                <p class="font-sm mb-0"><strong class="text-brand">{{ $setting->copyright }}</strong> <br />All rights reserved</p>
+                <p class="font-sm mb-0"><strong class="text-brand">{{ $setting?->copyright ?? 'Alostab Vendors' }}</strong> <br />All rights reserved</p>
             </div>
             <div class="col-xl-4 col-lg-6 text-center d-none d-xl-block">
 
                 <div class="hotline d-lg-inline-flex">
                     <img src = "{{ asset('frontend/assets/imgs/theme/icons/phone-call.svg') }}"
                         alt="hotline" />
-                    <p>{{ $setting->support_phone }}<span class="mt-1">24/7 Support Center</span></p>
+                    <p>{{ $setting?->support_phone ?? '+977 9862394599' }}<span class="mt-1">24/7 Support Center</span></p>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block pr-25">
                 <div class="mobile-social-icon">
                     <h6>Follow Us</h6>
-                    <a href="{{ $setting->facebook }}"><img
+                    <a href="{{ $setting?->facebook ?? '#' }}"><img
                             src = "{{ asset('frontend/assets/imgs/theme/icons/icon-facebook-white.svg') }}"
                             alt="" /></a>
-                    <a href="{{ $setting->twitter }}"><img
+                    <a href="{{ $setting?->twitter ?? '#' }}"><img
                             src = "{{ asset('frontend/assets/imgs/theme/icons/icon-twitter-white.svg') }}"
                             alt="" /></a>
-                    <a href="{{ $setting->instagram }}"><img
+                    <a href="{{ $setting?->instagram ?? '#' }}"><img
                             src = "{{ asset('frontend/assets/imgs/theme/icons/icon-instagram-white.svg') }}"
                             alt="" /></a>
                     <a href="https://www.pinterest.com/"><img
