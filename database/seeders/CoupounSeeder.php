@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
+use App\Models\Coupoun;
 use Illuminate\Database\Seeder;
 
-class BrandSeeder extends Seeder
+class CoupounSeeder extends Seeder
 {
     public function run(): void
     {
-        Brand::factory()->count(15)->create();
+        Coupoun::factory()->count(8)->create();
     }
 }
