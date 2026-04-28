@@ -34,7 +34,7 @@ class StripeController extends Controller
             $discount_amount = 0;
         }
 
-        \Stripe\Stripe::setApiKey('sk_test_51OfF36AIv39y6cmEZjb9WSgs07eVCEsd8VqVyrMBqcFguRCaQ8cQ3r7W8wQ6Czf4oyW8G98mF97jjuXWHjIuHQZN00AqNgV01u');
+        \Stripe\Stripe::setApiKey((string) config('services.stripe.secret'));
 
         $token = $_POST['stripeToken'];
 
