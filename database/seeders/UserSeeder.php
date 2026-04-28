@@ -5,12 +5,21 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate(
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'vendor']);
+        Role::firstOrCreate(['name' => 'user']);
+
+        $admin = User::updateOrCreate(
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin',
@@ -22,8 +31,9 @@ class UserSeeder extends Seeder
                 'photo' => 'upload/admin_images/default.png',
             ]
         );
+        $admin->syncRoles(['admin']);
 
-        User::updateOrCreate(
+        $vendor = User::updateOrCreate(
             ['email' => 'vendor@gmail.com'],
             [
                 'name' => 'Alostab Vendor',
@@ -35,8 +45,9 @@ class UserSeeder extends Seeder
                 'photo' => 'upload/vendor_images/default.png',
             ]
         );
+        $vendor->syncRoles(['vendor']);
 
-        User::updateOrCreate(
+        $customer = User::updateOrCreate(
             ['email' => 'user@gmail.com'],
             [
                 'name' => 'User',
@@ -48,6 +59,13 @@ class UserSeeder extends Seeder
                 'photo' => 'upload/user_images/default.png',
             ]
         );
+        $customer->syncRoles(['user']);
+
+        // Grant all existing permissions to admin role if permission records exist.
+        $permissions = Permission::query()->pluck('name')->all();
+        if (!empty($permissions)) {
+            $adminRole->syncPermissions($permissions);
+        }
 
         User::factory()->count(2)->admin()->create();
         User::factory()->count(10)->vendor()->create();

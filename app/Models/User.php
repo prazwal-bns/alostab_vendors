@@ -90,21 +90,17 @@ class User extends Authenticatable implements MustVerifyEmail
     // END METHOD
 
     public function canAll($permissionName) {
-        $auth_user = Auth::user()->id;
-        $role_id = DB::table('model_has_roles')
-        ->where('model_id', $auth_user)
-        ->value('role_id');
+        $user = Auth::user();
 
-        $permissions = DB::table('role_has_permissions')
-        ->join('permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
-        ->select('permissions.name')
-        ->where('role_has_permissions.role_id', $role_id)  
-        ->get();
-        
-        $permissionNames = $permissions->pluck('name')->toArray();
-        if(in_array($permissionName, $permissionNames)) {
+        if (!$user) {
+            return false;
+        }
+
+        // Keep full admin access even when permission mappings are not seeded yet.
+        if (($user->role ?? null) === 'admin' || $user->hasRole('admin')) {
             return true;
         }
-        return false;
+
+        return $user->hasPermissionTo($permissionName);
     }
 }
