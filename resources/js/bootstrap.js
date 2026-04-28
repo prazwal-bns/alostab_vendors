@@ -10,6 +10,26 @@ window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
+ * Security hardening for Axios:
+ *
+ * - baseURL: restrict requests to the same origin to prevent client-side
+ *   SSRF, where attacker-controlled input in API calls could target arbitrary
+ *   external or internal URLs.  Note: server-side validation is still required
+ *   to prevent server-level SSRF.
+ * - maxRedirects: cap redirects to limit redirect-chain attacks and prevent
+ *   credential leakage to unexpected hosts (follow-redirects CVEs).
+ * - maxBodyLength / maxContentLength: cap request/response body sizes to
+ *   protect against DoS via oversized payloads (axios DoS CVE).
+ * - withXSRFToken: ensure the XSRF token is attached to same-origin requests.
+ */
+window.axios.defaults.baseURL = window.location.origin;
+window.axios.defaults.withCredentials = true;
+window.axios.defaults.withXSRFToken = true;
+window.axios.defaults.maxRedirects = 5;
+window.axios.defaults.maxBodyLength = 10 * 1024 * 1024;   // 10 MB
+window.axios.defaults.maxContentLength = 10 * 1024 * 1024; // 10 MB
+
+/**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
