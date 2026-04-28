@@ -21,7 +21,7 @@ export default defineConfig({
         // environment files and other sensitive project paths.
         fs: {
             strict: true,
-            deny: ['.env', '.env.*', '*.{crt,pem,key}', 'composer.json', 'composer.lock'],
+            deny: ['.env', '.env.*', '**/*.{crt,pem,key}', 'composer.json', 'composer.lock'],
         },
 
         // Restrict cross-origin requests to same-origin only during

@@ -12,8 +12,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Security hardening for Axios:
  *
- * - baseURL: restrict requests to the same origin to prevent SSRF attacks
- *   where user-controlled input could route requests to internal services.
+ * - baseURL: restrict requests to the same origin to prevent client-side
+ *   SSRF, where attacker-controlled input in API calls could target arbitrary
+ *   external or internal URLs.  Note: server-side validation is still required
+ *   to prevent server-level SSRF.
  * - maxRedirects: cap redirects to limit redirect-chain attacks and prevent
  *   credential leakage to unexpected hosts (follow-redirects CVEs).
  * - maxBodyLength / maxContentLength: cap request/response body sizes to
