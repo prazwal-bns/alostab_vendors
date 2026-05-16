@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BannerFactory extends Factory
@@ -16,7 +17,7 @@ class BannerFactory extends Factory
                 'Top Picks This Month',
             ]),
             'banner_url' => fake()->url(),
-            'banner_image' => 'upload/banners/' . fake()->numberBetween(1, 12) . '.jpg',
+            'banner_image' => DemoAssetCatalog::bannerImage(fake()->numberBetween(1, 19)),
         ];
     }
 }
