@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SiteSettingFactory extends Factory
@@ -9,7 +10,7 @@ class SiteSettingFactory extends Factory
     public function definition(): array
     {
         return [
-            'logo' => 'upload/logo/default-logo.png',
+            'logo' => DemoAssetCatalog::SITE_LOGO,
             'support_phone' => '+977-9800000000',
             'phone_one' => '+977-9811111111',
             'email' => 'support@alostabvendors.test',

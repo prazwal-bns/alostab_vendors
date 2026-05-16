@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -14,7 +15,7 @@ class BrandFactory extends Factory
         return [
             'brand_name' => $brand,
             'brand_slug' => Str::slug($brand),
-            'brand_image' => 'upload/brand/' . fake()->numberBetween(1, 20) . '.png',
+            'brand_image' => DemoAssetCatalog::brandImage(fake()->numberBetween(1, 5)),
         ];
     }
 }
