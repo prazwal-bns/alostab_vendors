@@ -27,6 +27,7 @@ class ReviewController extends Controller
             'comment' => $request->comment,
             'rating' => $request->quality,
             'vendor_id' => $vendor,
+            'status' => false,
             'created_at' => Carbon::now(),
 
         ]);

@@ -56,10 +56,7 @@ class ProductController extends Controller
             'short_desc' => $request->short_desc,
             'long_desc' => $request->long_desc,
             'vendor_id' => $request->vendor_id,
-            'hot_deals' => $request->hot_deals,
-            'featured' => $request->featured,
-            'special_offer' => $request->special_offer,
-            'special_deals' => $request->special_deals,
+            ...Product::checkboxFlagsFromRequest($request),
             'status' => 1,
             'product_thumbnail' => $save_url,
             'created_at' => Carbon::now(),
@@ -126,10 +123,7 @@ class ProductController extends Controller
             'long_desc' => $request->long_desc,
 
             'vendor_id' => $request->vendor_id,
-            'hot_deals' => $request->hot_deals,
-            'featured' => $request->featured,
-            'special_offer' => $request->special_offer,
-            'special_deals' => $request->special_deals,
+            ...Product::checkboxFlagsFromRequest($request),
 
             'status' => 1,
             'created_at' => Carbon::now(),
