@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\SubCategory;
@@ -45,7 +46,7 @@ class ProductFactory extends Factory
             'discount_price' => $discount ? (string) $discount : null,
             'short_desc' => fake()->sentence(20),
             'long_desc' => fake()->paragraphs(3, true),
-            'product_thumbnail' => 'upload/products/' . fake()->numberBetween(1, 60) . '.jpg',
+            'product_thumbnail' => DemoAssetCatalog::productImage(fake()->numberBetween(1, 19)),
             'vendor_id' => fake()->boolean(70) ? User::factory()->vendor() : null,
             'hot_deals' => fake()->boolean(20),
             'featured' => fake()->boolean(35),
