@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use App\Models\BlogCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ class BlogPostFactory extends Factory
             'category_id' => BlogCategory::factory(),
             'post_title' => $title,
             'post_slug' => Str::slug($title),
-            'post_image' => 'upload/blog/' . fake()->numberBetween(1, 30) . '.jpg',
+            'post_image' => DemoAssetCatalog::blogImage(fake()->numberBetween(1, 21)),
             'post_short_description' => fake()->paragraph(),
             'post_long_description' => fake()->paragraphs(4, true),
         ];

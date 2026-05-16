@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SliderFactory extends Factory
@@ -16,7 +17,7 @@ class SliderFactory extends Factory
                 'Fitness Essentials Deals',
             ]),
             'short_title' => fake()->randomElement(['Up to 40% Off', 'Limited Time', 'New Arrivals', 'Shop Now']),
-            'slider_image' => 'upload/sliders/' . fake()->numberBetween(1, 12) . '.jpg',
+            'slider_image' => DemoAssetCatalog::sliderImage(fake()->numberBetween(1, 8)),
         ];
     }
 }

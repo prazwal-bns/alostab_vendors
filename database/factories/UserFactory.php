@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -33,7 +34,7 @@ class UserFactory extends Factory
             'provider_token' => null,
             'phone' => fake()->phoneNumber,
             'address' => fake()->address,
-            'photo' => 'upload/user_images/default.png',
+            'photo' => DemoAssetCatalog::avatarFilename(fake()->numberBetween(1, 25)),
             'role' => 'user',
             'status' => fake()->randomElement(['active', 'inactive']),
             'last_seen' => now()->subMinutes(fake()->numberBetween(1, 120))->toDateTimeString(),
@@ -56,7 +57,7 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'role' => 'admin',
             'status' => 'active',
-            'photo' => 'upload/admin_images/default.png',
+            'photo' => DemoAssetCatalog::avatarFilename(fake()->numberBetween(1, 25)),
         ]);
     }
 
@@ -65,7 +66,7 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'role' => 'vendor',
             'status' => 'active',
-            'photo' => 'upload/vendor_images/default.png',
+            'photo' => DemoAssetCatalog::vendorFilename(fake()->numberBetween(1, 17)),
         ]);
     }
 
@@ -74,7 +75,7 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'role' => 'user',
             'status' => 'active',
-            'photo' => 'upload/user_images/default.png',
+            'photo' => DemoAssetCatalog::avatarFilename(fake()->numberBetween(1, 25)),
         ]);
     }
 }

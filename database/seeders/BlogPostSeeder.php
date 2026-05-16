@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Seeder;
 
 class BlogPostSeeder extends Seeder
@@ -15,9 +16,10 @@ class BlogPostSeeder extends Seeder
             return;
         }
 
-        foreach (range(1, 24) as $i) {
+        foreach (range(1, 21) as $i) {
             BlogPost::factory()->create([
                 'category_id' => $categories->random(),
+                'post_image' => DemoAssetCatalog::blogImage($i),
             ]);
         }
     }

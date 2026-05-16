@@ -3,16 +3,20 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Support\CopiesDemoUserPhotos;
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
+        CopiesDemoUserPhotos::run();
+
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
@@ -28,7 +32,7 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
                 'status' => 'active',
                 'email_verified_at' => now(),
-                'photo' => 'upload/admin_images/default.png',
+                'photo' => DemoAssetCatalog::avatarFilename(1),
             ]
         );
         $admin->syncRoles(['admin']);
@@ -42,7 +46,7 @@ class UserSeeder extends Seeder
                 'role' => 'vendor',
                 'status' => 'active',
                 'email_verified_at' => now(),
-                'photo' => 'upload/vendor_images/default.png',
+                'photo' => DemoAssetCatalog::vendorFilename(1),
             ]
         );
         $vendor->syncRoles(['vendor']);
@@ -56,14 +60,13 @@ class UserSeeder extends Seeder
                 'role' => 'user',
                 'status' => 'active',
                 'email_verified_at' => now(),
-                'photo' => 'upload/user_images/default.png',
+                'photo' => DemoAssetCatalog::avatarFilename(2),
             ]
         );
         $customer->syncRoles(['user']);
 
-        // Grant all existing permissions to admin role if permission records exist.
         $permissions = Permission::query()->pluck('name')->all();
-        if (!empty($permissions)) {
+        if (! empty($permissions)) {
             $adminRole->syncPermissions($permissions);
         }
 

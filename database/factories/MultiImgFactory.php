@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -11,7 +12,7 @@ class MultiImgFactory extends Factory
     {
         return [
             'product_id' => Product::factory(),
-            'photo_image' => 'upload/products/multi/' . fake()->numberBetween(1, 120) . '.jpg',
+            'photo_image' => DemoAssetCatalog::galleryImage(fake()->numberBetween(1, 34)),
         ];
     }
 }

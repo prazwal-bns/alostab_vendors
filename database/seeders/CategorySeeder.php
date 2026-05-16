@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -18,11 +19,11 @@ class CategorySeeder extends Seeder
             'Books',
         ];
 
-        foreach ($baseCategories as $name) {
+        foreach ($baseCategories as $index => $name) {
             Category::factory()->create([
                 'category_name' => $name,
                 'category_slug' => str($name)->slug(),
-                'category_image' => 'upload/category/' . fake()->numberBetween(1, 20) . '.jpg',
+                'category_image' => DemoAssetCatalog::categoryImage($index + 1),
             ]);
         }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\Support\DemoAssetCatalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -19,7 +20,7 @@ class CategoryFactory extends Factory
         return [
             'category_name' => $cleanName,
             'category_slug' => Str::slug($cleanName) . '-' . fake()->unique()->numberBetween(10, 999),
-            'category_image' => 'upload/category/' . fake()->numberBetween(1, 20) . '.jpg',
+            'category_image' => DemoAssetCatalog::categoryImage(fake()->numberBetween(1, 16)),
         ];
     }
 }
