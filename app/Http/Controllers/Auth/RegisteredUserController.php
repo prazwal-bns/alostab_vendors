@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\RegisterUserNotification;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,9 +41,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'email_verified_at' => now(),
         ]);
-
-        event(new Registered($user));
 
         Auth::login($user);
 
