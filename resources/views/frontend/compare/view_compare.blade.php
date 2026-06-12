@@ -44,7 +44,7 @@
             <h1 class="heading-2 mb-10">Products Compare</h1>
             <h6 class="text-body mb-40">There are <span class="text-brand" id="compareAmt"></span> products to compare</h6>
             <div class="table-responsive">
-                <table class="table text-center table-compare" style="border: 1px solid rgb(108, 108, 108);">
+                <table class="table text-center table-compare compare-table" style="border: 1px solid rgb(108, 108, 108);">
                     <thead>
                         <tr>
                             <th>Preview</th>

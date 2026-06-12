@@ -17,6 +17,7 @@
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css?v=5.3')}}" />
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive-fixes.css?v=1.0') }}" />
     {{-- Toastr --}}
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>

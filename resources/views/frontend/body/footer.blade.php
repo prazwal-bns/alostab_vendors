@@ -199,7 +199,7 @@
                 <div class="hotline d-lg-inline-flex">
                     <img src = "{{ asset('frontend/assets/imgs/theme/icons/phone-call.svg') }}"
                         alt="hotline" />
-                    <p>{{ $setting?->support_phone ?? '+977 9862394599' }}<span class="mt-1">24/7 Support Center</span></p>
+                    <p>{{ $setting?->support_phone ?? '+977 9800000005' }}<span class="mt-1">24/7 Support Center</span></p>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block pr-25">

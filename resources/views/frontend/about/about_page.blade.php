@@ -69,7 +69,7 @@
                     <div class="vendor-info">
                         <ul class="font-sm mb-20">
                             <li><img class="mr-5" src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}" alt="" /><strong>Address:</strong> <span>Fulbari-11, Pokhara</span></li>
-                            <li><img class="mr-5" src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Call Us:</strong><span>(+977) 9862394599</span></li>
+                            <li><img class="mr-5" src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Call Us:</strong><span>(+977) 9800000005</span></li>
                         </ul>
                         <a href="mailto:alostabvendors@gmail.com" class="btn btn-xs">Contact Us <i class="fi-rs-arrow-small-right"></i></a>
                     </div>
@@ -130,7 +130,7 @@
                         <div class="vendor-info">
                             <ul class="font-sm mb-20">
                                 <li><img class="mr-5" src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}" alt="" /><strong>Address:</strong> <span>Fulbari-11, Pokhara</span></li>
-                                <li><img class="mr-5" src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Call Us:</strong><span>(+977) 9862394599</span></li>
+                                <li><img class="mr-5" src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Call Us:</strong><span>(+977) 9800000005</span></li>
                             </ul>
                             <a href="mailto:alostabvendors@gmail.com" class="btn btn-xs">Contact Us <i class="fi-rs-arrow-small-right"></i></a>
                         </div>

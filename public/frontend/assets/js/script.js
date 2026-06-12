@@ -1,27 +1,31 @@
-const site_url = "http://127.0.0.1:8000/";
+const site_url = window.location.origin + "/";
 
-$("body").on("keyup", "#search", function () {
+function liveProductSearch(inputSelector, resultsSelector) {
+    $("body").on("keyup", inputSelector, function () {
+        const text = $(inputSelector).val();
 
-    let text = $("#search").val();
-    //console.log(text);
+        if (text.length > 0) {
+            $.ajax({
+                data: { search: text },
+                url: site_url + "search-product",
+                method: "post",
+                beforeSend: function (request) {
+                    return request.setRequestHeader(
+                        "X-CSRF-TOKEN",
+                        $('meta[name="csrf-token"]').attr("content")
+                    );
+                },
+                success: function (result) {
+                    $(resultsSelector).html(result);
+                },
+            });
+        }
 
-    if (text.length > 0) {
-        $.ajax({
-            data: { search: text },
-            url: site_url + "search-product",
-            method: 'post',
-            beforSend: function (request) {
-                return request.setRequestHeader('X-CSRF-TOKEN', ("meta[name='csrf-token']"))
-            },
+        if (text.length < 1) {
+            $(resultsSelector).html("");
+        }
+    });
+}
 
-            success: function (result) {
-                $("#searchProducts").html(result);
-
-            }
-        }); //End Ajax
-
-    }// end if 
-
-    if (text.length < 1) $("#searchProducts").html("");
-
-});
+liveProductSearch("#search", "#searchProducts");
+liveProductSearch("#mobile-search", "#mobileSearchProducts");

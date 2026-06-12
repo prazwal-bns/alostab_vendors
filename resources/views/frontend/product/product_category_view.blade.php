@@ -198,7 +198,8 @@
 
             
         </div>
-        <div class="col-lg-1-5 primary-sidebar sticky-sidebar">
+        <div class="col-lg-1-5 col-12 primary-sidebar sticky-sidebar">
+            @include('frontend.partials.shop_filter_toggle')
             <div class="sidebar-widget widget-category-2 mb-30">
                 <h5 class="section-title style-1 mb-30">Category</h5>
                 <ul>
@@ -262,6 +263,7 @@
                 </div>
                 @endforeach
             </div>
+        </div>
         </div>
     </div>
 </div>

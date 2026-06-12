@@ -80,7 +80,7 @@
         <td class="right-align">
             <p>
                 Email: alostabvendors@gmail.om<br>
-                Contact No: +977 9862394599<br>
+                Contact No: +977 9800000005<br>
                 Address: Pokhara, Fulbari-11, Nepal
             </p>
         </td>

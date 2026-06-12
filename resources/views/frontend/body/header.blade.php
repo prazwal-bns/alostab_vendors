@@ -2,9 +2,13 @@
 @php
     $userData = null;
     if (Auth::check()) {
-        $id = Auth::user()->id; 
-        $userData = App\Models\User::find($id); 
+        $id = Auth::user()->id;
+        $userData = App\Models\User::find($id);
     }
+    $setting = App\Models\SiteSetting::find(1);
+    $siteLogo = $setting?->logo ? asset($setting->logo) : asset('frontend/assets/imgs/theme/logo.svg');
+    $navCategories = App\Models\Category::orderBy('category_name', 'ASC')->get();
+    $navMenuCategories = $navCategories->take(6);
 @endphp
     <div class="mobile-promotion">
         <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
@@ -59,7 +63,7 @@
                                 </ul> --}}
                             </li>
 
-                            <li>Need help? Call Us: <strong class="text-brand"> +977 9862394599</strong></li>
+                            <li>Need help? Call Us: <strong class="text-brand"> +977 9800000005</strong></li>
 
                         </ul>
                     </div>
@@ -71,11 +75,6 @@
         <div class="container">
             <div class="header-wrap">
                 <div class="logo logo-width-1">
-                    @php 
-                        $setting = App\Models\SiteSetting::find(1);
-                        $siteLogo = $setting?->logo ? asset($setting->logo) : asset('frontend/assets/imgs/theme/logo.svg');
-                    @endphp
-                    {{-- <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a> --}}
                     <a href="/"><img src="{{ $siteLogo }}" alt="logo" /></a>
                 </div>
                 <div class="header-right">
@@ -104,15 +103,11 @@
                             }
                         </script>
 
-@php
-    $categories = App\Models\Category::orderBy('category_name', 'ASC')->get();
-@endphp
-
                         <form action="{{ route('search.product') }}" method="POST">
                             @csrf
                             <select class="select-active">
                                 <option>All Categories</option>
-                                @foreach ($categories as $item)
+                                @foreach ($navCategories as $item)
                                     <option><a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">{{ $item->category_name }}</a></option>
                                 @endforeach
                             </select>
@@ -192,18 +187,11 @@
 
 
 
-@php
-    $categories = App\Models\Category::orderBy('category_name', 'ASC')->get();
-@endphp
-
-
-
     <div class="header-bottom header-bottom-bg-color sticky-bar">
         <div class="container">
             <div class="header-wrap header-space-between position-relative">
                 <div class="logo logo-width-1 d-block d-lg-none">
-                    <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
-                            alt="logo" /></a>
+                    <a href="/"><img src="{{ $siteLogo }}" alt="logo" /></a>
                 </div>
                 <div class="header-nav d-none d-lg-flex">
                     <div class="main-categori-wrap d-none d-lg-block">
@@ -214,7 +202,7 @@
                         <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                             <div class="d-flex categori-dropdown-inner">
                                 <ul>
-                                    @foreach ($categories as $item)
+                                    @foreach ($navCategories as $item)
                                         @if($loop->index < 5)
                                         <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">
                                             <li>
@@ -228,7 +216,7 @@
                                 </ul>
 
                                  <ul class="end">                                   
-                                    @foreach ($categories as $item)
+                                    @foreach ($navCategories as $item)
                                         @if($loop->index > 4)
                                         <a href="{{ url('product/category/'.$item->id.'/'.$item->category_slug) }}">
                                             <li>
@@ -289,11 +277,7 @@
                                 <li>
                                     <a class="{{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
                                 </li>
-                                @php
-                                    $categories = App\Models\Category::orderBy('category_name', 'ASC')->limit(6)->get();
-                                @endphp
-
-                                @foreach ($categories as $category)
+                                @foreach ($navMenuCategories as $category)
                                     <li>
                                         <a class="{{ request()->is('product/category/'.$category->id.'/'.$category->category_slug) ? 'active' : '' }}" href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }} <i class="fi-rs-angle-down"></i></a>
                                         @php
@@ -323,7 +307,40 @@
 
                 <div class="hotline d-none d-lg-flex">
                     <img src = "{{ asset('frontend/assets/imgs/theme/icons/icon-headphone.svg') }}" alt="hotline" />
-                    <p>{{ $setting?->support_phone ?? '+977 9862394599' }}<span class="mt-1">24/7 Support Center</span></p>
+                    <p>{{ $setting?->support_phone ?? '+977 9800000005' }}<span class="mt-1">24/7 Support Center</span></p>
+                </div>
+                <div class="header-action-right header-action-right--mobile d-block d-lg-none">
+                    <div class="header-action-2">
+                        <div class="header-action-icon-2">
+                            <a href="{{ route('wishlist') }}">
+                                <img alt="Wishlist" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
+                                <span class="pro-count white" id="wishQtyMobile">0</span>
+                            </a>
+                        </div>
+                        <div class="header-action-icon-2">
+                            <a href="{{ route('compare') }}">
+                                <i class="fi-rs-shuffle"></i>
+                                <span class="pro-count white" id="compareQtyMobile">0</span>
+                            </a>
+                        </div>
+                        <div class="header-action-icon-2">
+                            <a href="{{ route('myCart') }}">
+                                <img alt="Cart" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
+                                <span class="pro-count white" id="cartQtyMobile">0</span>
+                            </a>
+                        </div>
+                        <div class="header-action-icon-2">
+                            @auth
+                                <a href="{{ route('dashboard') }}">
+                                    <img id="showImageMobile" src="{{ !empty($userData->photo) ? url('upload/'.$userData->role.'_images/'.$userData->photo) : asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" alt="Account" class="rounded-circle" style="width:22px;height:22px;" />
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}">
+                                    <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" alt="Login" />
+                                </a>
+                            @endauth
+                        </div>
+                    </div>
                 </div>
                 <div class="header-action-icon-2 d-block d-lg-none">
                     <div class="burger-icon burger-icon-white">
@@ -332,64 +349,6 @@
                         <span class="burger-icon-bottom"></span>
                     </div>
                 </div>
-
-                {{-- <div class="header-action-right d-block d-lg-none">
-                    <div class="header-action-2">
-                        <div class="header-action-icon-2">
-                            <a href="">
-                                <img alt="heart"
-                                    src = "{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-                                <span class="pro-count white">4</span>
-                            </a>
-                        </div>
-                        <div class="header-action-icon-2">
-                            <a class="mini-cart-icon" href="#">
-                                <img alt="Nest"
-                                    src = "{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-                                <span class="pro-count white">2</span>
-                            </a>
-                            <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                <ul>
-                                    <li>
-                                        <div class="shopping-cart-img">
-                                            <a href="#"><img alt="Nest"
-                                                    src = "{{ asset('frontend/assets/imgs/shop/thumbnail-3.jpg') }}" /></a>
-                                        </div>
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="#">Plain Striola Shirts</a></h4>
-                                            <h3><span>1 × </span>$800.00</h3>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="shopping-cart-img">
-                                            <a href="#"><img alt="Nest"
-                                                    src = "{{ asset('frontend/assets/imgs/shop/thumbnail-4.jpg') }}" /></a>
-                                        </div>
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="#">Macbook Pro 2022</a></h4>
-                                            <h3><span>1 × </span>$3500.00</h3>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="shopping-cart-footer">
-                                    <div class="shopping-cart-total">
-                                        <h4>Total <span>$383.00</span></h4>
-                                    </div>
-                                    <div class="shopping-cart-button">
-                                        <a href="#">View cart</a>
-                                        <a href="#">Checkout</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
@@ -399,8 +358,7 @@
     <div class="mobile-header-wrapper-inner">
         <div class="mobile-header-top">
             <div class="mobile-header-logo">
-                <a href="/"><img src = "{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
-                        alt="logo" /></a>
+                <a href="/"><img src="{{ $siteLogo }}" alt="logo" /></a>
             </div>
             <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                 <button class="close-style search-close">
@@ -411,63 +369,74 @@
         </div>
         <div class="mobile-header-content-area">
             <div class="mobile-search search-style-3 mobile-header-border">
-                <form action="#">
-                    <input type="text" placeholder="Search for items…" />
-                    <button type="submit"><i class="fi-rs-search"></i></button>
+                <form action="{{ route('search.product') }}" method="POST" onsubmit="return false;">
+                    @csrf
+                    <input type="text" id="mobile-search" name="search" placeholder="Search for items…" autocomplete="off" />
+                    <button type="button"><i class="fi-rs-search"></i></button>
                 </form>
+                <div id="mobileSearchProducts" class="mobile-search-results"></div>
             </div>
             <div class="mobile-menu-wrap mobile-header-border">
-                <!-- mobile menu start -->
                 <nav>
                     <ul class="mobile-menu font-heading">
-                        <li class="menu-item-has-children">
+                        <li>
                             <a href="/">Home</a>
-
                         </li>
-                        <li class="menu-item-has-children">
+                        <li>
                             <a href="{{ route('shop.page') }}">Shop</a>
                         </li>
-                        
                         <li class="menu-item-has-children">
                             <a href="#">Categories</a>
                             <ul class="dropdown">
-                                @foreach($categories as $category)
-                                <li class="menu-item-has-children">
-                                    <a href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }}</a>
-                                </li>
+                                @foreach ($navCategories as $category)
+                                    @php
+                                        $subcategories = App\Models\SubCategory::where('category_id', $category->id)->orderBy('subcategory_name', 'ASC')->get();
+                                    @endphp
+                                    <li class="{{ $subcategories->isNotEmpty() ? 'menu-item-has-children' : '' }}">
+                                        <a href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }}</a>
+                                        @if ($subcategories->isNotEmpty())
+                                            <ul class="dropdown">
+                                                @foreach ($subcategories as $subcategory)
+                                                    <li><a href="{{ url('product/subcategory/'.$subcategory->id.'/'.$subcategory->subcategory_slug) }}">{{ $subcategory->subcategory_name }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
                                 @endforeach
                             </ul>
                         </li>
-
-                        <li class="menu-item-has-children">
+                        <li>
                             <a href="{{ route('home.blog') }}">Blog</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#">Pages</a>
+                            <a href="#">Account</a>
                             <ul class="dropdown">
-                                <li><a href="">My Account</a></li>
-                                <li><a href="{{ route('login') }}">Login</a></li>
-                                <li><a href="{{ route('login') }}">Register</a></li>
-                                <li><a href="">Purchase Guide</a></li>
-                                <li><a href="">Privacy Policy</a></li>
-                                <li><a href="">Terms of Service</a></li>
-                                <li><a href="">404 Page</a></li>
+                                <li><a href="{{ route('dashboard') }}">My Account</a></li>
+                                <li><a href="{{ route('myCart') }}">My Cart</a></li>
+                                <li><a href="{{ route('wishlist') }}">Wishlist</a></li>
+                                <li><a href="{{ route('compare') }}">Compare</a></li>
+                                <li><a href="{{ route('user.track.order') }}">Order Tracking</a></li>
+                                @guest
+                                    <li><a href="{{ route('login') }}">Login</a></li>
+                                    <li><a href="{{ route('register') }}">Register</a></li>
+                                @endguest
                             </ul>
                         </li>
                     </ul>
                 </nav>
-                <!-- mobile menu end -->
             </div>
             <div class="mobile-header-info-wrap">
                 <div class="single-mobile-header-info">
-                    <a href=""><i class="fi-rs-marker"></i> Our location </a>
+                    <a href="{{ route('checkout') }}"><i class="fi-rs-shopping-cart"></i> Checkout</a>
                 </div>
+                @guest
+                    <div class="single-mobile-header-info">
+                        <a href="{{ route('login') }}"><i class="fi-rs-user"></i> Log In</a>
+                        <a href="{{ route('register') }}"><i class="fi-rs-user-add"></i> Sign Up</a>
+                    </div>
+                @endguest
                 <div class="single-mobile-header-info">
-                    <a href="{{ route('login') }}"><i class="fi-rs-user"></i>Log In  </a>
-                    <a href="{{ route('register') }}"><i class="fi-rs-user"></i>Sign Up </a>
-                </div>
-                <div class="single-mobile-header-info">
-                    <a href="#"><i class="fi-rs-headphones"></i>(+977) 9862394599 </a>
+                    <a href="tel:{{ preg_replace('/\s+/', '', $setting?->support_phone ?? '+9779800000005') }}"><i class="fi-rs-headphones"></i>{{ $setting?->support_phone ?? '+977 9800000005' }}</a>
                 </div>
             </div>
             <div class="mobile-social-icon mb-50">

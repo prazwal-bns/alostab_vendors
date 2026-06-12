@@ -26,10 +26,9 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{asset ('frontend/assets/css/plugins/animate.min.css')}}" />
     <link rel="stylesheet" href="{{asset ('frontend/assets/css/main.css?v=5.3')}}" />
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive-fixes.css?v=1.0') }}" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" media="all" />
 
@@ -107,7 +106,7 @@
     <script src="{{ asset('frontend/assets/js/shop.js?v=5.3') }}"></script>
 
     {{-- PRODUCT SEARCH --}}
-    <script src="{{ asset('frontend/assets/js/script.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/script.js?v=1.1') }}"></script>
 
     {{-- Sweet alert for add to cart --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -295,28 +294,27 @@
                 // console.log(response);
 
                 $('span[id="cartSubTotal"]').text(response.cartTotal);
-
-                 $('#cartQty').text(response.cartQty);
+                $('#cartQty').text(response.cartQty);
+                $('#cartQtyMobile').text(response.cartQty);
 
                 var miniCart = ""
                 $.each(response.carts, function(key,value){
                     miniCart += `
                     <ul>
-                        <li>
+                        <li class="mini-cart-item">
                             <div class="shopping-cart-img">
-                                <a href=""><img alt="Nest"
-                                        src = "/${value.options.image}" style="width: 50px; height:50px;" /></a>
+                                <a href="{{ route('myCart') }}"><img alt="Nest" src="/${value.options.image}" /></a>
                             </div>
-                            <div class="shopping-cart-title" style="margin: -73px 74px 14px; width: 146px;">
-                                <h4><a href="">${value.name}</a></h4>
+                            <div class="shopping-cart-title">
+                                <h4><a href="{{ route('myCart') }}">${value.name}</a></h4>
                                 <h4><span>${value.qty}× </span>${value.price}</h4>
                             </div>
-                            <div class="shopping-cart-delete" style="margin: -85px 1px 0px;">
+                            <div class="shopping-cart-delete">
                                 <a type="submit" id="${value.rowId}" onClick="miniCartRemove(this.id)"><i class="fi-rs-cross-small"></i></a>
                             </div>
                         </li>
                     </ul>
-                    <hr> <br>
+                    <hr>
                     `
                 });
                 $('#miniCart').html(miniCart);
@@ -456,6 +454,7 @@
             url: "/get-wishlist-product/",
             success: function (response) {
                 $('#wishQty').text(response.wishQty);
+                $('#wishQtyMobile').text(response.wishQty);
                 $('#wishAmt').text(response.wishQty);
                 var rows = "";
 
@@ -611,6 +610,7 @@
             url: "/get-compare-product/",
             success: function(response) {
                 $('#compareQty').text(response.compareQty);
+                $('#compareQtyMobile').text(response.compareQty);
                 $('#compareAmt').text(response.compareQty);
                 var rows = "";
 
@@ -624,7 +624,7 @@
                     // Construct the table row with the calculated price
                     rows += `
                         <tr>
-                            <td class="row_img"><img src="/${value.product.product_thumbnail}" alt="compare-img" height="300" /></td>
+                            <td class="row_img"><img src="/${value.product.product_thumbnail}" alt="compare-img" class="compare-product-img" /></td>
                             <td class="product_name"><h6><a href="#" class="text-heading">${value.product.product_name}</a></h6></td>
                             <td class="product_price"><h3 class="price text-brand">Rs. ${finalPrice}</h3></td>
                             <td class="row_stock">

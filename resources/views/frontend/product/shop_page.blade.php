@@ -166,7 +166,8 @@
 
 
         </div>
-        <div class="col-lg-1-5 primary-sidebar sticky-sidebar">
+        <div class="col-lg-1-5 col-12 primary-sidebar sticky-sidebar">
+            @include('frontend.partials.shop_filter_toggle')
 
             {{-- Filter By Price Start --}}
             <div class="sidebar-widget price_range range mb-30">
@@ -301,6 +302,7 @@
             </div>
         @endforeach
     </div>
+        </div>
 </div>
 </div>
 </div>
